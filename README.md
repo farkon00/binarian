@@ -2,6 +2,7 @@
 # Content
   * [Global info](#global-info)
   * [Basic syntax](#basic-syntax)
+   * [Expressions](#expressions)
   * [Keywords](#keywords)
     * [Base keywords](#base-keywords)
       * [set](#set)
@@ -23,11 +24,29 @@
 # Basic syntax
   All syntax is based on keywords and arguments. 
   ```
-  keyword arg1 arg2(not for all keywords)
+  keyword1 arg1 arg2(not for all keywords)
+  keyword2 arg1 arg2(not for all keywords)
+  keyword3 arg1
   ```
   All keywords except [not](#not) and [input](#input) takes second argument. This 2 keywords take only 1 argument.
   
   To reference variable you must type name of it. 
+  
+  To write comments use '//'. All symbols in line after '//' will be matched as comments.
+  
+  ## Expressions
+   Expressions is lines in lines. But logical operators not make auto output, they will be replaced by result. Also you can't use set, input and output in expressions.
+   Syntax : 
+   ```
+   keyword {keyword arg {keyword arg arg}} arg
+   ```
+   
+   Example :
+   ```
+   input var1
+   input var2
+   output {and var1 {not var2}}
+   ```
   
 # Keywords
   ## Base keywords
