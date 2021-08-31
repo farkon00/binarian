@@ -117,7 +117,7 @@
    ### or
    Syntax : `or val1 val2`
    
-   Boolean logical or operator.
+   Boolean logical operator or.
 
    Values must be 1 or 0.
    If keyword using in expression, expression will replaced by result. Else in console will be printed keyword output.
@@ -133,7 +133,7 @@
    ### not
    Syntax : `not val`
    
-   Boolean logical or operator.
+   Boolean logical operator not.
 
    Value must be 1 or 0.
    If keyword using in expression, expression will replaced by result. Else in console will be printed keyword output.
@@ -145,5 +145,68 @@
    not i1
    set var1 {not {or i1 i2}} // nor analogue
    ```
-  
+  ## Additional keywords
+   ### nand 
+   Syntax : `nand val1 val2`
+   
+   Boolean logical operator nand.
+
+   Values must be 1 or 0.
+   If keyword using in expression, expression will replaced by result. Else in console will be printed keyword output.
+   
+   Example : 
+   ```
+   input i1
+   input i2
+   nand i1 i2
+   set var1 {nand i1 1}
+   ```
+ 
+   ### nor
+   Syntax : `nor val1 val2`
+   
+   Boolean logical operator nor.
+
+   Values must be 1 or 0.
+   If keyword using in expression, expression will replaced by result. Else in console will be printed keyword output.
+   
+   Example : 
+   ```
+   input i1
+   input i2
+   nor i1 i2
+   set var1 {nor i1 i2}
+   ```
+ 
+   ### xor
+   Syntax : `xor val1 val2`
+   
+   Boolean logical operator xor.
+
+   Values must be 1 or 0.
+   If keyword using in expression, expression will replaced by result. Else in console will be printed keyword output.
+   
+   Example : 
+   ```
+   input i1
+   input i2
+   xor i1 i2
+   set var1 {xor i1 i2}
+   ```
+ 
+   ### xnor
+   Syntax : `xnor val1 val2`
+   
+   Boolean logical operator xnor.
+
+   Values must be 1 or 0.
+   If keyword using in expression, expression will replaced by result. Else in console will be printed keyword output.
+   
+   Example : 
+   ```
+   input i1
+   input i2
+   xnor i1 i2
+   set var1 {xnor i1 i2}
+   ```
 
