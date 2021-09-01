@@ -14,12 +14,24 @@
 
 # Global info
   Original compilers are written in python 3.10rc1. I or other peoples will update compilers to new versions of python.
+  
+  All files with code on binarian have extension .bino.
 
   Exe file will be released when stable version of python 3.10 is released.
   
   I have 2 version of conpilers high level and main compiler. 
   High level contains additional keywords(xor, xnor, nor, nand).
   Main compiler contains onle base keywords.
+  
+  To run your code, run python file(compiler.py or high_level.py). Also you can add debug after file name to see variable in the end of executing.
+  
+  Examples :
+  ```
+  python compiler.py your_file.bino
+  python3 high_level.py your_file.bino
+  python3.10 high_level.py your_file.bino debug
+  python3 compiler.py other_file.bino debug
+  ```
 
 # Basic syntax
   All syntax is based on keywords and arguments. 
