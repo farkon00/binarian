@@ -11,6 +11,11 @@
       * [and](#and)
       * [or](#or)
       * [not](#not)
+    * [Additional keywords](#additional-keywords)
+      * [nand](#nand)
+      * [nor](#nor)
+      * [xor](#xor)
+      * [xnor](#xnor)
 
 # Global info
   Original compilers are written in python 3.10rc1. I or other peoples will update compilers to new versions of python.
