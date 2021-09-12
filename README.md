@@ -4,18 +4,14 @@
   * [Basic syntax](#basic-syntax)
    * [Expressions](#expressions)
   * [Keywords](#keywords)
-    * [Base keywords](#base-keywords)
+    * [Special keywords](#special-keywords)
       * [set](#set)
       * [input](#input)
       * [output](#output)
+    * [Logical operators keywords](#logical-operators-keywords)
       * [and](#and)
       * [or](#or)
       * [not](#not)
-    * [Additional keywords](#additional-keywords)
-      * [nand](#nand)
-      * [nor](#nor)
-      * [xor](#xor)
-      * [xnor](#xnor)
 
 # Global info
   Original compilers are written in python 3.10rc1. I or other peoples will update compilers to new versions of python.
@@ -24,17 +20,13 @@
 
   Exe file will be released when stable version of python 3.10 is released.
   
-  I have 2 version of conpilers high level and main compiler. 
-  High level contains additional keywords(xor, xnor, nor, nand).
-  Main compiler contains onle base keywords.
-  
-  To run your code, run python file(compiler.py or high_level.py). Also you can add debug after file name to see variable in the end of executing.
+  To run your code, run python file(compiler.py). Also you can add debug after file name to see variable in the end of executing.
   
   Examples :
   ```
   python compiler.py your_file.bino
-  python3 high_level.py your_file.bino
-  python3.10 high_level.py your_file.bino debug
+  python3 compiler.py your_file.bino
+  python3.10 compiler.py your_file.bino debug
   python3 compiler.py other_file.bino debug
   ```
 
@@ -49,7 +41,7 @@
   
   To reference variable you must type name of it. 
   
-  To write comments use '//'. All symbols in line after '//' will be matched as comments.
+  To write comments use '//'. All symbols in line after '//' will be marked as comments.
   
   ## Expressions
    Expressions is lines in lines. But logical operators not make auto output, they will be replaced by result. Also you can't use set, input and output in expressions.
@@ -66,7 +58,7 @@
    ```
   
 # Keywords
-  ## Base keywords
+  ## Special keywords
    ### set
    Syntax : `set var_name value`
    
@@ -114,7 +106,7 @@
    output val1 Hi! // Hi! : 1
    output 0 Its_zero // Its_zero : 0
    ```
-  
+  ## Logical operators keywords
    ### and
    Syntax : `and val1 val2`
    
@@ -160,69 +152,5 @@
    input i1
    input i2
    not i1
-   set var1 {not {or i1 i2}} // nor analogue
-   ```
-  ## Additional keywords
-   ### nand 
-   Syntax : `nand val1 val2`
-   
-   Boolean logical operator nand.
-
-   Values must be 1 or 0.
-   If keyword using in expression, expression will replaced by result. Else in console will be printed keyword output.
-   
-   Example : 
-   ```
-   input i1
-   input i2
-   nand i1 i2
-   set var1 {nand i1 1}
-   ```
- 
-   ### nor
-   Syntax : `nor val1 val2`
-   
-   Boolean logical operator nor.
-
-   Values must be 1 or 0.
-   If keyword using in expression, expression will replaced by result. Else in console will be printed keyword output.
-   
-   Example : 
-   ```
-   input i1
-   input i2
-   nor i1 i2
-   set var1 {nor i1 i2}
-   ```
- 
-   ### xor
-   Syntax : `xor val1 val2`
-   
-   Boolean logical operator xor.
-
-   Values must be 1 or 0.
-   If keyword using in expression, expression will replaced by result. Else in console will be printed keyword output.
-   
-   Example : 
-   ```
-   input i1
-   input i2
-   xor i1 i2
-   set var1 {xor i1 i2}
-   ```
- 
-   ### xnor
-   Syntax : `xnor val1 val2`
-   
-   Boolean logical operator xnor.
-
-   Values must be 1 or 0.
-   If keyword using in expression, expression will replaced by result. Else in console will be printed keyword output.
-   
-   Example : 
-   ```
-   input i1
-   input i2
-   xnor i1 i2
-   set var1 {xnor i1 i2}
+   set var1 {not {or i1 i2}}
    ```
