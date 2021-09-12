@@ -2,12 +2,6 @@ import sys
 
 vars = {}
 
-def get_var(name, i):
-    try:
-        return vars[name]
-    except:
-        raise NameError(f"Variable did not found or value isn`t 0 or 1. Line : {i + 1}")
-
 def expr_read(line, i):
     end_ind = line.find("}")
     if end_ind != -1:
@@ -18,39 +12,31 @@ def expr_read(line, i):
 
     lexic = line[start_ind+1:end_ind].split()
 
+    for j in range(len(lexic)):
+        if lexic[j] in vars.keys():
+            lexic[j] = str(vars[lexic[j]])
+
     match lexic[0]:
         case "and":
-            args = []
             if lexic[1] != '0' and lexic[1] != '1':
-                args.append(get_var(lexic[1], i))
-            else:
-                args.append(int(lexic[1]))
+                raise NameError(f"Variable is not found. Line : {i + 1}")
             if lexic[2] != '0' and lexic[2] != '1':
-                args.append(get_var(lexic[2], i))
-            else:
-                args.append(int(lexic[2]))
-            line = line.replace(line[start_ind:end_ind] + '}', str(int(args[0] and args[1])))
+                raise NameError(f"Variable is not found. Line : {i + 1}")
+
+            line = line.replace(line[start_ind:end_ind] + '}', str(int(int(lexic[1]) and int(lexic[2]))))
 
         case "or":
-            args = []
             if lexic[1] != '0' and lexic[1] != '1':
-                args.append(get_var(lexic[1], i))
-            else:
-                args.append(int(lexic[1]))
+                raise NameError(f"Variable is not found. Line : {i + 1}")
             if lexic[2] != '0' and lexic[2] != '1':
-                args.append(get_var(lexic[2], i))
-            else:
-                args.append(int(lexic[2]))
-            line = line.replace(line[start_ind:end_ind] + '}', str(int(args[0] or args[1])))
+                raise NameError(f"Variable is not found. Line : {i + 1}")
+            line = line.replace(line[start_ind:end_ind] + '}', str(int(int(lexic[1]) or int(lexic[2]))))
 
         case "not":
-            args = []
             if lexic[1] != '0' and lexic[1] != '1':
-                args.append(get_var(lexic[1], i))
-            else:
-                args.append(int(lexic[1]))
+                raise NameError(f"Variable is not found. Line : {i + 1}")
 
-            line = line.replace(line[start_ind:end_ind] + '}', str(int(not args[0])))
+            line = line.replace(line[start_ind:end_ind] + '}', str(int(not int(lexic[1]))))
 
     
         # Unavailable keywords check
@@ -90,76 +76,72 @@ for i in range(len(code.split('\n'))):
     if len(lexic) <= 0:
         continue
 
+    for j in range(len(lexic)):
+        if lexic[j] in vars.keys():
+            lexic[j] = str(vars[lexic[j]])
+
     match lexic[0]:
         case "set":
             if len(lexic) >= 3:
-                try:
-                    set_val = int(lexic[2])
-                except ValueError:
-                    raise ValueError(f"Value must be 0 or 1. Line : {i + 1}")
-                if set_val == 0 or set_val == 1:
-                    vars[lexic[1]] = set_val
+                if lexic[1] not in ['0', '1', 'and', 'or', 'not', 'set', 'input', 'output']:
+                    try:
+                        set_val = int(lexic[2])
+                    except ValueError:
+                        raise ValueError(f"Value must be 0 or 1. Line : {i + 1}")
+                    if set_val == 0 or set_val == 1:
+                        vars[lexic[1]] = set_val
+                    else:
+                        raise ValueError(f"Value must be 0 or 1. Line : {i + 1}")
                 else:
-                    raise ValueError(f"Value must be 0 or 1. Line : {i + 1}")
+                    raise NameError(f"Variable name is unavailable. Line : {i + 1}")
             else:
                 raise SyntaxError(f"You didn`t give enough arguments. Line : {i + 1}")
 
         case "input":
             if len(lexic) >= 2:
-                try:
-                    inp = int(input(f'{lexic[1]} : '))
-                except ValueError:
-                    raise ValueError(f"Value must be 0 or 1. Line : {i + 1}")
-                if inp == 0 or inp == 1:
-                    vars[lexic[1]] = inp
+                if lexic[1] not in ['0', '1', 'and', 'or', 'not', 'set', 'input', 'output']:
+                    try:
+                        inp = int(input(f'{lexic[1]} : '))
+                    except ValueError:
+                        raise ValueError(f"Value must be 0 or 1. Line : {i + 1}")
+                    if inp == 0 or inp == 1:
+                        vars[lexic[1]] = inp
+                    else:
+                        raise ValueError(f"Value must be 0 or 1. Line : {i + 1}")
                 else:
-                    raise ValueError(f"Value must be 0 or 1. Line : {i + 1}")
+                    raise NameError(f"Variable name is unavailable. Line : {i + 1}")
             else:
                 raise ValueError(f"You didn`t provide a variable name. Line : {i + 1}")
 
         case "output":
             if lexic[1] != '0' and lexic[1] != '1':
-                print(f"{lexic[2]} : {get_var(lexic[1], i)}")
+                raise NameError(f"Variable is not found. Line : {i + 1}")
             else:
-                print(f"{lexic[2]} : {lexic[1]}")
+                print(f"{lexic[2]} : {int(lexic[1])}")
 
 
         case "and":
-            args = []
             if lexic[1] != '0' and lexic[1] != '1':
-                args.append(get_var(lexic[1], i))
-            else:
-                args.append(int(lexic[1]))
+                raise NameError(f"Variable is not found. Line : {i + 1}")
             if lexic[2] != '0' and lexic[2] != '1':
-                args.append(get_var(lexic[2], i))
-            else:
-                args.append(int(lexic[2]))
+                raise NameError(f"Variable is not found. Line : {i + 1}")
 
-            print(f"AND output : {int(args[0] and args[1])}. Line : {i + 1}")
+            print(f"AND output : {int(int(lexic[1]) and int(lexic[2]))}. Line : {i + 1}")
 
         case "or":
-            args = []
             if lexic[1] != '0' and lexic[1] != '1':
-                args.append(get_var(lexic[1], i))
-            else:
-                args.append(int(lexic[1]))
+                raise NameError(f"Variable is not found. Line : {i + 1}")
             if lexic[2] != '0' and lexic[2] != '1':
-                args.append(get_var(lexic[2], i))
-            else:
-                args.append(int(lexic[2]))
+                raise NameError(f"Variable is not found. Line : {i + 1}")
 
-            print(f"OR output : {int(args[0] and args[1])}. Line : {i + 1}")
+            print(f"OR output : {int(int(lexic[1]) or int(lexic[2]))}. Line : {i + 1}")
 
         case "not":
-            args = []
             if lexic[1] != '0' and lexic[1] != '1':
-                args.append(get_var(lexic[1], i))
-            else:
-                args.append(int(lexic[1]))
-
-            print(f"NOT output : {int(not args[0])}. Line : {i + 1}")
+                raise NameError(f"Variable is not found. Line : {i + 1}")
+            print(f"NOT output : {int(not int(lexic[1]))}. Line : {i + 1}")
         case _:
-            raise NameError(f"Function or keyword did not found. Line : {i + 1}")
+            raise NameError(f"Keyword did not found. Line : {i + 1}")
 
 
 try:
