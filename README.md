@@ -14,13 +14,11 @@
       * [not](#not)
 
 # Global info
-  Original compilers are written in python 3.10rc1. I or other peoples will update compilers to new versions of python.
+  Original compilers are written in python 3.10.
   
   All files with code on binarian have extension .bino.
-
-  Exe file will be released when stable version of python 3.10 is released.
   
-  To run your code, run python file(compiler.py). Also you can add debug after file name to see variable in the end of executing.
+  To run your code, run python file(binarian.py) or executable(binarian.exe). Also you can add debug after file name to see variable in the end of executing.
   
   Examples :
   ```
@@ -28,6 +26,7 @@
   python3 compiler.py your_file.bino
   python3.10 compiler.py your_file.bino debug
   python3 compiler.py other_file.bino debug
+  binarian.exe your_file.bino
   ```
 
 # Basic syntax
