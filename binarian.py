@@ -80,13 +80,7 @@ def execute_line(lexic : list[str], i : int, local : dict[str : Function] = None
             return call_keyword(lexic, i, full_vars)
 
         case "return":
-            check_args((lexic[1]), i)
-
-            # Error handeling
-            if not is_func:
-                raise SyntaxError(f'Keyword "return" is restricted out of functions. Line : {i + 1}')
-
-            return int(lexic[1])
+            return return_keyword(lexic, i, is_func)
 
 
         case _:
