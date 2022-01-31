@@ -1,6 +1,6 @@
 from .check_args import check_args
 
-def and_keyword(lexic : list[str], i : int, is_expr : bool):
+def and_keyword(lexic : list[str], i : int, is_expr : bool) -> int:
     if len(lexic) <= 2:
         raise SyntaxError(f"You didn`t give enough arguments. Line : {i + 1}")
 
@@ -11,7 +11,7 @@ def and_keyword(lexic : list[str], i : int, is_expr : bool):
     else:
         return int(int(lexic[1]) and int(lexic[2]))
 
-def or_keyword(lexic : list[str], i : int, is_expr : bool):
+def or_keyword(lexic : list[str], i : int, is_expr : bool) -> int:
     if len(lexic) <= 2:
         raise SyntaxError(f"You didn`t give enough arguments. Line : {i + 1}")
 
@@ -22,7 +22,7 @@ def or_keyword(lexic : list[str], i : int, is_expr : bool):
     else:
         return int(int(lexic[1]) or int(lexic[2]))
 
-def not_keyword(lexic : list[str], i : int, is_expr : bool):
+def not_keyword(lexic : list[str], i : int, is_expr : bool) -> int:
     if len(lexic) <= 1:
         raise SyntaxError(f"You didn`t give enough arguments. Line : {i + 1}")
 
