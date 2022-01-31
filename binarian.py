@@ -4,7 +4,9 @@ from dataclasses import dataclass
 from keywords.log_oper import *
 from keywords.set_keyw import *
 from keywords.io_keyw import *
-import func
+from keywords.func_keyw import *
+
+from Function import Function
 
 global vars
 global block_indexes
@@ -15,7 +17,7 @@ block_indexes = []
 
 
 
-def execute_line(lexic : list[str], i : int, local : dict[str : func.Function] = None, is_expr=False) -> int | None:
+def execute_line(lexic : list[str], i : int, local : dict[str : Function] = None, is_expr=False) -> int | None:
     global vars
     global code
 
@@ -27,7 +29,7 @@ def execute_line(lexic : list[str], i : int, local : dict[str : func.Function] =
 
     for j in range(len(lexic)):
         if lexic[j] in full_vars.keys():
-            if not isinstance(full_vars[lexic[j]], func.Function):
+            if not isinstance(full_vars[lexic[j]], Function):
                 lexic[j] = str(full_vars[lexic[j]])
 
     match lexic[0]:
@@ -70,25 +72,12 @@ def execute_line(lexic : list[str], i : int, local : dict[str : func.Function] =
             func_code = code[block[0]:block[1]]
 
             if is_func:
-                local.append(func.Function(args, func_code))
+                local.append(Function(args, func_code))
 
-            vars[func_name] = func.Function(args, func_code)
+            vars[func_name] = Function(args, func_code)
         
         case "call":
-            args = lexic[2:]
-            check_args(args, i)
-
-            # Error handeling
-            if lexic[1] in full_vars.keys():
-                if isinstance(full_vars[lexic[1]], func.Function):
-                    if len(full_vars[lexic[1]].args) != len(args):
-                        raise SyntaxError(f"You didn`t give enough arguments. Line : {i + 1}")
-                else:
-                    raise TypeError(f"This object is not callable. Line : {i + 1}")
-            else:
-                raise NameError(f"Function is not found. Line : {i + 1}")
-
-            return full_vars[lexic[1]].execute(args, i)
+            return call_keyword(lexic, i, full_vars)
 
         case "return":
             check_args((lexic[1]), i)
@@ -104,7 +93,7 @@ def execute_line(lexic : list[str], i : int, local : dict[str : func.Function] =
             raise NameError(f"Keyword did not found. Line : {i + 1}")
 
 
-def expr_read(line : str, i : int, local : dict[str : func.Function] = None) -> str:
+def expr_read(line : str, i : int, local : dict[str : Function] = None) -> str:
     global vars
 
     end_ind = line.find("}")

@@ -1,13 +1,15 @@
 from dataclasses import dataclass
 
-import binarian
-
 @dataclass
 class Function:
+    """Class"""
+
     args : list[str]
     lines : str
 
     def execute(self, args, i):
+        import binarian
+
         local = {self.args[j] : args[j] for j in range(len(args))}
         for line in map(lambda x : x.lower(), self.lines.split("\n")[1:-1]):
             while "{" in line:
