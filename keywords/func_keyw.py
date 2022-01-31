@@ -20,3 +20,12 @@ def call_keyword(lexic : list[str], i : int, full_vars : dict[str : int]):
         raise NameError(f"Function is not found. Line : {i + 1}")
 
     return full_vars[lexic[1]].execute(args, i)
+
+def return_keyword(lexic : list[str], i : int, is_func : bool):
+    check_args((lexic[1]), i)
+
+    # Error handeling
+    if not is_func:
+        raise SyntaxError(f'Keyword "return" is restricted out of functions. Line : {i + 1}')
+
+    return int(lexic[1])

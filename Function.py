@@ -2,8 +2,6 @@ from dataclasses import dataclass
 
 @dataclass
 class Function:
-    """Class"""
-
     args : list[str]
     lines : str
 
