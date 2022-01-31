@@ -255,11 +255,11 @@ def main():
         execute_line(lexic, i)
 
 
-    try:
-        if sys.argv[2] == "debug":
-            print("\n" + str(vars), "\n\nFinished")
-    except:
-        print("\nFinished")
+    if "-d" in sys.argv:
+        print("\n" + str(vars))
+
+    print("\nFinished")
+        
 
 if __name__ == "__main__":
     main()
