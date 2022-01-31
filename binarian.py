@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from keywords.log_oper import *
 from keywords.set_keyw import *
 from keywords.io_keyw import *
+import func
 
 global vars
 global block_indexes
@@ -12,32 +13,9 @@ vars = {}
 code : str = None
 block_indexes = []
 
-@dataclass
-class Function:
-    args : list[str]
-    lines : str
 
-    def execute(self, args, i):
-        local = {self.args[j] : args[j] for j in range(len(args))}
-        for line in map(lambda x : x.lower(), self.lines.split("\n")[1:-1]):
-            while "{" in line:
-                if line.count("{") == line.count("}"):
-                    line = expr_read(line, i, local=local)
-                else:
-                    raise SyntaxError('Expression must have start and finish matched with "{" and "}". Line : ' + str(i + 1))
-            
-            lexic = line.split()
-            if len(lexic) <= 0:
-                continue
 
-            ret = execute_line(lexic, i, local=local)
-
-            if ret != None:
-                return ret
-
-        return "0"
-
-def execute_line(lexic : list[str], i : int, local : dict[str : Function] = None, is_expr=False) -> int | None:
+def execute_line(lexic : list[str], i : int, local : dict[str : func.Function] = None, is_expr=False) -> int | None:
     global vars
     global code
 
@@ -49,7 +27,7 @@ def execute_line(lexic : list[str], i : int, local : dict[str : Function] = None
 
     for j in range(len(lexic)):
         if lexic[j] in full_vars.keys():
-            if not isinstance(full_vars[lexic[j]], Function):
+            if not isinstance(full_vars[lexic[j]], func.Function):
                 lexic[j] = str(full_vars[lexic[j]])
 
     match lexic[0]:
@@ -92,9 +70,9 @@ def execute_line(lexic : list[str], i : int, local : dict[str : Function] = None
             func_code = code[block[0]:block[1]]
 
             if is_func:
-                local.append(Function(args, func_code))
+                local.append(func.Function(args, func_code))
 
-            vars[func_name] = Function(args, func_code)
+            vars[func_name] = func.Function(args, func_code)
         
         case "call":
             args = lexic[2:]
@@ -102,7 +80,7 @@ def execute_line(lexic : list[str], i : int, local : dict[str : Function] = None
 
             # Error handeling
             if lexic[1] in full_vars.keys():
-                if isinstance(full_vars[lexic[1]], Function):
+                if isinstance(full_vars[lexic[1]], func.Function):
                     if len(full_vars[lexic[1]].args) != len(args):
                         raise SyntaxError(f"You didn`t give enough arguments. Line : {i + 1}")
                 else:
@@ -126,7 +104,7 @@ def execute_line(lexic : list[str], i : int, local : dict[str : Function] = None
             raise NameError(f"Keyword did not found. Line : {i + 1}")
 
 
-def expr_read(line : str, i : int, local : dict[str : Function] = None) -> str:
+def expr_read(line : str, i : int, local : dict[str : func.Function] = None) -> str:
     global vars
 
     end_ind = line.find("}")
