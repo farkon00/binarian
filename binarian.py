@@ -1,6 +1,8 @@
 import sys
 from dataclasses import dataclass
 
+from code_preparer import prepare_code
+
 from keywords.log_oper import *
 from keywords.set_keyw import *
 from keywords.io_keyw import *
@@ -8,18 +10,13 @@ from keywords.func_keyw import *
 
 from Function import Function
 
-global vars
 global block_indexes
 global code
 vars = {}
 code : str = None
 block_indexes = []
 
-
-
 def execute_line(lexic : list[str], i : int, local : dict[str : Function] = None, is_expr=False) -> int | None:
-    global vars
-    global code
 
     full_vars = vars.copy()
     is_func = local != None
@@ -52,29 +49,10 @@ def execute_line(lexic : list[str], i : int, local : dict[str : Function] = None
             return not_keyword(lexic, i, is_expr)
 
         case "func":
-            parts = " ".join(lexic).split(":")
+            if is_expr:
+                raise SyntaxError(f"This operation is unavailable in expressions. Line : {i + 1}")
 
-            func_name = parts[0].split()[1]
-            args = parts[1].split()
-
-            func_index = len("\n".join(code.split("\n")[:i+1]))-1
-
-            # Finding nearest block for tha function
-            block = block_indexes[0]
-            for j in block_indexes:
-                if func_index > j[0]:
-                    if j[0] < block[0]:
-                        block = j
-
-            if not code[func_index:block[1]].split():
-                raise SyntaxError(f"Between nearest block and function declaration code was found. Line : {i+1}")
-
-            func_code = code[block[0]:block[1]]
-
-            if is_func:
-                local.append(Function(args, func_code))
-
-            vars[func_name] = Function(args, func_code)
+            func_keyword(lexic, i, code, local if is_func else vars, block_indexes)
         
         case "call":
             return call_keyword(lexic, i, full_vars)
@@ -104,7 +82,6 @@ def expr_read(line : str, i : int, local : dict[str : Function] = None) -> str:
     return line.replace(line[start_ind:end_ind] + "}", str(execute_line(lexic, i, is_expr=True, local=local)))
 
 def main():
-    global vars
     global block_indexes
     global code
 
@@ -113,42 +90,7 @@ def main():
     except:
         raise FileExistsError("File does not exist.")
 
-    while "//" in code:
-        comm_start = code.find("//")
-
-        if comm_start != -1:
-            code = code[:comm_start]
-
-    if "*" in code:
-        raise UnicodeEncodeError('Character "*" is restricted in binarian code')
-
-    # Blocks indexes search and deleting non-global scope code from executable
-    temp = code
-    executable_code = code
-    deleted = 0
-
-    if code.count("(") != code.count(")"):
-        raise SyntaxError('Functions must have start and finish matched with "(" and ")".')
-
-    while "(" in temp:
-        end_ind = temp.find(")")
-        if end_ind != -1:
-            start_ind = temp[:end_ind].rfind("(")
-
-            if start_ind == -1:
-                raise SyntaxError('Functions must have start and finish matched with "(" and ")".')
-
-            temp = temp[:start_ind]  + "{" + temp[start_ind+1:]
-            temp = temp[:end_ind]  + "}" + temp[end_ind+1:]
-
-            new_line_count = executable_code[start_ind:end_ind].count("\n")
-
-            executable_code = executable_code[:start_ind] + "*" * (end_ind - start_ind + 1) + executable_code[end_ind+1:]
-            executable_code = executable_code[:end_ind] + "\n" * new_line_count + executable_code[end_ind:]
-
-            block_indexes.append((start_ind, end_ind))  
-
-    executable_code = executable_code.replace("*", "")      
+    code, executable_code, block_indexes = prepare_code(code)
 
     for i in range(len(executable_code.split("\n"))):
 
