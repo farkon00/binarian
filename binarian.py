@@ -1,7 +1,9 @@
 import sys
-
 from dataclasses import dataclass
+
 from keywords.log_oper import *
+from keywords.set_keyw import *
+from keywords.io_keyw import *
 
 global vars
 global block_indexes
@@ -52,64 +54,13 @@ def execute_line(lexic : list[str], i : int, local : dict[str : Function] = None
 
     match lexic[0]:
         case "set":
-            if is_expr:
-                raise SyntaxError(f"This operation is unavailable in expressions. Line : {i + 1}")
-
-            # Error handeling
-            if len(lexic) >= 3:
-                if lexic[1] not in ("0", "1", "and", "or", "not", "set", "input", "output"):
-                    try:
-                        set_val = int(lexic[2])
-                    except ValueError:
-                        raise ValueError(f"Value must be 0 or 1. Line : {i + 1}")
-
-                    if set_val not in (0, 1):
-                        raise ValueError(f"Value must be 0 or 1. Line : {i + 1}")
-                else:
-                    raise NameError(f"Variable name is unavailable. Line : {i + 1}")
-            else:
-                raise SyntaxError(f"You didn`t give enough arguments. Line : {i + 1}")
-            
-            if is_func:
-                local[lexic[1]] = set_val
-            else:
-                vars[lexic[1]] = set_val
-                
+            set_keyword(lexic, i, local if is_func else vars, is_expr, is_func)
 
         case "input":
-            if is_expr:
-                raise SyntaxError(f"This operation is unavailable in expressions. Line : {i + 1}")
-
-            # Error handeling
-            if len(lexic) >= 2:
-                if lexic[1] not in ["0", "1", "and", "or", "not", "set", "input", "output"]:
-                    inp = input(f"{lexic[1]} : ")
-                    if inp not in ("0", "1"): 
-                        raise ValueError(f"Value must be 0 or 1. Line : {i + 1}")
-                else:
-                    raise NameError(f"Variable name is unavailable. Line : {i + 1}")
-            else:
-                raise ValueError(f"You didn`t provide a variable name. Line : {i + 1}")
-
-            inp = int(inp)
-
-            if is_func:
-                local[lexic[1]] = inp
-            else:
-                vars[lexic[1]] = inp
+            input_keyword(lexic, i, local if is_func else vars, is_expr, is_func)
 
         case "output":
-            if is_expr:
-                raise SyntaxError(f"This operation is unavailable in expressions. Line : {i + 1}")
-
-            check_args((lexic[1]), i)
-
-            # Error handeling
-            if len(lexic) < 3:
-                raise SyntaxError(f"You didn`t give enough arguments. Line : {i + 1}")
-
-            print(f"{lexic[2]} : {int(lexic[1])}")
-
+            output_keyword(lexic, i, is_expr)
 
         case "and":
             return and_keyword(lexic, i, is_expr)
