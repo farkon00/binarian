@@ -229,8 +229,7 @@ def main():
     try:
         code = open(sys.argv[1], "r", encoding="utf-8").read()
     except:
-        code = open("test.bino", "r", encoding="utf-8").read()
-        #raise FileExistsError("File does not exist.")
+        raise FileExistsError("File does not exist.")
 
     while "//" in code:
         comm_start = code.find("//")
