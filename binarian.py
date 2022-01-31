@@ -1,5 +1,7 @@
-from dataclasses import dataclass
 import sys
+
+from dataclasses import dataclass
+from keywords.log_oper import *
 
 global vars
 global block_indexes
@@ -30,6 +32,8 @@ class Function:
 
             if ret != None:
                 return ret
+
+        return "0"
 
 def execute_line(lexic : list[str], i : int, local : dict[str : Function] = None, is_expr=False) -> int | None:
     global vars
@@ -108,40 +112,13 @@ def execute_line(lexic : list[str], i : int, local : dict[str : Function] = None
 
 
         case "and":
-            if len(lexic) <= 2:
-                raise SyntaxError(f"You didn`t give enough arguments. Line : {i + 1}")
-
-            check_args((lexic[1], lexic[2]), i)
-
-            if not is_expr:
-                print(f"AND output : {int(int(lexic[1]) and int(lexic[2]))}. Line : {i + 1}")
-
-            if is_expr:
-                return int(int(lexic[1]) and int(lexic[2]))
+            return and_keyword(lexic, i, is_expr)
 
         case "or":
-            if len(lexic) <= 2:
-                raise SyntaxError(f"You didn`t give enough arguments. Line : {i + 1}")
-
-            check_args((lexic[1], lexic[2]), i)
-
-            if not is_expr:
-                print(f"OR output : {int(int(lexic[1]) or int(lexic[2]))}. Line : {i + 1}")
-
-            if is_expr:
-                return int(int(lexic[1]) or int(lexic[2]))
+            return or_keyword(lexic, i, is_expr)
 
         case "not":
-            if len(lexic) <= 1:
-                raise SyntaxError(f"You didn`t give enough arguments. Line : {i + 1}")
-
-            check_args((lexic[1]), i)
-            
-            if not is_expr:
-                print(f"NOT output : {int(not int(lexic[1]))}. Line : {i + 1}")
-
-            if is_expr:
-                return int(not int(lexic[1]))
+            return not_keyword(lexic, i, is_expr)
 
         case "func":
             parts = " ".join(lexic).split(":")
@@ -182,9 +159,7 @@ def execute_line(lexic : list[str], i : int, local : dict[str : Function] = None
             else:
                 raise NameError(f"Function is not found. Line : {i + 1}")
 
-            ret = full_vars[lexic[1]].execute(args, i)
-
-            return ret if ret else 0
+            return full_vars[lexic[1]].execute(args, i)
 
         case "return":
             check_args((lexic[1]), i)
@@ -199,11 +174,6 @@ def execute_line(lexic : list[str], i : int, local : dict[str : Function] = None
         case _:
             raise NameError(f"Keyword did not found. Line : {i + 1}")
 
-
-
-def check_args(args : tuple[str], i : int) -> None:
-    if any(map(lambda x : x not in ("0", "1"), args)):
-        raise NameError(f"Variable is not found. Line : {i + 1}")
 
 def expr_read(line : str, i : int, local : dict[str : Function] = None) -> str:
     global vars
