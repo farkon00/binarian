@@ -1,5 +1,4 @@
 import sys
-from dataclasses import dataclass
 
 from code_preparer import prepare_code
 
