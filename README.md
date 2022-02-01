@@ -2,8 +2,8 @@
 # Content
   * [Global info](#global-info)
   * [Basic syntax](#basic-syntax)
-   * [Expressions](#expression)
-   * [Functions](#functions)
+    * [Expressions](#expression)
+    * [Functions](#functions)
   * [Keywords](#keywords)
     * [Special keywords](#special-keywords)
       * [set](#set)
