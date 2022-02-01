@@ -9,7 +9,10 @@ def func_keyword(lexic : list[str], i : int, code : str, in_vars : dict[str : in
     parts = " ".join(lexic).split(":")
 
     func_name = parts[0].split()[1]
-    args = parts[1].split()
+    try:
+        args = parts[1].split()
+    except:
+        args = []
 
     func_index = len("\n".join(code.split("\n")[:i+1]))-1
 
