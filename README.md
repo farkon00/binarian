@@ -23,7 +23,7 @@
   
   All files with code on binarian have extension .bino.
   
-  To run your code, run python file(binarian.py) or executable(binarian.exe). Also you can add debug after file name to see variable in the end of executing.
+  To run your code, run python file(binarian.py) or executable(binarian.exe). Also you can add -d flag after file name to see variable in the end of execution.
   
   Examples :
   ```
