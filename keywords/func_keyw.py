@@ -5,7 +5,10 @@ from Function import Function
 
 from .check_args import check_args
 
-def func_keyword(lexic : list[str], i : int, code : str, in_vars : dict[str : int], block_indexes : list[tuple[int, int]]):
+def func_keyword(lexic : list[str], i : int, code : str, in_vars : dict[str : int], is_expr : bool):
+    if is_expr:
+        raise SyntaxError(f"This operation is unavailable in expressions. Line : {i + 1}")
+
     parts = " ".join(lexic).split(":")
 
     func_name = parts[0].split()[1]
@@ -14,23 +17,18 @@ def func_keyword(lexic : list[str], i : int, code : str, in_vars : dict[str : in
     except:
         args = []
 
-    func_index = len("\n".join(code.split("\n")[:i+1]))-1
+    if "(" in args: args.remove("(")
+    if ")" in args: args.remove(")")
+    if "()" in args: args.remove("()")
 
-    # Finding nearest block for tha function
-    block = block_indexes[0]
-    for j in block_indexes:
-        if func_index > j[0]:
-            if j[0] < block[0]:
-                block = j
+    #if not code[func_index:block[1]].split():
+    #    raise SyntaxError(f"Between nearest block and function declaration code was found. Line : {i+1}")
 
-    if not code[func_index:block[1]].split():
-        raise SyntaxError(f"Between nearest block and function declaration code was found. Line : {i+1}")
+    in_vars[func_name] = Function(args, i)
 
-    func_code = code[block[0]:block[1]]
+def call_keyword(lexic : list[str], i : int, code : str, opened_blocks : int, allowed_blocks : int, full_vars : dict[str : int]):
+    print(full_vars) # TODO : delete this
 
-    in_vars[func_name] = Function(args, func_code)
-
-def call_keyword(lexic : list[str], i : int, full_vars : dict[str : int]):
     args = lexic[2:]
     check_args(args, i)
 
@@ -44,7 +42,7 @@ def call_keyword(lexic : list[str], i : int, full_vars : dict[str : int]):
     else:
         raise NameError(f"Function is not found. Line : {i + 1}")
 
-    return full_vars[lexic[1]].execute(args, i)
+    return full_vars[lexic[1]].execute(args, i, code, opened_blocks, allowed_blocks)
 
 def return_keyword(lexic : list[str], i : int, is_func : bool):
     check_args((lexic[1]), i)
