@@ -39,10 +39,11 @@ def execute_line(lexic : list[str], i : int, state : ExecutionState, local : dic
     is_func = local != None
     full_vars = {**state.vars, **(local if is_func else {})}
 
-    for j in range(len(lexic)):
-        if lexic[j] in full_vars.keys():
-            if not isinstance(full_vars[lexic[j]], Function):
-                lexic[j] = str(full_vars[lexic[j]])
+    if lexic[0] != "drop":
+        for j in range(len(lexic)):
+            if lexic[j] in full_vars.keys():
+                if not isinstance(full_vars[lexic[j]], Function):
+                    lexic[j] = str(full_vars[lexic[j]])
 
     line = parse_blocks(" ".join(lexic), state)
     lexic = line.split()
@@ -59,6 +60,9 @@ def execute_line(lexic : list[str], i : int, state : ExecutionState, local : dic
     match lexic[0]:
         case "set":
             set_keyword(lexic, i, state, local if is_func else state.vars)
+
+        case "drop":
+            drop_keyword(lexic, i, state, local if is_func else state.vars)
 
         case "input":
             input_keyword(lexic, i, local if is_func else state.vars, state)
