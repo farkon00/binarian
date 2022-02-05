@@ -11,10 +11,10 @@ from keywords.func_keyw import *
 
 from Function import Function
 
-start_time = time()
-
 class ExecutionState:
     def __init__(self, code : str) -> None:
+        self.RESTRICTED_NAMES = ("0", "1", "and", "or", "not", "set", "input", "output", "func", "return", "call")
+
         self.vars = {}
         self.is_expr : bool = False
 
@@ -103,6 +103,8 @@ def execute_expr(line : str, i : int, state : ExecutionState, local : dict[str :
     return ret
 
 def main():
+    start_time = time()
+
     try:
         code = open(argv[1], "r", encoding="utf-8").read().lower()
     except:

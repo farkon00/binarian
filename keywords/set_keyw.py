@@ -6,7 +6,7 @@ def set_keyword(lexic : list[str], i : int, state, in_vars : dict[str : int]) ->
 
     # Error handeling
     if len(lexic) >= 3:
-        if lexic[1] not in ("0", "1", "and", "or", "not", "set", "input", "output"): # TODO : Move this tuple to constant
+        if lexic[1] not in state.RESTRICTED_NAMES:
             try:
                 set_val = int(lexic[2])
             except ValueError:
