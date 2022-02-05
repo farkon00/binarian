@@ -51,9 +51,9 @@ def execute_line(lexic : list[str], i : int, state : ExecutionState, local : dic
         return None
 
     if lexic[0] != "else":
-        for i in state.opened_ifs:
-            if i[1] == state.opened_blocks:
-                state.opened_ifs.remove(i)
+        for j in state.opened_ifs:
+            if j[1] == state.opened_blocks + 1:
+                state.opened_ifs.remove(j)
                 break
 
     match lexic[0]:
