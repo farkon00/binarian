@@ -1,3 +1,5 @@
+from time import time
+
 from .check_args import check_args
 
 def input_keyword(lexic : list[str], i : int, in_vars : dict[str : int], state) -> None:
@@ -7,14 +9,16 @@ def input_keyword(lexic : list[str], i : int, in_vars : dict[str : int], state) 
     # Error handeling
     if len(lexic) >= 2:
         if lexic[1] not in ("0", "1", "and", "or", "not", "set", "input", "output"):
+            input_start_time = time()
             inp = input(f"{lexic[1]} : ")
+            state.input_time += time() - input_start_time
             if inp not in ("0", "1"): 
                 raise ValueError(f"Value must be 0 or 1. Line : {i + 1}")
         else:
             raise NameError(f"Variable name is unavailable. Line : {i + 1}")
     else:
         raise ValueError(f"You didn`t provide a variable name. Line : {i + 1}")
-
+    
     inp = int(inp)
 
     in_vars[lexic[1]] = inp

@@ -1,4 +1,5 @@
 from sys import argv
+from time import time
 
 from code_preparer import *
 from blocks_parser import *
@@ -10,6 +11,8 @@ from keywords.func_keyw import *
 
 from Function import Function
 
+start_time = time()
+
 class ExecutionState:
     def __init__(self, code : str) -> None:
         self.vars = {}
@@ -20,6 +23,8 @@ class ExecutionState:
 
         self.code : str = code
         self.lines : list[str] = code.split("\n")
+
+        self.input_time : int = 0
 
         self.global_funcs = {
             "execute_line" : execute_line,
@@ -132,7 +137,7 @@ def main():
     if "-d" in argv:
         print("\n" + str(state.vars))
 
-    print("\nFinished")
+    print(f"\nFinished in {time() - start_time - state.input_time} sec")
         
 
 if __name__ == "__main__":
