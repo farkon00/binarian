@@ -13,6 +13,9 @@
       * [and](#and)
       * [or](#or)
       * [not](#not)
+    * [Conditional operators](#conditional-operators)
+      * [if](#if)
+      * [else](#else)
     * [Functions keywords](#functions-keywords)
       * [func](#func)
       * [call](#call)
@@ -41,7 +44,6 @@
   keyword2 arg1 arg2(not for all keywords)
   keyword3 arg1
   ```
-  All keywords except [not](#not) and [input](#input) takes second argument. This 2 keywords take only 1 argument.
   
   To reference variable you must type name of it. 
   
@@ -179,6 +181,57 @@
    not i1
    set var1 {not {or i1 i2}}
    ```
+ 
+ ## Conditional operators
+   ### if  
+   Synatax :
+   ``` 
+   if condition (
+     code
+   )
+   ```
+   Conditional operator if, execute code in block if condition is 1.
+  
+   Condition must be 0 or 1.
+      
+   Example :
+   ```
+   input a
+   if a (
+     output a _a
+   )
+   ```
+  
+   ### else 
+   Synatax :
+   ``` 
+   if condition (
+     code
+   )
+   else (
+     code
+   )
+   ```
+   Conditional operator else, execute code in block if condition of previous if operator is 0.
+  
+   Not required for every if.
+  
+   Else must go right after if.
+      
+   Example :
+   ```
+   input a
+  
+   if a (
+     output a _a
+   )
+   else (
+     input b
+     output b _b
+   )
+   ```
+ 
+ 
  ## Functions keywords
    ### func
    Synatax :
@@ -189,13 +242,14 @@
    ```
  
    Function declaration keyword.
-   ":" is not needed if no args used in function
+  
+   ":" is not needed if no args used in function.
       
    Example :
    ```
-      func nor : arg1 arg2 (
-        return {not {or arg1 arg2}}
-      )
+   func nor : arg1 arg2 (
+     return {not {or arg1 arg2}}
+   )
    ```
       
       
