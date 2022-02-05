@@ -1,10 +1,16 @@
+def delete_com_line(line : str) -> str:
+    """Deletes comments from line"""
+
+    comm_start = line.find("//")
+
+    if comm_start != -1:
+        line = line[:comm_start]
+
+    return line
+
 def delete_comments(code : str) -> str:
-    """Deletes comments from code"""
-    
-    while "//" in code:
-        comm_start = code.find("//")
+    lines = code.split("\n")
+    for i in range(len(lines)):
+        lines[i] = delete_com_line(lines[i])
 
-        if comm_start != -1:
-            code = code[:comm_start]
-
-    return code
+    return "\n".join(lines)
