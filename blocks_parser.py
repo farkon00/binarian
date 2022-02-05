@@ -10,13 +10,11 @@ def parse_expr(line : str, i : int) -> tuple[int, int] | None:
     else:
         pass
 
-def parse_blocks(line : str, opened : int, allowed : int) -> tuple[int, int]:
+def parse_blocks(line : str, state) -> None:
     closings = line.count(")")
 
-    if opened <= allowed:
-        allowed -= closings
+    if state.opened_blocks <= state.allowed_blocks:
+        state.allowed_blocks -= closings
 
-    opened += line.count("(")
-    opened -= closings
-
-    return opened, allowed
+    state.opened_blocks += line.count("(")
+    state.opened_blocks -= closings
