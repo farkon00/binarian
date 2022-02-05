@@ -4,10 +4,7 @@ from time import time
 from code_preparer import *
 from blocks_parser import *
 
-from keywords.log_oper import *
-from keywords.set_keyw import *
-from keywords.io_keyw import *
-from keywords.func_keyw import *
+from keywords import *
 
 from Function import Function
 
@@ -46,7 +43,11 @@ def execute_line(lexic : list[str], i : int, state : ExecutionState, local : dic
             if not isinstance(full_vars[lexic[j]], Function):
                 lexic[j] = str(full_vars[lexic[j]])
 
-    parse_blocks(" ".join(lexic), state)
+    line = parse_blocks(" ".join(lexic), state)
+    lexic = line.split()
+
+    if len(lexic) <= 0:
+        return None
 
     match lexic[0]:
         case "set":
@@ -66,6 +67,9 @@ def execute_line(lexic : list[str], i : int, state : ExecutionState, local : dic
 
         case "not":
             return not_keyword(lexic, i, state)
+
+        case "if":
+            if_keyword(lexic, i, state)
 
         case "func":
             func_keyword(lexic, i, state, local if is_func else state.vars)
@@ -114,7 +118,7 @@ def main():
     state = ExecutionState(code)
 
     if code.count("(") != code.count(")"):
-        raise SyntaxError('Blcoks must have starts and finishes matched with "(" and ")". Line : ')
+        raise SyntaxError('Blocks must have starts and finishes matched with "(" and ")".')
 
     for i in range(len(state.lines)):
 

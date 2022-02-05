@@ -22,3 +22,5 @@ def parse_blocks(line : str, state) -> None:
 
     state.opened_blocks += line.count("(")
     state.opened_blocks -= closings
+
+    return line.replace(")", "")

@@ -10,6 +10,8 @@ def func_keyword(lexic : list[str], i : int, state, in_vars : dict[str : int]):
         raise SyntaxError(f"This operation is unavailable in expressions. Line : {i + 1}")
     if lexic[1] in state.RESTRICTED_NAMES:
         raise NameError(f"Function name is unavailable. Line : {i + 1}")
+    if "(" not in " ".join(lexic):
+        raise SyntaxError(f'Blocks must have starts and finishes matched with "(" and ")". Line : {i + 1}')
 
     parts = " ".join(lexic).split(":")
 
