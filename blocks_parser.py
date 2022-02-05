@@ -1,4 +1,6 @@
 def parse_expr(line : str, i : int) -> tuple[int, int] | None:
+    """Finds expression indexes"""
+
     end_ind = line.find("}")
     if end_ind != -1:
         for j in range(end_ind, 0, -1):
@@ -11,6 +13,8 @@ def parse_expr(line : str, i : int) -> tuple[int, int] | None:
         pass
 
 def parse_blocks(line : str, state) -> None:
+    """Counts opened blocks"""
+
     closings = line.count(")")
 
     if state.opened_blocks <= state.allowed_blocks:
