@@ -12,9 +12,8 @@ from keywords.func_keyw import *
 from Function import Function
 
 class ExecutionState:
+    """Class that contains all data about execution state and constants for execution"""
     def __init__(self, code : str) -> None:
-        self.RESTRICTED_NAMES = ("0", "1", "and", "or", "not", "set", "input", "output", "func", "return", "call")
-
         self.vars = {}
         self.is_expr : bool = False
 
@@ -26,12 +25,14 @@ class ExecutionState:
 
         self.input_time : int = 0
 
-        self.global_funcs = {
+        self.RESTRICTED_NAMES = ("0", "1", "and", "or", "not", "set", "input", "output", "func", "return", "call")
+        self.GLOBAL_FUNCS = {
             "execute_line" : execute_line,
             "execute_expr" : execute_expr
         }
 
 def execute_line(lexic : list[str], i : int, state : ExecutionState, local : dict[str : Function] = None) -> int | None:
+    """Executes one keyword"""
 
     if state.opened_blocks > state.allowed_blocks:
         parse_blocks(" ".join(lexic), state)
@@ -79,12 +80,11 @@ def execute_line(lexic : list[str], i : int, state : ExecutionState, local : dic
 
 
         case _:
-            print("")
-
             raise NameError(f"Keyword did not found. Line : {i + 1}")
 
 
 def execute_expr(line : str, i : int, state : ExecutionState, local : dict[str : Function] = None) -> str:
+    """Execute one expression"""
     state.is_expr = True
 
     indexes = parse_expr(line, i)

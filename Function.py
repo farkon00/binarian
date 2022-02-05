@@ -4,6 +4,8 @@ from blocks_parser import *
 
 @dataclass
 class Function:
+    """Class that represents function in binarian"""
+
     args : list[str]
     start_line : int
 
@@ -20,7 +22,7 @@ class Function:
 
             if state.opened_blocks <= state.allowed_blocks:
                 while "{" in line:
-                    line = state.global_funcs["execute_expr"](line, i, state, local=local)
+                    line = state.GLOBAL_FUNCS["execute_expr"](line, i, state, local=local)
             
             lexic = line.split()
             if len(lexic) <= 0:
@@ -30,7 +32,7 @@ class Function:
             if state.opened_blocks <= starter_blocks - 1:
                 return 0
 
-            ret = state.global_funcs["execute_line"](lexic, i, state, local=local)
+            ret = state.GLOBAL_FUNCS["execute_line"](lexic, i, state, local=local)
 
             if ret != None and lexic[0] == "return":
                 return ret
