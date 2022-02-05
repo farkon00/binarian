@@ -28,8 +28,8 @@ class Function:
             if len(lexic) <= 0:
                 continue
 
-            parse_blocks(line, state)
-            if state.opened_blocks <= starter_blocks - 1:
+            opened_blocks, _ = parse_blocks(line, state, ret=True)
+            if opened_blocks <= starter_blocks - 1:
                 state.opened_blocks -= 1
                 state.allowed_blocks -= 1
                 return 0

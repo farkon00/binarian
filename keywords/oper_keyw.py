@@ -17,6 +17,8 @@ def else_keyword(lexic : list[str], i : int, state):
     for j in state.opened_ifs:
         if j[1] == state.opened_blocks:
             if_ = j
+            state.opened_ifs.remove(j)
+
             break
     else:
         raise SyntaxError(f"If operator for else was not found. Line : {i + 1}")
