@@ -16,6 +16,7 @@ class ExecutionState:
 
         self.opened_blocks : int = 0
         self.allowed_blocks : int = 0
+        self.opened_ifs : list[tuple[bool, int]] = []
 
         self.code : str = code
         self.lines : list[str] = code.split("\n")
@@ -49,6 +50,12 @@ def execute_line(lexic : list[str], i : int, state : ExecutionState, local : dic
     if len(lexic) <= 0:
         return None
 
+    if lexic[0] != "else":
+        for i in state.opened_ifs:
+            if i[1] == state.opened_blocks:
+                state.opened_ifs.remove(i)
+                break
+
     match lexic[0]:
         case "set":
             set_keyword(lexic, i, state, local if is_func else state.vars)
@@ -70,6 +77,9 @@ def execute_line(lexic : list[str], i : int, state : ExecutionState, local : dic
 
         case "if":
             if_keyword(lexic, i, state)
+
+        case "else":
+            else_keyword(lexic, i , state)
 
         case "func":
             func_keyword(lexic, i, state, local if is_func else state.vars)

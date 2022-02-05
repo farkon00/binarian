@@ -30,9 +30,13 @@ class Function:
 
             parse_blocks(line, state)
             if state.opened_blocks <= starter_blocks - 1:
+                state.opened_blocks -= 1
+                state.allowed_blocks -= 1
                 return 0
 
             ret = state.GLOBAL_FUNCS["execute_line"](lexic, i, state, local=local)
 
             if ret != None and lexic[0] == "return":
+                state.opened_blocks -= 1
+                state.allowed_blocks -= 1
                 return ret
