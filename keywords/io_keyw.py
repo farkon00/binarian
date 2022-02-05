@@ -8,7 +8,7 @@ def input_keyword(lexic : list[str], i : int, in_vars : dict[str : int], state) 
 
     # Error handeling
     if len(lexic) >= 2:
-        if lexic[1] not in ("0", "1", "and", "or", "not", "set", "input", "output"):
+        if lexic[1] not in state.RESTRICTED_NAMES:
             input_start_time = time()
             inp = input(f"{lexic[1]} : ")
             state.input_time += time() - input_start_time
