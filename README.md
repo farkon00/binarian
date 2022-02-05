@@ -181,14 +181,18 @@
    ```
  ## Functions keywords
    ### func
-   Synatax : ```func name : arg1 arg2... (
-     <code>
-   )```
+   Synatax :
+   ```
+   func name : arg1 arg2... (
+     code
+   )
+   ```
  
    Function declaration keyword.
    ":" is not needed if no args used in function
       
-   Example : ```
+   Example :
+   ```
       func nor : arg1 arg2 (
         return {not {or arg1 arg2}}
       )
@@ -205,8 +209,9 @@
    Count of arguments given for function must equal to count of arguments that function acceptes.
    
       
-   Example : ```
-      <nor fucntion decalration with 2 args>
+   Example : 
+   ```
+      [nor fucntion decalration with 2 args]
       
       call nor 1 0 // Returns 0
       
@@ -225,10 +230,11 @@
    Keyword need to be used in function.
    
       
-   Example : ```
+   Example : 
+   ```
       func nor : arg1 arg2 (
         return {not {or arg1 arg2}}
       )
-   ``
+   ```
  
    
