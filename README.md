@@ -7,6 +7,7 @@
   * [Keywords](#keywords)
     * [Special keywords](#special-keywords)
       * [set](#set)
+      * [drop](#drop)
       * [input](#input)
       * [output](#output)
     * [Logical operators keywords](#logical-operators-keywords)
@@ -100,6 +101,23 @@
    set var2 1
    and var1 var2
    or 0 var1
+   ```
+   
+   ### drop
+   Syntax : `drop var_name`
+   
+   This keyword uses to delete variable from memory.
+   
+   Variable need to be assigned before droping.
+   You can't use this keyword in expression.
+   Variable name can\`t be same as keyword. 
+   
+   Example : 
+   ```
+   set var1 1
+   set var2 1
+   drop var1
+   and var1 var2 // Will throw exception
    ```
    
    ### input
