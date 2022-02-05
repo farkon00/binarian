@@ -1,12 +1,12 @@
 from .check_args import check_args
 
-def set_keyword(lexic : list[str], i : int, in_vars : dict[str : int], is_expr : bool, is_func : bool) -> None:
-    if is_expr:
+def set_keyword(lexic : list[str], i : int, state, in_vars : dict[str : int]) -> None:
+    if state.is_expr:
         raise SyntaxError(f"This operation is unavailable in expressions. Line : {i + 1}")
 
     # Error handeling
     if len(lexic) >= 3:
-        if lexic[1] not in ("0", "1", "and", "or", "not", "set", "input", "output"):
+        if lexic[1] not in ("0", "1", "and", "or", "not", "set", "input", "output"): # TODO : Move this tuple to constant
             try:
                 set_val = int(lexic[2])
             except ValueError:

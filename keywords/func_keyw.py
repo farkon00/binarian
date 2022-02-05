@@ -1,12 +1,12 @@
 import sys
-sys.path.append( '.' )
+sys.path.append(".")
 
 from Function import Function
 
 from .check_args import check_args
 
-def func_keyword(lexic : list[str], i : int, code : str, in_vars : dict[str : int], is_expr : bool):
-    if is_expr:
+def func_keyword(lexic : list[str], i : int, state, in_vars : dict[str : int]):
+    if state.is_expr:
         raise SyntaxError(f"This operation is unavailable in expressions. Line : {i + 1}")
 
     parts = " ".join(lexic).split(":")
@@ -21,14 +21,9 @@ def func_keyword(lexic : list[str], i : int, code : str, in_vars : dict[str : in
     if ")" in args: args.remove(")")
     if "()" in args: args.remove("()")
 
-    #if not code[func_index:block[1]].split():
-    #    raise SyntaxError(f"Between nearest block and function declaration code was found. Line : {i+1}")
-
     in_vars[func_name] = Function(args, i)
 
-def call_keyword(lexic : list[str], i : int, code : str, opened_blocks : int, allowed_blocks : int, full_vars : dict[str : int]):
-    print(full_vars) # TODO : delete this
-
+def call_keyword(lexic : list[str], i : int, state, full_vars : dict[str : int]):
     args = lexic[2:]
     check_args(args, i)
 
@@ -42,7 +37,7 @@ def call_keyword(lexic : list[str], i : int, code : str, opened_blocks : int, al
     else:
         raise NameError(f"Function is not found. Line : {i + 1}")
 
-    return full_vars[lexic[1]].execute(args, i, code, opened_blocks, allowed_blocks)
+    return full_vars[lexic[1]].execute(args, i, state)
 
 def return_keyword(lexic : list[str], i : int, is_func : bool):
     check_args((lexic[1]), i)

@@ -1,36 +1,36 @@
 from dataclasses import dataclass
-import traceback
+
+from blocks_parser import *
 
 @dataclass
 class Function:
     args : list[str]
     start_line : int
 
-    def execute(self, args : list[int], i : int, code : str, opened_blocks : int, allowed_blocks : int):
-        import binarian
+    def execute(self, args : list[int], i : int, state):
+        starter_blocks = state.opened_blocks
+        state.is_expr = False
+
         local = {self.args[j] : args[j] for j in range(len(args))}
-        for line in code.split("\n")[self.start_line+1:]:
+        for line in state.lines[self.start_line+1:]:
             
             # Expressions executing
             if line.count("{") != line.count("}"):
                 raise SyntaxError('Expression must have start and finish matched with "{" and "}". Line : ' + str(i + 1))
 
-            if opened_blocks <= allowed_blocks:
+            if state.opened_blocks <= state.allowed_blocks:
                 while "{" in line:
-                    line = binarian.execute_expr(line, i, opened_blocks, allowed_blocks, local=local)[-1]
+                    line = state.global_funcs["execute_expr"](line, i, state, local=local)
             
             lexic = line.split()
             if len(lexic) <= 0:
                 continue
 
-            ret = binarian.execute_line(lexic, i, opened_blocks, allowed_blocks, local=local)
-            opened_blocks, allowed_blocks = ret[:2]
+            parse_blocks(line, state)
+            if state.opened_blocks <= starter_blocks - 1:
+                return 0
 
-            try:
-                if ret[2] != None:
-                    return opened_blocks, allowed_blocks, ret[-1]
-            except:
-                #traceback.print_exc()
-                None
+            ret = state.global_funcs["execute_line"](lexic, i, state, local=local)
 
-        return opened_blocks, allowed_blocks, 0
+            if ret != None and lexic[0] == "return":
+                return ret
