@@ -1,7 +1,5 @@
-def get_var(var : str, i : int, full_vars : dict[str : int], _type : type | None = None):
+def get_var(var : str, i : int, full_vars : dict[str : int], _type : type = object):
     if var not in full_vars:
-        print("")
-
         raise NameError(f"Variable is not found. Line : {i + 1}")
 
     ret = full_vars[var]
