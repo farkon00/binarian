@@ -11,7 +11,7 @@ def set_keyword(lexic : list[str], i : int, state, in_vars : dict[str : int], fu
     else:
         raise SyntaxError(f"You didn`t give enough arguments. Line : {i + 1}")
     
-    in_vars[lexic[1]] = get_var(lexic[2], i, full_vars, int)
+    in_vars[lexic[1]] = get_var(lexic[2], i, full_vars)
 
 def drop_keyword(lexic : list[str], i : int, state, in_vars : dict[str : int]):
     if state.is_expr:
