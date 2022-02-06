@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
 from blocks_parser import *
+from get_var import get_var
 
 @dataclass
 class Function:
@@ -9,11 +10,11 @@ class Function:
     args : list[str]
     start_line : int
 
-    def execute(self, args : list[int], i : int, state):
+    def execute(self, args : list[str], i : int, state, full_vars : dict[str : int]):
         starter_blocks = state.opened_blocks
         state.is_expr = False
 
-        local = {self.args[j] : args[j] for j in range(len(args))}
+        local = {self.args[j] : get_var(args[j], i, full_vars, int) for j in range(len(args))}
         for line in state.lines[self.start_line+1:]:
             
             # Expressions executing

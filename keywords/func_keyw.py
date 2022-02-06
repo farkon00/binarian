@@ -1,9 +1,5 @@
-import sys
-sys.path.append(".")
-
 from Function import Function
-
-from .check_args import check_args
+from get_var import get_var
 
 def func_keyword(lexic : list[str], i : int, state, in_vars : dict[str : int]):
     if state.is_expr:
@@ -29,7 +25,6 @@ def func_keyword(lexic : list[str], i : int, state, in_vars : dict[str : int]):
 
 def call_keyword(lexic : list[str], i : int, state, full_vars : dict[str : int]):
     args = lexic[2:]
-    check_args(args, i)
 
     # Error handeling
     if lexic[1] in full_vars.keys():
@@ -41,13 +36,11 @@ def call_keyword(lexic : list[str], i : int, state, full_vars : dict[str : int])
     else:
         raise NameError(f"Function is not found. Line : {i + 1}")
 
-    return full_vars[lexic[1]].execute(args, i, state)
+    return get_var(lexic[1], i, full_vars, Function).execute(args, i, state, full_vars)
 
-def return_keyword(lexic : list[str], i : int, is_func : bool):
-    check_args((lexic[1]), i)
-
+def return_keyword(lexic : list[str], i : int, is_func : bool, full_vars : dict[str : int]):
     # Error handeling
     if not is_func:
         raise SyntaxError(f'Keyword "return" is restricted out of functions. Line : {i + 1}')
 
-    return int(lexic[1])
+    return get_var(lexic[1], i, full_vars, int)

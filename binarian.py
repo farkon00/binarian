@@ -11,7 +11,7 @@ from Function import Function
 class ExecutionState:
     """Class that contains all data about execution state and constants for execution"""
     def __init__(self, code : str) -> None:
-        self.vars = {}
+        self.vars = {"0" : 0, "1" : 1}
         self.is_expr : bool = False
 
         self.opened_blocks : int = 0
@@ -39,12 +39,6 @@ def execute_line(lexic : list[str], i : int, state : ExecutionState, local : dic
     is_func = local != None
     full_vars = {**state.vars, **(local if is_func else {})}
 
-    if lexic[0] != "drop":
-        for j in range(len(lexic)):
-            if lexic[j] in full_vars.keys():
-                if not isinstance(full_vars[lexic[j]], Function):
-                    lexic[j] = str(full_vars[lexic[j]])
-
     line = parse_blocks(" ".join(lexic), state)
     lexic = line.split()
 
@@ -59,7 +53,7 @@ def execute_line(lexic : list[str], i : int, state : ExecutionState, local : dic
 
     match lexic[0]:
         case "set":
-            set_keyword(lexic, i, state, local if is_func else state.vars)
+            set_keyword(lexic, i, state, local if is_func else state.vars, full_vars)
 
         case "drop":
             drop_keyword(lexic, i, state, local if is_func else state.vars)
@@ -68,19 +62,19 @@ def execute_line(lexic : list[str], i : int, state : ExecutionState, local : dic
             input_keyword(lexic, i, local if is_func else state.vars, state)
 
         case "output":
-            output_keyword(lexic, i, state)
+            output_keyword(lexic, i, state, full_vars)
 
         case "and":
-            return and_keyword(lexic, i, state)
+            return and_keyword(lexic, i, state, full_vars)
 
         case "or":
-            return or_keyword(lexic, i, state)
+            return or_keyword(lexic, i, state, full_vars)
 
         case "not":
-            return not_keyword(lexic, i, state)
+            return not_keyword(lexic, i, state, full_vars)
 
         case "if":
-            if_keyword(lexic, i, state)
+            if_keyword(lexic, i, state, full_vars)
 
         case "else":
             else_keyword(lexic, i , state)
@@ -94,7 +88,7 @@ def execute_line(lexic : list[str], i : int, state : ExecutionState, local : dic
             return call_keyword(lexic, i, state, full_vars)
 
         case "return":
-            return return_keyword(lexic, i, is_func)
+            return return_keyword(lexic, i, is_func, full_vars)
 
 
         case _:
@@ -155,6 +149,9 @@ def main():
 
 
     if "-d" in argv:
+        del state.vars["0"]
+        del state.vars["1"]
+
         print("\n" + str(state.vars))
 
     print(f"\nFinished in {time() - start_time - state.input_time} sec")
