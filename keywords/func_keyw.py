@@ -26,17 +26,16 @@ def func_keyword(lexic : list[str], i : int, state, in_vars : dict[str : int]):
 def call_keyword(lexic : list[str], i : int, state, full_vars : dict[str : int]):
     args = lexic[2:]
 
+    func = get_var(lexic[1], i, full_vars, Function)
+
     # Error handeling
     if lexic[1] in full_vars.keys():
-        if isinstance(full_vars[lexic[1]], Function):
-            if len(full_vars[lexic[1]].args) != len(args):
-                raise SyntaxError(f"You didn`t give enough arguments. Line : {i + 1}")
-        else:
-            raise TypeError(f"This object is not callable. Line : {i + 1}")
+        if len(func.args) != len(args):
+            raise SyntaxError(f"You didn`t give enough arguments. Line : {i + 1}")
     else:
         raise NameError(f"Function is not found. Line : {i + 1}")
 
-    return get_var(lexic[1], i, full_vars, Function).execute(args, i, state, full_vars)
+    return func.execute(args, i, state, full_vars)
 
 def return_keyword(lexic : list[str], i : int, is_func : bool, full_vars : dict[str : int]):
     # Error handeling
