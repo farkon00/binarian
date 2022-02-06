@@ -1,16 +1,12 @@
-def parse_expr(line : str, i : int) -> tuple[int, int] | None:
+def parse_brackets(line : str, i : int, mode : tuple[str, str], error : str = "Expression") -> tuple[int, int] | None:
     """Finds expression indexes"""
 
-    end_ind = line.find("}")
+    end_ind = line.find(mode[1])
     if end_ind != -1:
-        for j in range(end_ind, 0, -1):
-            if line[j] == "{":
-                start_ind = j
-                return start_ind, end_ind
-        else: # If for ends without break. That means "}" located before "{"
-            raise SyntaxError('Expression must have start and finish matched with "{" and "}". Line : ' + str(i + 1))
-    else:
-        pass
+        start_ind = line[:end_ind].rfind(mode[0])
+        if start_ind == -1:
+            raise SyntaxError(f'{error} must have start and finish matched with "{mode[0]}" and "{mode[1]}". Line : {i + 1}')
+        return start_ind, end_ind
 
 def parse_blocks(line : str, state, ret : bool = False) -> str | tuple[int, int]:
     """Counts opened blocks"""
