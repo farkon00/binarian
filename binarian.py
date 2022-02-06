@@ -99,7 +99,7 @@ def execute_expr(line : str, i : int, state : ExecutionState, local : dict[str :
     """Execute one expression"""
     state.is_expr = True
 
-    indexes = parse_expr(line, i)
+    indexes = parse_brackets(line, i, ("{", "}"))
 
     if not indexes:
         return line
