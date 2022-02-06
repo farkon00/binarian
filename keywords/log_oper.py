@@ -1,34 +1,28 @@
-from .check_args import check_args
+from get_var import get_var
 
-def and_keyword(lexic : list[str], i : int, state) -> int:
+def and_keyword(lexic : list[str], i : int, state, full_vars : dict[str : int]) -> int:
     if len(lexic) <= 2:
         raise SyntaxError(f"You didn`t give enough arguments. Line : {i + 1}")
 
-    check_args((lexic[1], lexic[2]), i)
-
     if not state.is_expr:
-        print(f"AND output : {int(int(lexic[1]) and int(lexic[2]))}. Line : {i + 1}")
+        print(f"AND output : {int(get_var(lexic[1], i, full_vars, int) and get_var(lexic[2], i, full_vars, int))}. Line : {i + 1}")
     else:
-        return int(int(lexic[1]) and int(lexic[2]))
+        return int(get_var(lexic[1], i, full_vars, int) and get_var(lexic[2], i, full_vars, int))
 
-def or_keyword(lexic : list[str], i : int, state) -> int:
+def or_keyword(lexic : list[str], i : int, state, full_vars : dict[str : int]) -> int:
     if len(lexic) <= 2:
         raise SyntaxError(f"You didn`t give enough arguments. Line : {i + 1}")
 
-    check_args((lexic[1], lexic[2]), i)
-
     if not state.is_expr:
-        print(f"OR output : {int(int(lexic[1]) or int(lexic[2]))}. Line : {i + 1}")
+        print(f"OR output : {int(get_var(lexic[1], i, full_vars, int) or get_var(lexic[2], i, full_vars, int))}. Line : {i + 1}")
     else:
-        return int(int(lexic[1]) or int(lexic[2]))
+        return int(get_var(lexic[1], i, full_vars, int) or get_var(lexic[2], i, full_vars, int))
 
-def not_keyword(lexic : list[str], i : int, state) -> int:
+def not_keyword(lexic : list[str], i : int, state, full_vars : dict[str : int]) -> int:
     if len(lexic) <= 1:
         raise SyntaxError(f"You didn`t give enough arguments. Line : {i + 1}")
-
-    check_args((lexic[1]), i)
     
     if not state.is_expr:
-        print(f"NOT output : {int(not int(lexic[1]))}. Line : {i + 1}")
+        print(f"NOT output : {int(not get_var(lexic[1], i, full_vars, int))}. Line : {i + 1}")
     else:
-        return int(not int(lexic[1]))
+        return int(not get_var(lexic[1], i, full_vars, int))

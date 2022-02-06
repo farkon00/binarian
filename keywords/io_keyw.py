@@ -1,6 +1,6 @@
 from time import time
 
-from .check_args import check_args
+from get_var import get_var
 
 def input_keyword(lexic : list[str], i : int, in_vars : dict[str : int], state) -> None:
     if state.is_expr:
@@ -23,14 +23,12 @@ def input_keyword(lexic : list[str], i : int, in_vars : dict[str : int], state) 
 
     in_vars[lexic[1]] = inp
 
-def output_keyword(lexic : list[str], i : int, state):
+def output_keyword(lexic : list[str], i : int, state, full_vars : dict[str : int]):
     if state.is_expr:
         raise SyntaxError(f"This operation is unavailable in expressions. Line : {i + 1}")
-
-    check_args((lexic[1]), i)
 
     # Error handeling
     if len(lexic) < 3:
         raise SyntaxError(f"You didn`t give enough arguments. Line : {i + 1}")
 
-    print(f"{lexic[2]} : {int(lexic[1])}")
+    print(f"{lexic[2]} : {get_var(lexic[1], i, full_vars, int)}")
