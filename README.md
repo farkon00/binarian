@@ -283,14 +283,14 @@
       
    Example : 
    ```
-      [nor fucntion decalration with 2 args]
+   [nor fucntion decalration with 2 args]
+    
+   call nor 1 0 // Returns 0
+   
+   input inp1
+   input inp2
       
-      call nor 1 0 // Returns 0
-      
-      input inp1
-      input inp2
-      
-      output {call nor inp1 inp2} nor_result // Outputs "nor_result : <function return value>"
+   output {call nor inp1 inp2} nor_result // Outputs "nor_result : <function return value>"
    ```
        
        
@@ -304,9 +304,9 @@
       
    Example : 
    ```
-      func nor : arg1 arg2 (
-        return {not {or arg1 arg2}}
-      )
+   func nor : arg1 arg2 (
+     return {not {or arg1 arg2}}
+   )
    ```
  
    
