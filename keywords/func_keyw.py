@@ -42,4 +42,4 @@ def return_keyword(lexic : list[str], i : int, is_func : bool, full_vars : dict[
     if not is_func:
         raise SyntaxError(f'Keyword "return" is restricted out of functions. Line : {i + 1}')
 
-    return get_var(lexic[1], i, full_vars, int)
+    return get_var(lexic[1], i, full_vars)

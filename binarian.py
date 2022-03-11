@@ -41,6 +41,7 @@ def execute_line(lexic : list[str], i : int, state : ExecutionState, local : dic
 
     line = parse_blocks(" ".join(lexic), state)
     lexic = line.split()
+    parse_arrays(lexic)
 
     if len(lexic) <= 0:
         return None
