@@ -31,4 +31,4 @@ def output_keyword(lexic : list[str], i : int, state, full_vars : dict[str : int
     if len(lexic) < 3:
         raise SyntaxError(f"You didn`t give enough arguments. Line : {i + 1}")
 
-    print(f"{lexic[2]} : {get_var(lexic[1], i, full_vars, int)}")
+    print(f"{lexic[2]} : {get_var(lexic[1], i, full_vars)}")
