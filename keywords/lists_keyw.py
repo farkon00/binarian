@@ -26,3 +26,15 @@ def len_keyword(lexic : list[str], i : int, state, full_vars : dict[str : int]):
         print(f"LEN output : {_len}. Line : {i + 1}")
     else:
         return _len
+
+def append_keyword(lexic : list[str], i : int, state, full_vars : dict[str : int]):
+    if state.is_expr:
+        raise SyntaxError(f"This operation is unavailable in expressions. Line : {i + 1}")
+
+    if len(lexic) <= 2:
+        raise SyntaxError(f"You didn`t give enough arguments. Line : {i + 1}")
+
+    _list = get_var(lexic[1], i, full_vars, List)
+    _object = get_var(lexic[2], i, full_vars)
+
+    _list.append(_object)
