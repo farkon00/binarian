@@ -1,10 +1,11 @@
 from time import time
 
 from get_var import get_var
+from exceptions import throw_exception
 
 def input_keyword(lexic : list[str], i : int, in_vars : dict[str : int], state) -> None:
     if state.is_expr:
-        raise SyntaxError(f"This operation is unavailable in expressions. Line : {i + 1}")
+        throw_exception(f"This operation is unavailable in expressions.", state)
 
     # Error handeling
     if len(lexic) >= 2:
@@ -13,11 +14,11 @@ def input_keyword(lexic : list[str], i : int, in_vars : dict[str : int], state) 
             inp = input(f"{lexic[1]} : ")
             state.input_time += time() - input_start_time
             if inp not in ("0", "1"): 
-                raise ValueError(f"Value must be 0 or 1. Line : {i + 1}")
+                throw_exception(f"Value must be 0 or 1.", state)
         else:
-            raise NameError(f"Variable name is unavailable. Line : {i + 1}")
+            throw_exception(f"Variable name is unavailable.", state)
     else:
-        raise ValueError(f"You didn`t provide a variable name. Line : {i + 1}")
+        throw_exception(f"You didn`t provide a variable name.", state)
     
     inp = int(inp)
 
@@ -25,10 +26,10 @@ def input_keyword(lexic : list[str], i : int, in_vars : dict[str : int], state) 
 
 def output_keyword(lexic : list[str], i : int, state, full_vars : dict[str : int]):
     if state.is_expr:
-        raise SyntaxError(f"This operation is unavailable in expressions. Line : {i + 1}")
+        throw_exception(f"This operation is unavailable in expressions.", state)
 
     # Error handeling
     if len(lexic) < 3:
-        raise SyntaxError(f"You didn`t give enough arguments. Line : {i + 1}")
+        throw_exception(f"You didn`t give enough arguments.", state)
 
-    print(f"{lexic[2]} : {get_var(lexic[1], i, full_vars)}")
+    print(f"{lexic[2]} : {get_var(lexic[1], i, full_vars, state)}")

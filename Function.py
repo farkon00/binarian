@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 from blocks_parser import *
 from get_var import get_var
+from exceptions import throw_exception
 
 @dataclass
 class Function:
@@ -14,13 +15,13 @@ class Function:
         starter_blocks = state.opened_blocks
         state.is_expr = False
 
-        local = {self.args[j] : get_var(args[j], i, full_vars, int) for j in range(len(args))}
+        local = {self.args[j] : get_var(args[j], i, full_vars, state, int) for j in range(len(args))}
         for line in state.lines[self.start_line+1:]:
             state.current_line += 1
 
             # Expressions executing
             if line.count("{") != line.count("}"):
-                raise SyntaxError('Expression must have start and finish matched with "{" and "}". Line : ' + str(i + 1))
+                throw_exception('Expression must have start and finish matched with "{" and "}".')
 
             if state.opened_blocks <= state.allowed_blocks:
                 while "{" in line:

@@ -106,7 +106,7 @@ def execute_line(lexic : list[str], i : int, state : ExecutionState, local : dic
             return call_keyword(lexic, i, state, full_vars)
 
         case "return":
-            return return_keyword(lexic, i, is_func, full_vars)
+            return return_keyword(lexic, i, state, is_func, full_vars)
 
 
         case _:
