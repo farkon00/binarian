@@ -75,6 +75,9 @@ def execute_line(lexic : list[str], i : int, state : ExecutionState, local : dic
         case "not":
             return not_keyword(lexic, i, state, full_vars)
 
+        case "index":
+            return index_keyword(lexic, i, state, full_vars)
+
         case "if":
             if_keyword(lexic, i, state, full_vars)
 
