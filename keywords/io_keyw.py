@@ -32,4 +32,4 @@ def output_keyword(lexic : list[str], state, full_vars : dict[str : int]):
     if len(lexic) < 3:
         throw_exception(f"You didn`t give enough arguments.", state)
 
-    print(f"{lexic[2]} : {get_var(lexic[1], full_vars, state)}")
+    print(f"{' '.join(lexic[2:])} : {get_var(lexic[1], full_vars, state)}")
