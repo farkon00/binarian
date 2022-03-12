@@ -99,18 +99,18 @@ def execute_line(lexic : list[str], state : ExecutionState, local : dict[str : F
 
         case "func":
             func_keyword(lexic, state, local if is_func else state.vars)
-        
-        case "call":
-            state.opened_blocks += 1
-            state.allowed_blocks += 1
-            return call_keyword(lexic, state, full_vars)
 
         case "return":
             return return_keyword(lexic, state, is_func, full_vars)
 
 
         case _:
-            throw_exception(f"Keyword did not found.", state)
+            if lexic[0] in full_vars:
+                state.opened_blocks += 1
+                state.allowed_blocks += 1
+                return call_keyword(lexic, state, full_vars)
+
+            throw_exception(f"Keyword of function wasn`t found.", state)
 
 
 def execute_expr(line : str, state : ExecutionState, local : dict[str : Function] = None) -> str:
