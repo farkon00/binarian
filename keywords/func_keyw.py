@@ -26,16 +26,23 @@ def func_keyword(lexic : list[str], i : int, state, in_vars : dict[str : int]):
 def call_keyword(lexic : list[str], i : int, state, full_vars : dict[str : int]):
     args = lexic[2:]
 
-    func = get_var(lexic[1], i, full_vars, Function)
+    func = get_var(lexic[1], i, full_vars, Function, error="Function")
 
-    # Error handeling
-    if lexic[1] in full_vars.keys():
-        if len(func.args) != len(args):
-            raise SyntaxError(f"You didn`t give enough arguments. Line : {i + 1}")
-    else:
-        raise NameError(f"Function is not found. Line : {i + 1}")
 
-    return func.execute(args, i, state, full_vars)
+    if len(func.args) != len(args):
+        raise SyntaxError(f"You didn`t give enough arguments. Line : {i + 1}")
+
+    call_line = state.current_line
+
+    state.call_stack.append((lexic[1], state.current_line))
+    state.current_line = func.start_line
+
+    ret = func.execute(args, i, state, full_vars)
+
+    del state.call_stack[-1]
+    state.current_line = call_line
+
+    return ret
 
 def return_keyword(lexic : list[str], i : int, is_func : bool, full_vars : dict[str : int]):
     # Error handeling

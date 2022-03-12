@@ -2,12 +2,12 @@ from blocks_parser import parse_brackets
 from list import List
 from blocks_parser import parse_lists
 
-def get_var(var : str, i : int, full_vars : dict[str : int], _type : type = object):
+def get_var(var : str, i : int, full_vars : dict[str : int], _type : type = object, error = "Variable"):
     if var[0] != "[":
         ret = full_vars[var]
 
         if var not in full_vars:
-            raise NameError(f"Variable is not found. Line : {i + 1}")
+            raise NameError(f"{error} is not found. Line : {i + 1}")
     else:
         if var.count("[") != var.count("]"):
             raise SyntaxError(f'Arrays must have start and finish matched with "[" and "]". Line : {i + 1}')

@@ -3,6 +3,7 @@ from time import time
 
 from code_preparer import *
 from blocks_parser import *
+from exceptions import *
 
 from keywords import *
 
@@ -14,17 +15,23 @@ class ExecutionState:
         self.vars = {"0" : 0, "1" : 1}
         self.is_expr : bool = False
 
+        self.current_line = -1
+
         self.opened_blocks : int = 0
         self.allowed_blocks : int = 0
-        self.opened_ifs : list[tuple[bool, int]] = []
+        self.opened_ifs : list[tuple[bool, int]] = [] # condition, opened_blocks
+
+        self.call_stack : list[tuple[str, int]] = [] # func_name, line
 
         self.code : str = code
         self.lines : list[str] = code.split("\n")
-        self.list_indexes : list[list[int, int]] = []
 
         self.input_time : int = 0
 
-        self.RESTRICTED_NAMES = ("0", "1", "and", "or", "not", "set", "input", "output", "func", "return", "call")
+        self.RESTRICTED_NAMES = (
+            "0", "1", "and", "or", "not", "set", "drop", "input", "output", "func",
+            "return", "call", "index", "len", "append"
+        )
         self.GLOBAL_FUNCS = {
             "execute_line" : execute_line,
             "execute_expr" : execute_expr
@@ -103,7 +110,7 @@ def execute_line(lexic : list[str], i : int, state : ExecutionState, local : dic
 
 
         case _:
-            raise NameError(f"Keyword did not found. Line : {i + 1}")
+            throw_exception(f"Keyword did not found.", state)
 
 
 def execute_expr(line : str, i : int, state : ExecutionState, local : dict[str : Function] = None) -> str:
@@ -137,15 +144,16 @@ def main():
     state = ExecutionState(code)
 
     if code.count("(") != code.count(")"):
-        raise SyntaxError('Blocks must have starts and finishes matched with "(" and ")".')
+        throw_exception('Blocks must have starts and finishes matched with "(" and ")".', state, display_line=False)
 
     for i in range(len(state.lines)):
+        state.current_line += 1
 
         line = state.lines[i]
 
         # Expressions executing
         if line.count("{") != line.count("}"):
-            raise SyntaxError('Expression must have start and finish matched with "{" and "}". Line : ' + str(i + 1))
+            throw_exception('Expression must have start and finish matched with "{" and "}".', state, display_line=False)
 
         if state.opened_blocks <= state.allowed_blocks:
             while "{" in line:

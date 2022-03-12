@@ -16,7 +16,8 @@ class Function:
 
         local = {self.args[j] : get_var(args[j], i, full_vars, int) for j in range(len(args))}
         for line in state.lines[self.start_line+1:]:
-            
+            state.current_line += 1
+
             # Expressions executing
             if line.count("{") != line.count("}"):
                 raise SyntaxError('Expression must have start and finish matched with "{" and "}". Line : ' + str(i + 1))
