@@ -2,7 +2,7 @@ from Function import Function
 from get_var import get_var
 from exceptions import throw_exception
 
-def func_keyword(lexic : list[str], i : int, state, in_vars : dict[str : int]):
+def func_keyword(lexic : list[str], state, in_vars : dict[str : int]):
     if state.is_expr:
         throw_exception(f"This operation is unavailable in expressions.", state)
     if lexic[1] in state.RESTRICTED_NAMES:
@@ -22,12 +22,12 @@ def func_keyword(lexic : list[str], i : int, state, in_vars : dict[str : int]):
     if ")" in args: args.remove(")")
     if "()" in args: args.remove("()")
 
-    in_vars[func_name] = Function(args, i)
+    in_vars[func_name] = Function(args, state.current_line)
 
-def call_keyword(lexic : list[str], i : int, state, full_vars : dict[str : int]):
+def call_keyword(lexic : list[str], state, full_vars : dict[str : int]):
     args = lexic[2:]
 
-    func = get_var(lexic[1], i, full_vars, state, Function, error="Function")
+    func = get_var(lexic[1], full_vars, state, Function, error="Function")
 
 
     if len(func.args) != len(args):
@@ -38,16 +38,16 @@ def call_keyword(lexic : list[str], i : int, state, full_vars : dict[str : int])
     state.call_stack.append((lexic[1], state.current_line))
     state.current_line = func.start_line
 
-    ret = func.execute(args, i, state, full_vars)
+    ret = func.execute(args, state, full_vars)
 
     del state.call_stack[-1]
     state.current_line = call_line
 
     return ret
 
-def return_keyword(lexic : list[str], i : int, state, is_func : bool, full_vars : dict[str : int]):
+def return_keyword(lexic : list[str], state, is_func : bool, full_vars : dict[str : int]):
     # Error handeling
     if not is_func:
         throw_exception(f'Keyword "return" is restricted out of functions.', state)
 
-    return get_var(lexic[1], i, full_vars, state)
+    return get_var(lexic[1], full_vars, state)

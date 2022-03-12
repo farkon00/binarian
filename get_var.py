@@ -2,7 +2,7 @@ from list import List
 from blocks_parser import parse_lists
 from exceptions import throw_exception
 
-def get_var(var : str, i : int, full_vars : dict[str : int], state, _type : type = object, error = "Variable"):
+def get_var(var : str, full_vars : dict[str : int], state, _type : type = object, error = "Variable"):
     if var[0] != "[":
         ret = full_vars[var]
 
@@ -13,7 +13,7 @@ def get_var(var : str, i : int, full_vars : dict[str : int], state, _type : type
             throw_exception(f'Arrays must have start and finish matched with "[" and "]"', state)
 
         elems = parse_lists(var[1:-1].split())
-        ret = List([get_var(j, i, full_vars, state) for j in elems])
+        ret = List([get_var(j, full_vars, state) for j in elems])
 
     if not isinstance(ret, _type):
         # Makes better strs for types e. g. <class 'int'> -> int

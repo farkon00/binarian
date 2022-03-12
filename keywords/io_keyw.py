@@ -3,7 +3,7 @@ from time import time
 from get_var import get_var
 from exceptions import throw_exception
 
-def input_keyword(lexic : list[str], i : int, in_vars : dict[str : int], state) -> None:
+def input_keyword(lexic : list[str], in_vars : dict[str : int], state) -> None:
     if state.is_expr:
         throw_exception(f"This operation is unavailable in expressions.", state)
 
@@ -24,7 +24,7 @@ def input_keyword(lexic : list[str], i : int, in_vars : dict[str : int], state) 
 
     in_vars[lexic[1]] = inp
 
-def output_keyword(lexic : list[str], i : int, state, full_vars : dict[str : int]):
+def output_keyword(lexic : list[str], state, full_vars : dict[str : int]):
     if state.is_expr:
         throw_exception(f"This operation is unavailable in expressions.", state)
 
@@ -32,4 +32,4 @@ def output_keyword(lexic : list[str], i : int, state, full_vars : dict[str : int
     if len(lexic) < 3:
         throw_exception(f"You didn`t give enough arguments.", state)
 
-    print(f"{lexic[2]} : {get_var(lexic[1], i, full_vars, state)}")
+    print(f"{lexic[2]} : {get_var(lexic[1], full_vars, state)}")

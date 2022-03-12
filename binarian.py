@@ -37,7 +37,7 @@ class ExecutionState:
             "execute_expr" : execute_expr
         }
 
-def execute_line(lexic : list[str], i : int, state : ExecutionState, local : dict[str : Function] = None) -> int | None:
+def execute_line(lexic : list[str], state : ExecutionState, local : dict[str : Function] = None) -> int | None:
     """Executes one keyword"""
 
     if state.opened_blocks > state.allowed_blocks:
@@ -62,62 +62,62 @@ def execute_line(lexic : list[str], i : int, state : ExecutionState, local : dic
 
     match lexic[0]:
         case "set":
-            set_keyword(lexic, i, state, local if is_func else state.vars, full_vars)
+            set_keyword(lexic, state, local if is_func else state.vars, full_vars)
 
         case "drop":
-            drop_keyword(lexic, i, state, local if is_func else state.vars)
+            drop_keyword(lexic, state, local if is_func else state.vars)
 
         case "input":
-            input_keyword(lexic, i, local if is_func else state.vars, state)
+            input_keyword(lexic, local if is_func else state.vars, state)
 
         case "output":
-            output_keyword(lexic, i, state, full_vars)
+            output_keyword(lexic, state, full_vars)
 
         case "and":
-            return and_keyword(lexic, i, state, full_vars)
+            return and_keyword(lexic, state, full_vars)
 
         case "or":
-            return or_keyword(lexic, i, state, full_vars)
+            return or_keyword(lexic, state, full_vars)
 
         case "not":
-            return not_keyword(lexic, i, state, full_vars)
+            return not_keyword(lexic, state, full_vars)
 
         case "index":
-            return index_keyword(lexic, i, state, full_vars)
+            return index_keyword(lexic, state, full_vars)
 
         case "len":
-            return len_keyword(lexic, i, state, full_vars)
+            return len_keyword(lexic, state, full_vars)
 
         case "append":
-            return append_keyword(lexic, i, state, full_vars)
+            return append_keyword(lexic, state, full_vars)
 
         case "if":
-            if_keyword(lexic, i, state, full_vars)
+            if_keyword(lexic, state, full_vars)
 
         case "else":
-            else_keyword(lexic, i , state)
+            else_keyword(lexic, state)
 
         case "func":
-            func_keyword(lexic, i, state, local if is_func else state.vars)
+            func_keyword(lexic, state, local if is_func else state.vars)
         
         case "call":
             state.opened_blocks += 1
             state.allowed_blocks += 1
-            return call_keyword(lexic, i, state, full_vars)
+            return call_keyword(lexic, state, full_vars)
 
         case "return":
-            return return_keyword(lexic, i, state, is_func, full_vars)
+            return return_keyword(lexic, state, is_func, full_vars)
 
 
         case _:
             throw_exception(f"Keyword did not found.", state)
 
 
-def execute_expr(line : str, i : int, state : ExecutionState, local : dict[str : Function] = None) -> str:
+def execute_expr(line : str, state : ExecutionState, local : dict[str : Function] = None) -> str:
     """Execute one expression"""
     state.is_expr = True
 
-    indexes = parse_brackets(line, i, ("{", "}"))
+    indexes = parse_brackets(line, ("{", "}"))
 
     if not indexes:
         return line
@@ -126,7 +126,7 @@ def execute_expr(line : str, i : int, state : ExecutionState, local : dict[str :
 
     lexic = line[start_ind+1:end_ind].split()
 
-    ret = line[:start_ind] + str(execute_line(lexic, i, state, local=local)) + line[end_ind+1:]
+    ret = line[:start_ind] + str(execute_line(lexic, state, local=local)) + line[end_ind+1:]
 
     state.is_expr = False
 
@@ -157,14 +157,14 @@ def main():
 
         if state.opened_blocks <= state.allowed_blocks:
             while "{" in line:
-                line = execute_expr(line, i, state)
+                line = execute_expr(line, state)
             
         
         lexic = line.split()
         if len(lexic) <= 0:
             continue
 
-        execute_line(lexic, i, state)
+        execute_line(lexic, state)
 
 
     if "-d" in argv:

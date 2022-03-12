@@ -1,7 +1,7 @@
 from get_var import get_var
 from exceptions import throw_exception
 
-def set_keyword(lexic : list[str], i : int, state, in_vars : dict[str : int], full_vars) -> None:
+def set_keyword(lexic : list[str], state, in_vars : dict[str : int], full_vars) -> None:
     if state.is_expr:
         throw_exception(f"This operation is unavailable in expressions.", state)
 
@@ -12,9 +12,9 @@ def set_keyword(lexic : list[str], i : int, state, in_vars : dict[str : int], fu
     else:
         throw_exception(f"You didn`t give enough arguments.", state)
     
-    in_vars[lexic[1]] = get_var(lexic[2], i, state, full_vars)
+    in_vars[lexic[1]] = get_var(lexic[2], state, full_vars)
 
-def drop_keyword(lexic : list[str], i : int, state, in_vars : dict[str : int]):
+def drop_keyword(lexic : list[str], state, in_vars : dict[str : int]):
     if state.is_expr:
         throw_exception(f"This operation is unavailable in expressions.", state)
     if lexic[1] not in in_vars:
