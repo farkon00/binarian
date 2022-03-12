@@ -77,7 +77,8 @@
   Check [List keywords](#list-keywords) for all possible keywords related to lists.
 
   ### Lists as integers
-  Keywords and in future standart functions use lists as integers. Format of integer lists is just a positive binary number.
+  Keywords and in future standart functions use lists as integers. Format of integer lists is just a positive binary number. 
+  Check [wiki](https://en.wikipedia.org/wiki/Binary_number#Representation) for more details.
   E.g. `[1 1 0]` is 6, `[0 1 1 1]` is 7. Zero in second example is optional, but you can put infinite number of zeros before number and nofing will be changed.
    
   ## Functions
