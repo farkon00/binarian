@@ -9,16 +9,11 @@ def get_var(var : str, i : int, full_vars : dict[str : int], _type : type = obje
         if var not in full_vars:
             raise NameError(f"Variable is not found. Line : {i + 1}")
     else:
-        temp = var
-
-        if temp.count("[") != temp.count("]"):
+        if var.count("[") != var.count("]"):
             raise SyntaxError(f'Arrays must have start and finish matched with "[" and "]". Line : {i + 1}')
 
-        while "[" in temp:
-            start_ind, end_ind = parse_brackets(temp, i, ("[", "]"), error="List")
-            elems = parse_lists(temp[start_ind+1:end_ind].split())
-            ret = List([get_var(j, i, full_vars) for j in elems])
-            temp = temp[:start_ind] + temp[end_ind+1:]
+        elems = parse_lists(var[1:-1].split())
+        ret = List([get_var(j, i, full_vars) for j in elems])
 
     if not isinstance(ret, _type):
         # Makes better strs for types e. g. <class 'int'> -> int
