@@ -110,7 +110,7 @@ def execute_line(lexic : list[str], state : ExecutionState, local : dict[str : F
                 state.allowed_blocks += 1
                 return call_keyword(lexic, state, full_vars)
 
-            throw_exception(f"Keyword of function wasn`t found.", state)
+            throw_exception(f"Keyword or function wasn`t found.", state)
 
 
 def execute_expr(line : str, state : ExecutionState, local : dict[str : Function] = None) -> str:
