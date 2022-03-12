@@ -1,5 +1,6 @@
 from blocks_parser import parse_brackets
 from list import List
+from blocks_parser import parse_lists
 
 def get_var(var : str, i : int, full_vars : dict[str : int], _type : type = object):
     if var[0] != "[":
@@ -14,8 +15,9 @@ def get_var(var : str, i : int, full_vars : dict[str : int], _type : type = obje
             raise SyntaxError(f'Arrays must have start and finish matched with "[" and "]". Line : {i + 1}')
 
         while "[" in temp:
-            start_ind, end_ind = parse_brackets(var, i, ("[", "]"), error="Array")
-            ret = List([get_var(j, i, full_vars) for j in var[start_ind+1:end_ind].split()])
+            start_ind, end_ind = parse_brackets(temp, i, ("[", "]"), error="List")
+            elems = parse_lists(temp[start_ind+1:end_ind].split())
+            ret = List([get_var(j, i, full_vars) for j in elems])
             temp = temp[:start_ind] + temp[end_ind+1:]
 
     if not isinstance(ret, _type):

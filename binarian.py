@@ -20,6 +20,7 @@ class ExecutionState:
 
         self.code : str = code
         self.lines : list[str] = code.split("\n")
+        self.list_indexes : list[list[int, int]] = []
 
         self.input_time : int = 0
 
@@ -41,7 +42,7 @@ def execute_line(lexic : list[str], i : int, state : ExecutionState, local : dic
 
     line = parse_blocks(" ".join(lexic), state)
     lexic = line.split()
-    parse_arrays(lexic)
+    lexic = parse_lists(lexic)
 
     if len(lexic) <= 0:
         return None

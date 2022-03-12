@@ -8,18 +8,20 @@ def parse_brackets(line : str, i : int, mode : tuple[str, str], error : str = "E
             raise SyntaxError(f'{error} must have start and finish matched with "{mode[0]}" and "{mode[1]}". Line : {i + 1}')
         return start_ind, end_ind
 
-def parse_arrays(lexic : list[str]):
+def parse_lists(lexic : list[str]):
     arrays_opened = 0
+    merged = 0
     
-    for j, i in enumerate(lexic):
+    for i in range(len(lexic)):
+        now_lex = lexic[i-merged]
+        
         if arrays_opened > 0:
-            lexic[j-1] += " " + i
-            del lexic[j]
+            lexic[i-1-merged] += " " + now_lex
+            del lexic[i-merged]
+            merged += 1
 
-        if i[0] == "[":
-            arrays_opened += 1
-        if i[0] == "]":
-            arrays_opened -= 1
+        arrays_opened += now_lex.count("[")
+        arrays_opened -= now_lex.count("]")
 
     return lexic
 
