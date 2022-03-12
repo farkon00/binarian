@@ -25,9 +25,9 @@ def func_keyword(lexic : list[str], state, in_vars : dict[str : int]):
     in_vars[func_name] = Function(args, state.current_line)
 
 def call_keyword(lexic : list[str], state, full_vars : dict[str : int]):
-    args = lexic[2:]
+    args = lexic[1:]
 
-    func = get_var(lexic[1], full_vars, state, Function, error="Function")
+    func = get_var(lexic[0], full_vars, state, Function, error="Function")
 
 
     if len(func.args) != len(args):
@@ -35,7 +35,7 @@ def call_keyword(lexic : list[str], state, full_vars : dict[str : int]):
 
     call_line = state.current_line
 
-    state.call_stack.append((lexic[1], state.current_line))
+    state.call_stack.append((lexic[0], state.current_line))
     state.current_line = func.start_line
 
     ret = func.execute(args, state, full_vars)
