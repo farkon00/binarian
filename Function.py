@@ -11,11 +11,11 @@ class Function:
     args : list[str]
     start_line : int
 
-    def execute(self, args : list[str], i : int, state, full_vars : dict[str : int]):
+    def execute(self, args : list[str], state, full_vars : dict[str : int]):
         starter_blocks = state.opened_blocks
         state.is_expr = False
 
-        local = {self.args[j] : get_var(args[j], i, full_vars, state, int) for j in range(len(args))}
+        local = {self.args[j] : get_var(args[j], full_vars, state, int) for j in range(len(args))}
         for line in state.lines[self.start_line+1:]:
             state.current_line += 1
 
@@ -25,7 +25,7 @@ class Function:
 
             if state.opened_blocks <= state.allowed_blocks:
                 while "{" in line:
-                    line = state.GLOBAL_FUNCS["execute_expr"](line, i, state, local=local)
+                    line = state.GLOBAL_FUNCS["execute_expr"](line, state, local=local)
             
             lexic = line.split()
             if len(lexic) <= 0:
@@ -37,7 +37,7 @@ class Function:
                 state.allowed_blocks -= 1
                 return 0
 
-            ret = state.GLOBAL_FUNCS["execute_line"](lexic, i, state, local=local)
+            ret = state.GLOBAL_FUNCS["execute_line"](lexic, state, local=local)
 
             if ret != None and lexic[0] == "return":
                 state.opened_blocks -= 1

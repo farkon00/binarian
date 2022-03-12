@@ -1,6 +1,6 @@
 from exceptions import throw_exception
 
-def parse_brackets(line : str, i : int, mode : tuple[str, str], error : str = "Expression") -> tuple[int, int] | None:
+def parse_brackets(line : str, mode : tuple[str, str], error : str = "Expression") -> tuple[int, int] | None:
     """Finds brackets indexes"""
 
     end_ind = line.find(mode[1])

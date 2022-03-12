@@ -1,16 +1,16 @@
 from get_var import get_var
 from exceptions import throw_exception
 
-def if_keyword(lexic : list[str], i : int, state, full_vars : dict[str : int]):
+def if_keyword(lexic : list[str], state, full_vars : dict[str : int]):
     if "(" not in " ".join(lexic):
         throw_exception(f'Blocks must have starts and finishes matched with "(" and ")".', state)
 
-    cond = get_var(lexic[1], i, full_vars, state, int)
+    cond = get_var(lexic[1], full_vars, state, int)
     state.allowed_blocks += cond
 
     state.opened_ifs.append((bool(cond), state.opened_blocks))
 
-def else_keyword(lexic : list[str], i : int, state):
+def else_keyword(lexic : list[str], state):
     if "(" not in " ".join(lexic):
         throw_exception(f'Blocks must have starts and finishes matched with "(" and ")".', state)
 
