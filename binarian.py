@@ -81,6 +81,9 @@ def execute_line(lexic : list[str], i : int, state : ExecutionState, local : dic
         case "len":
             return len_keyword(lexic, i, state, full_vars)
 
+        case "append":
+            return append_keyword(lexic, i, state, full_vars)
+
         case "if":
             if_keyword(lexic, i, state, full_vars)
 
