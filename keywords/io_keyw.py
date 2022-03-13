@@ -5,7 +5,7 @@ from exceptions import *
 
 def input_keyword(lexic : list[str], in_vars : dict[str : object], state) -> None:
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
-    binarian_assert(len(lexic) <= 2, "You didn`t provide a variable name.", state)
+    binarian_assert(len(lexic) < 2, "You didn`t provide a variable name.", state)
     binarian_assert(lexic[1] in state.RESTRICTED_NAMES, "Variable name is unavailable.", state)
 
     input_start_time = time()

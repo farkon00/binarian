@@ -145,7 +145,7 @@ def execute_expr(line : str, state : ExecutionState, local : dict[str : object] 
     """Execute one expression"""
     state.is_expr = True
 
-    indexes = parse_brackets(line, ("{", "}"))
+    indexes = parse_brackets(line, ("{", "}"), state)
 
     if not indexes:
         state.is_expr = False
@@ -161,16 +161,47 @@ def execute_expr(line : str, state : ExecutionState, local : dict[str : object] 
 
     return ret
 
+def load_std() -> ExecutionState:
+    try:
+        code = open("\\".join(__file__.split("\\")[:-1]) + "\\std.bino", "r", encoding="utf-8").read().lower()
+    except FileNotFoundError:
+        from std_lib_code import std_lib_code
+        code = std_lib_code.lower()
+
+    code = delete_comments(code)
+    state = ExecutionState(code)
+
+    binarian_assert(code.count("(") != code.count(")"), 'Blocks must have starts and finishes matched with "(" and ")".', state, display_line=False)
+
+    for i in range(len(state.lines)):
+        state.current_line += 1
+
+        line = state.lines[i]
+
+        # Expressions executing
+        binarian_assert(line.count("{") != line.count("}"), 'Expression must have start and finish matched with "{" and "}".', state)
+
+        if state.opened_blocks <= state.allowed_blocks:
+            while "{" in line:
+                line = execute_expr(line, state)
+
+        lexic = line.split()
+
+        execute_line(lexic, state)
+
+    return state
+
 def main():
     start_time = time()
 
     try:
         code = open(argv[1], "r", encoding="utf-8").read().lower()
-    except:
-        raise FileExistsError("File does not exist.")
+    except FileNotFoundError:
+        raise FileNotFoundError("File does not exist.")
 
     code = delete_comments(code)
     state = ExecutionState(code)
+    state.vars = load_std().vars
 
     binarian_assert(code.count("(") != code.count(")"), 'Blocks must have starts and finishes matched with "(" and ")".', state, display_line=False)
 
