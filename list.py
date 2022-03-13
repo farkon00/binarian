@@ -5,4 +5,4 @@ class List(list):
 
     def __int__(self):
         """Converts binarian list from binary to decimal int"""
-        return sum([2 ** j * i for j, i in enumerate(self[::-1])])
+        return sum([2 ** j * i for j, i in enumerate(self)])

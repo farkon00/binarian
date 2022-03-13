@@ -31,7 +31,7 @@ def len_keyword(lexic : list[str], state, full_vars : dict[str : object]):
     binarian_assert(len(lexic) <= 1, "You didn`t give enough arguments.", state)
 
     _list = get_var(lexic[1], full_vars, state, List)
-    _len = List(list(bin(len(_list)).replace('0b', '')))
+    _len = List(list(bin(len(_list)).replace('0b', ''))[::-1])
 
     if not state.is_expr:
         print(f"LEN output : {_len}. Line : {state.current_line + 1}")
