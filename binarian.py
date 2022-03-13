@@ -20,6 +20,7 @@ class ExecutionState:
         self.opened_blocks : int = 0
         self.allowed_blocks : int = 0
         self.opened_ifs : list[tuple[bool, int]] = [] # condition, opened_blocks
+        self.opened_fors : list[list[int, int, list[str]]] = [] # line, opened_block, lines
 
         self.call_stack : list[tuple[str, int]] = [] # func_name, line
 
@@ -96,6 +97,9 @@ def execute_line(lexic : list[str], state : ExecutionState, local : dict[str : F
 
         case "else":
             else_keyword(lexic, state)
+
+        case "for":
+            for_keyword(lexic, state, full_vars)
 
         case "func":
             func_keyword(lexic, state, local if is_func else state.vars)
