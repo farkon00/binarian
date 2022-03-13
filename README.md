@@ -21,6 +21,7 @@
       * [else](#else)
     * [Loops](#loops)
       * [for](#for)
+      * [while](#while)
     * [List keywords](#list-keywords)
       * [index](#index)
       * [len](#len)
@@ -229,7 +230,7 @@
     code
   )
   ```
-  Conditional operator if, execute code in block if condition is 1.
+  Conditional operator if, executes code in block if condition is 1.
   
   Condition must be 0 or 1.
       
@@ -251,7 +252,7 @@
     code
   )
   ```
-  Conditional operator else, execute code in block if condition of previous if operator is 0.
+  Conditional operator else, executes code in block if condition of previous if operator is 0.
   
   Not required for every if.
   
@@ -291,6 +292,28 @@
     for j i (
       output j pretty sub-list
     )
+  )
+  ```
+
+  ### while
+  Synatax :
+  ``` 
+  while condition (
+    code
+  )
+  ```
+  While loop. Repeats code inside, while condition is 1.
+
+  Condition must be 0 or 1.
+      
+  Example :
+  ```
+  // This code will just output hi there : 1
+  set var 1
+
+  while var (
+    output 1 hi there
+    set var 0
   )
   ```
  
