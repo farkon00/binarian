@@ -197,7 +197,7 @@ def main():
         del state.vars["0"]
         del state.vars["1"]
 
-        print("\n" + str(state.vars))
+        print("\n" + str({i : str(j) for i, j in state.vars.items()}))
 
     print(f"\nFinished in {time() - start_time - state.input_time} sec")
         
