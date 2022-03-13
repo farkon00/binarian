@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from blocks_parser import *
 from get_var import get_var
-from exceptions import throw_exception
+from exceptions import *
 
 @dataclass
 class Function:
@@ -20,8 +20,7 @@ class Function:
             state.current_line += 1
 
             # Expressions executing
-            if line.count("{") != line.count("}"):
-                throw_exception('Expression must have start and finish matched with "{" and "}".')
+            binarian_assert(line.count("{") != line.count("}"), 'Expression must have start and finish matched with "{" and "}".', state)
 
             if state.opened_blocks <= state.allowed_blocks:
                 while "{" in line:
