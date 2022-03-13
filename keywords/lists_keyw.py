@@ -15,6 +15,18 @@ def index_keyword(lexic : list[str], state, full_vars : dict[str : object]):
     else:
         return list[index]
 
+def setindex_keyword(lexic : list[str], state, full_vars : dict[str : object]):
+    binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
+    binarian_assert(len(lexic) <= 3, "You didn`t give enough arguments.", state)
+
+    list = get_var(lexic[1], full_vars, state, List)
+    index = int(get_var(lexic[2], full_vars, state, List))
+    val = get_var(lexic[3], full_vars, state)
+
+    binarian_assert(index >= len(list), "Index out of range.", state)
+
+    list[index] = val
+
 def len_keyword(lexic : list[str], state, full_vars : dict[str : object]):
     binarian_assert(len(lexic) <= 1, "You didn`t give enough arguments.", state)
 

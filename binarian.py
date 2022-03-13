@@ -107,6 +107,9 @@ def execute_line(lexic : list[str], state : ExecutionState, local : dict[str : o
         case "index":
             return index_keyword(lexic, state, full_vars)
 
+        case "setindex":
+            return setindex_keyword(lexic, state, full_vars)
+
         case "len":
             return len_keyword(lexic, state, full_vars)
 
