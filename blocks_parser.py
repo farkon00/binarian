@@ -1,12 +1,12 @@
 from exceptions import *
 
-def parse_brackets(line : str, mode : tuple[str, str], error : str = "Expression") -> tuple[int, int] | None:
+def parse_brackets(line : str, mode : tuple[str, str], state, error : str = "Expression") -> tuple[int, int] | None:
     """Finds brackets indexes"""
 
     end_ind = line.find(mode[1])
     if end_ind != -1:
         start_ind = line[:end_ind].rfind(mode[0])
-        binarian_assert(start_ind == -1, f'{error} must have start and finish matched with "{mode[0]}" and "{mode[1]}".')
+        binarian_assert(start_ind == -1, f'{error} must have start and finish matched with "{mode[0]}" and "{mode[1]}".', state)
         return start_ind, end_ind
 
 def parse_lists(lexic : list[str]):

@@ -4,7 +4,7 @@ from list import List
 
 def for_keyword(lexic : list[str], state, full_vars : dict[str : object]):
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
-    binarian_assert(len(lexic) <= 3, "You didn`t give enough arguments.", state)
+    binarian_assert(len(lexic) < 3, "You didn`t give enough arguments.", state)
     binarian_assert(lexic[1] in state.RESTRICTED_NAMES, "Variable name is unavailable.", state)
     binarian_assert("(" not in " ".join(lexic), 'Blocks must have starts and finishes matched with "(" and ")".', state)
     get_var(lexic[2], full_vars, state, List) # Checks for errors in list
@@ -47,7 +47,7 @@ def execute_for(loop : list[int, int, list[str]], state, full_vars : dict[str : 
 
 def while_keyword(lexic : list[str], state, full_vars : dict[str : object]):
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
-    binarian_assert(len(lexic) <= 2, "You didn`t give enough arguments.", state)
+    binarian_assert(len(lexic) < 2, "You didn`t give enough arguments.", state)
     binarian_assert("(" not in " ".join(lexic), 'Blocks must have starts and finishes matched with "(" and ")".', state)
 
     state.opened_loops.append([state.current_line, state.opened_blocks, [], 1])
