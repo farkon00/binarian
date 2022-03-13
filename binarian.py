@@ -35,20 +35,34 @@ class ExecutionState:
         )
         self.GLOBAL_FUNCS = {
             "execute_line" : execute_line,
-            "execute_expr" : execute_expr
+            "execute_expr" : execute_expr,
+            "parse_blocks" : parse_blocks,
+            "parse_lists" : parse_lists
         }
 
 def execute_line(lexic : list[str], state : ExecutionState, local : dict[str : Function] = None) -> int | None:
     """Executes one keyword"""
 
-    if state.opened_blocks > state.allowed_blocks:
-        parse_blocks(" ".join(lexic), state)
-        return None
-
     is_func = local != None
     full_vars = {**state.vars, **(local if is_func else {})}
 
+    allowed = state.allowed_blocks
+    opened = state.opened_blocks
+
     line = parse_blocks(" ".join(lexic), state)
+
+    for i in state.opened_fors.copy():
+        i[2].append(" ".join(lexic))
+        if i[1] > state.opened_blocks:
+            state.opened_fors.remove(i)
+            execute_for(i, state, full_vars, local if is_func else None)
+
+    if opened > allowed:
+        return None
+
+    if len(lexic) <= 0:
+        return None
+
     lexic = line.split()
     lexic = parse_lists(lexic)
 
@@ -157,16 +171,13 @@ def main():
 
         # Expressions executing
         if line.count("{") != line.count("}"):
-            throw_exception('Expression must have start and finish matched with "{" and "}".', state, display_line=False)
+            throw_exception('Expression must have start and finish matched with "{" and "}".', state)
+
+        lexic = line.split()
 
         if state.opened_blocks <= state.allowed_blocks:
             while "{" in line:
                 line = execute_expr(line, state)
-            
-        
-        lexic = line.split()
-        if len(lexic) <= 0:
-            continue
 
         execute_line(lexic, state)
 

@@ -4,10 +4,10 @@ from exceptions import throw_exception
 
 def get_var(var : str, full_vars : dict[str : int], state, _type : type = object, error = "Variable"):
     if var[0] != "[":
-        ret = full_vars[var]
-
         if var not in full_vars:
-            throw_exception(f"{error} is not found", state)
+            throw_exception(f"{error} is not found : {var}", state)
+
+        ret = full_vars[var]
     else:
         if var.count("[") != var.count("]"):
             throw_exception(f'Arrays must have start and finish matched with "[" and "]"', state)
