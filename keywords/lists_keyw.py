@@ -46,3 +46,12 @@ def append_keyword(lexic : list[str], state, full_vars : dict[str : object]):
     _object = get_var(lexic[2], full_vars, state,)
 
     _list.append(_object)
+
+def zip_keyword(lexic : list[str], state, full_vars : dict[str : object]):
+    binarian_assert(len(lexic) <= 2, "You didn`t give enough arguments.", state)
+
+    list1 = get_var(lexic[1], full_vars, state, List)
+    list2 = get_var(lexic[2], full_vars, state, List)
+
+    if state.is_expr:
+        return List([List(i) for i in zip(list1, list2)])
