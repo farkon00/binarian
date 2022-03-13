@@ -2,7 +2,7 @@ from list import List
 from blocks_parser import parse_lists
 from exceptions import throw_exception
 
-def get_var(var : str, full_vars : dict[str : int], state, _type : type = object, error = "Variable"):
+def get_var(var : str, full_vars : dict[str : object], state, _type : type = object, error = "Variable"):
     if var[0] != "[":
         if var not in full_vars:
             throw_exception(f"{error} is not found : {var}", state)

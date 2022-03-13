@@ -11,7 +11,7 @@ class Function:
     args : list[str]
     start_line : int
 
-    def execute(self, args : list[str], state, full_vars : dict[str : int]):
+    def execute(self, args : list[str], state, full_vars : dict[str : object]):
         starter_blocks = state.opened_blocks
         state.is_expr = False
 

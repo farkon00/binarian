@@ -3,7 +3,7 @@ from get_var import get_var
 from exceptions import throw_exception
 from list import List
 
-def for_keyword(lexic : list[str], state, full_vars : dict[str  : object]):
+def for_keyword(lexic : list[str], state, full_vars : dict[str : object]):
     if state.is_expr:
         throw_exception(f"This operation is unavailable in expressions.", state)
     if len(lexic) <= 3:

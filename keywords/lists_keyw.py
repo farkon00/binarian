@@ -2,7 +2,7 @@ from get_var import get_var
 from exceptions import throw_exception
 from list import List
 
-def index_keyword(lexic : list[str], state, full_vars : dict[str : int]):
+def index_keyword(lexic : list[str], state, full_vars : dict[str : object]):
     if len(lexic) <= 2:
         throw_exception(f"You didn`t give enough arguments.", state)
 
@@ -16,7 +16,7 @@ def index_keyword(lexic : list[str], state, full_vars : dict[str : int]):
     else:
         return list[index]
 
-def len_keyword(lexic : list[str], state, full_vars : dict[str : int]):
+def len_keyword(lexic : list[str], state, full_vars : dict[str : object]):
     if len(lexic) <= 1:
         throw_exception(f"You didn`t give enough arguments.", state)
 
@@ -28,7 +28,7 @@ def len_keyword(lexic : list[str], state, full_vars : dict[str : int]):
     else:
         return _len
 
-def append_keyword(lexic : list[str], state, full_vars : dict[str : int]):
+def append_keyword(lexic : list[str], state, full_vars : dict[str : object]):
     if state.is_expr:
         throw_exception(f"This operation is unavailable in expressions.", state)
 
