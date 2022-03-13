@@ -12,7 +12,7 @@ from Function import Function
 class ExecutionState:
     """Class that contains all data about execution state and constants for execution"""
     def __init__(self, code : str) -> None:
-        self.vars = {"0" : 0, "1" : 1}
+        self.vars : dict[str : object] = {"0" : 0, "1" : 1}
         self.is_expr : bool = False
 
         self.current_line = -1
@@ -40,7 +40,7 @@ class ExecutionState:
             "parse_lists" : parse_lists
         }
 
-def execute_line(lexic : list[str], state : ExecutionState, local : dict[str : Function] = None) -> int | None:
+def execute_line(lexic : list[str], state : ExecutionState, local : dict[str : object] = None) -> int | None:
     """Executes one keyword"""
 
     is_func = local != None
@@ -131,7 +131,7 @@ def execute_line(lexic : list[str], state : ExecutionState, local : dict[str : F
             throw_exception(f"Keyword or function wasn`t found.", state)
 
 
-def execute_expr(line : str, state : ExecutionState, local : dict[str : Function] = None) -> str:
+def execute_expr(line : str, state : ExecutionState, local : dict[str : object] = None) -> str:
     """Execute one expression"""
     state.is_expr = True
 

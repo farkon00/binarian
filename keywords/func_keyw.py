@@ -2,7 +2,7 @@ from Function import Function
 from get_var import get_var
 from exceptions import throw_exception
 
-def func_keyword(lexic : list[str], state, in_vars : dict[str : int]):
+def func_keyword(lexic : list[str], state, in_vars : dict[str : object]):
     if state.is_expr:
         throw_exception(f"This operation is unavailable in expressions.", state)
     if lexic[1] in state.RESTRICTED_NAMES:
@@ -24,7 +24,7 @@ def func_keyword(lexic : list[str], state, in_vars : dict[str : int]):
 
     in_vars[func_name] = Function(args, state.current_line)
 
-def call_keyword(lexic : list[str], state, full_vars : dict[str : int]):
+def call_keyword(lexic : list[str], state, full_vars : dict[str : object]):
     args = lexic[1:]
 
     func = get_var(lexic[0], full_vars, state, Function, error="Function")
@@ -45,7 +45,7 @@ def call_keyword(lexic : list[str], state, full_vars : dict[str : int]):
 
     return ret
 
-def return_keyword(lexic : list[str], state, is_func : bool, full_vars : dict[str : int]):
+def return_keyword(lexic : list[str], state, is_func : bool, full_vars : dict[str : object]):
     # Error handeling
     if not is_func:
         throw_exception(f'Keyword "return" is restricted out of functions.', state)

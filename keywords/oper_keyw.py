@@ -1,7 +1,7 @@
 from get_var import get_var
 from exceptions import throw_exception
 
-def if_keyword(lexic : list[str], state, full_vars : dict[str : int]):
+def if_keyword(lexic : list[str], state, full_vars : dict[str : object]):
     if "(" not in " ".join(lexic):
         throw_exception(f'Blocks must have starts and finishes matched with "(" and ")".', state)
 
