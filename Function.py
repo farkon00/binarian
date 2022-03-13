@@ -15,7 +15,7 @@ class Function:
         starter_blocks = state.opened_blocks
         state.is_expr = False
 
-        local = {self.args[j] : get_var(args[j], full_vars, state, int) for j in range(len(args))}
+        local = {self.args[j] : get_var(args[j], full_vars, state) for j in range(len(args))}
         for line in state.lines[self.start_line+1:]:
             state.current_line += 1
 
@@ -28,8 +28,6 @@ class Function:
                     line = state.GLOBAL_FUNCS["execute_expr"](line, state, local=local)
             
             lexic = line.split()
-            if len(lexic) <= 0:
-                continue
 
             opened_blocks, _ = parse_blocks(line, state, ret=True)
             if opened_blocks <= starter_blocks - 1:
