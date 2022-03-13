@@ -19,6 +19,8 @@
     * [Conditional operators](#conditional-operators)
       * [if](#if)
       * [else](#else)
+    * [Loops](#loops)
+      * [for](#for)
     * [List keywords](#list-keywords)
       * [index](#index)
       * [len](#len)
@@ -265,6 +267,30 @@
   else (
     input b
     output b _b
+  )
+  ```
+
+  ## Loops
+  ### for
+  Synatax :
+  ``` 
+  for variable list (
+    code
+  )
+  ```
+  For loop, aka foreach. Iterates throw `list`, every iteration executes code inside, sets `variable` to next value in list.
+  After last loop iteration finished, `variable` is droped, so you can`t access it any more.
+      
+  Example :
+  ```
+  set list [[0 1] [1 0]]
+
+  for i list (
+    output i pretty list
+
+    for j i (
+      output j pretty sub-list
+    )
   )
   ```
  
