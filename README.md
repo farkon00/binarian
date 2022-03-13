@@ -159,6 +159,9 @@
   This keyword uses to output data to user. In console user will see 'user_tip : value'.
 
   user_tip writing without " or '.
+ 
+  User tip can contain spaces, everything after value will be considered tip.
+ 
   You can't use this keyword in expression.
   
   Example : 
