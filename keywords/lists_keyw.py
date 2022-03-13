@@ -1,15 +1,14 @@
 from get_var import get_var
-from exceptions import throw_exception
+from exceptions import *
 from list import List
 
 def index_keyword(lexic : list[str], state, full_vars : dict[str : object]):
-    if len(lexic) <= 2:
-        throw_exception(f"You didn`t give enough arguments.", state)
+    binarian_assert(len(lexic) <= 2, "You didn`t give enough arguments.", state)
 
     index = int(get_var(lexic[2], full_vars, state, List))
     list = get_var(lexic[1], full_vars, state, List)
-    if index >= len(list):
-        throw_exception(f"Index out of range.", state)
+
+    binarian_assert(index >= len(list), "Index out of range.", state)
 
     if not state.is_expr:
         print(f"INDEX output : {list[index]}. Line : {state.current_line + 1}")
@@ -17,8 +16,7 @@ def index_keyword(lexic : list[str], state, full_vars : dict[str : object]):
         return list[index]
 
 def len_keyword(lexic : list[str], state, full_vars : dict[str : object]):
-    if len(lexic) <= 1:
-        throw_exception(f"You didn`t give enough arguments.", state)
+    binarian_assert(len(lexic) <= 1, "You didn`t give enough arguments.", state)
 
     _list = get_var(lexic[1], full_vars, state, List)
     _len = List(list(bin(len(_list)).replace('0b', '')))
@@ -29,11 +27,8 @@ def len_keyword(lexic : list[str], state, full_vars : dict[str : object]):
         return _len
 
 def append_keyword(lexic : list[str], state, full_vars : dict[str : object]):
-    if state.is_expr:
-        throw_exception(f"This operation is unavailable in expressions.", state)
-
-    if len(lexic) <= 2:
-        throw_exception(f"You didn`t give enough arguments.", state)
+    binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
+    binarian_assert(len(lexic) <= 2, "You didn`t give enough arguments.", state)
 
     _list = get_var(lexic[1], full_vars, state, List)
     _object = get_var(lexic[2], full_vars, state,)

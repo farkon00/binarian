@@ -26,3 +26,7 @@ def throw_exception(text : str, state, display_line=True):
     print(exc_text)
 
     exit(1)
+
+def binarian_assert(condition : bool, text : str, state, display_line=True):
+    if condition:
+        throw_exception(text, state, display_line=display_line)

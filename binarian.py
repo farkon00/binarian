@@ -172,8 +172,7 @@ def main():
     code = delete_comments(code)
     state = ExecutionState(code)
 
-    if code.count("(") != code.count(")"):
-        throw_exception('Blocks must have starts and finishes matched with "(" and ")".', state, display_line=False)
+    binarian_assert(code.count("(") != code.count(")"), 'Blocks must have starts and finishes matched with "(" and ")".', state, display_line=False)
 
     for i in range(len(state.lines)):
         state.current_line += 1
@@ -181,8 +180,7 @@ def main():
         line = state.lines[i]
 
         # Expressions executing
-        if line.count("{") != line.count("}"):
-            throw_exception('Expression must have start and finish matched with "{" and "}".', state)
+        binarian_assert(line.count("{") != line.count("}"), 'Expression must have start and finish matched with "{" and "}".', state)
 
         if state.opened_blocks <= state.allowed_blocks:
             while "{" in line:
