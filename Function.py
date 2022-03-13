@@ -40,3 +40,6 @@ class Function:
                 state.opened_blocks -= 1
                 state.allowed_blocks -= 1
                 return ret
+
+    def __str__(self):
+        return f"<function : {' '.join(self.args)}>"

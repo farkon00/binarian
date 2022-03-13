@@ -29,6 +29,7 @@ class ExecutionState:
 
         self.code : str = code
         self.lines : list[str] = code.split("\n")
+        self.std_lines : int = 0 # Shold be setted to right value in main 
 
         self.input_time : int = 0
 
@@ -116,6 +117,9 @@ def execute_line(lexic : list[str], state : ExecutionState, local : dict[str : o
         case "append":
             return append_keyword(lexic, state, full_vars)
 
+        case "zip":
+            return zip_keyword(lexic, state, full_vars)
+
         case "if":
             if_keyword(lexic, state, full_vars)
 
@@ -164,36 +168,6 @@ def execute_expr(line : str, state : ExecutionState, local : dict[str : object] 
 
     return ret
 
-def load_std() -> ExecutionState:
-    try:
-        code = open("\\".join(__file__.split("\\")[:-1]) + "\\std.bino", "r", encoding="utf-8").read().lower()
-    except FileNotFoundError:
-        from std_lib_code import std_lib_code
-        code = std_lib_code.lower()
-
-    code = delete_comments(code)
-    state = ExecutionState(code)
-
-    binarian_assert(code.count("(") != code.count(")"), 'Blocks must have starts and finishes matched with "(" and ")".', state, display_line=False)
-
-    for i in range(len(state.lines)):
-        state.current_line += 1
-
-        line = state.lines[i]
-
-        # Expressions executing
-        binarian_assert(line.count("{") != line.count("}"), 'Expression must have start and finish matched with "{" and "}".', state)
-
-        if state.opened_blocks <= state.allowed_blocks:
-            while "{" in line:
-                line = execute_expr(line, state)
-
-        lexic = line.split()
-
-        execute_line(lexic, state)
-
-    return state
-
 def main():
     start_time = time()
 
@@ -201,10 +175,16 @@ def main():
         code = open(argv[1], "r", encoding="utf-8").read().lower()
     except FileNotFoundError:
         raise FileNotFoundError("File does not exist.")
+    try:
+        std_lib = open("\\".join(__file__.split("\\")[:-1]) + "\\std.bino", "r", encoding="utf-8").read().lower()
+    except FileNotFoundError:
+        from std_lib_code import std_lib_code
+        std_lib = std_lib_code.lower()
+        
 
-    code = delete_comments(code)
+    code = delete_comments(std_lib + "\n" + code)
     state = ExecutionState(code)
-    state.vars = load_std().vars
+    state.std_lines = std_lib.count("\n") + 1
 
     binarian_assert(code.count("(") != code.count(")"), 'Blocks must have starts and finishes matched with "(" and ")".', state, display_line=False)
 
