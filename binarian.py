@@ -20,7 +20,7 @@ class ExecutionState:
         self.opened_blocks : int = 0
         self.allowed_blocks : int = 0
         self.opened_ifs : list[tuple[bool, int]] = [] # condition, opened_blocks
-        self.opened_fors : list[list[int, int, list[str]]] = [] # line, opened_block, lines
+        self.opened_loops : list[list[int, int, list[str]]] = [] # line, opened_block, lines
 
         self.call_stack : list[tuple[str, int]] = [] # func_name, line
 
@@ -31,7 +31,8 @@ class ExecutionState:
 
         self.RESTRICTED_NAMES = (
             "0", "1", "and", "or", "not", "set", "drop", "input", "output", "func",
-            "return", "call", "index", "len", "append"
+            "return", "call", "index", "len", "append", "for", "while", "(", ")", "[",
+            "]", "{", "}"
         )
         self.GLOBAL_FUNCS = {
             "execute_line" : execute_line,
@@ -51,10 +52,10 @@ def execute_line(lexic : list[str], state : ExecutionState, local : dict[str : o
 
     line = parse_blocks(" ".join(lexic), state)
 
-    for i in state.opened_fors.copy():
+    for i in state.opened_loops.copy():
         i[2].append(" ".join(lexic))
         if i[1] > state.opened_blocks:
-            state.opened_fors.remove(i)
+            state.opened_loops.remove(i)
             execute_for(i, state, full_vars, local if is_func else None)
 
     if opened > allowed:
@@ -173,11 +174,11 @@ def main():
         if line.count("{") != line.count("}"):
             throw_exception('Expression must have start and finish matched with "{" and "}".', state)
 
-        lexic = line.split()
-
         if state.opened_blocks <= state.allowed_blocks:
             while "{" in line:
                 line = execute_expr(line, state)
+
+        lexic = line.split()
 
         execute_line(lexic, state)
 
