@@ -51,6 +51,51 @@ func subt : num1 num2 (
     return ret
 )
 
+func eq : num1 num2 (
+    for dig {zip num1 num2} (
+        set a {index dig [0]}
+        set b {index dig [1]}
+
+        if {xor a b} (
+            return 0
+        )
+    )
+
+    return 1
+)
+
+func bt : num1 num2 (
+    for dig {zip num1 num2} (
+        set a {index dig [0]}
+        set b {index dig [1]}
+
+        if {xor a b} (
+            if a (
+                return 1
+            )
+            else (
+                return 0
+            )
+        )
+    )
+)
+
+func lt : num1 num2 (
+    for dig {zip num1 num2} (
+        set a {index dig [0]}
+        set b {index dig [1]}
+
+        if {xor a b} (
+            if b (
+                return 1
+            )
+            else (
+                return 0
+            )
+        )
+    )
+)
+
 func sum : list (
     set sum [0]
     for i list (
