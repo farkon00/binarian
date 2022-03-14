@@ -3,6 +3,7 @@ from binarian import main
 import pytest
 
 tests = [
+    ["set_debug", ["-d"]],
     ["for"]
 ]
 
