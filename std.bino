@@ -23,3 +23,39 @@ func add : num1 num2 (
 
     return ret
 )
+
+func half-subt : a b (
+    set dif {xor a b}
+    set borrow {and {not a} b}
+
+    return [dif borrow]
+)
+
+func subt : num1 num2 (
+    set borrow 0
+    set ret []
+
+    for dig {zip num1 num2} (
+        set a {index dig [0]}
+        set b {index dig [1]}
+
+        set half {half-subt a b}
+        set half2 {half-subt {index half [0]} borrow}
+
+        set dif {index half2 [0]}
+        set borrow {or {index half [1]} {index half2 [1]}}
+
+        append ret dif
+    )
+
+    return ret
+)
+
+func sum : list (
+    set sum [0]
+    for i list (
+        set sum {add sum i}
+    )
+
+    return sum
+)
