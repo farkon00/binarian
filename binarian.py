@@ -1,4 +1,4 @@
-from sys import argv
+import sys
 from time import time
 
 from code_preparer import *
@@ -37,8 +37,8 @@ class ExecutionState:
 
         self.RESTRICTED_NAMES = (
             "0", "1", "and", "or", "not", "set", "drop", "input", "output", "func",
-            "return", "call", "index", "len", "append", "zip", "for", "while", "(", ")", "[",
-            "]", "{", "}"
+            "return", "call", "index", "len", "append", "zip", "for", "while", "(",
+            ")", "[", "]", "{", "}"
         )
         self.GLOBAL_FUNCS = {
             "execute_line" : execute_line,
@@ -170,8 +170,13 @@ def execute_expr(line : str, state : ExecutionState, local : dict[str : object] 
 
     return ret
 
-def main():
+def main(test_argv=None):
     start_time = time()
+
+    if test_argv:
+        argv = test_argv
+    else:
+        argv = sys.argv
 
     try:
         code = open(argv[1], "r", encoding="utf-8").read().lower()

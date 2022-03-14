@@ -1,0 +1,9 @@
+set list [[0 1] [1 0]]
+
+for i list (
+    output i pretty list
+
+    for j i (
+        output j pretty sub-list
+    )
+)
