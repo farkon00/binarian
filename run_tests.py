@@ -13,7 +13,8 @@ tests = [
     ["while"],
     ["func"],
     ["exception"],
-    ["call_stack"]
+    ["call_stack"],
+    ["std", "-d"]
 ]
 
 # Adds argv everywhere
