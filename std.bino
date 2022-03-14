@@ -32,6 +32,9 @@ func half-subt : a b (
 )
 
 func subt : num1 num2 (
+    // Please just not use this if first number is smaller than second one.
+    // It can`t deal with negative numbers as everything in this language
+
     set borrow 0
     set ret []
 
