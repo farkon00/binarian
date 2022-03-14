@@ -48,10 +48,13 @@ def execute_for(loop : list[int, int, list[str]], state, full_vars : dict[str : 
 
             state.GLOBAL_FUNCS["execute_line"](lexic, state, local=local)
 
-    if local != None:
-        del local[loop_lexic[1]]
-    else:
-        del state.vars[loop_lexic[1]]
+    try:
+        if local != None:
+            del local[loop_lexic[1]]
+        else:
+            del state.vars[loop_lexic[1]]
+    except KeyError:
+        pass
 
 def while_keyword(lexic : list[str], state, full_vars : dict[str : object]):
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
