@@ -4,7 +4,8 @@ import pytest
 
 tests = [
     ["set_debug", ["-d"]],
-    ["for"]
+    ["for"],
+    ["exception"]
 ]
 
 # Adds argv everywhere
@@ -20,8 +21,11 @@ def test_language(name, argv):
         sys.stdin = open(f"tests/input_{name}.txt", "r")
     except FileNotFoundError:
         pass
-
-    main(test_argv=["binarian.py", f"tests/{name}.bino", *argv])
+    
+    try:
+        main(test_argv=["binarian.py", f"tests/{name}.bino", *argv])
+    except SystemExit:
+        pass
 
     sys.stdout.close()
 
