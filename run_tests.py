@@ -4,8 +4,16 @@ import pytest
 
 tests = [
     ["set_debug", ["-d"]],
+    ["io"],
+    ["log_oper"],
+    ["expr"],
+    ["drop", ["-d"]],
+    ["if"],
     ["for"],
-    ["exception"]
+    ["while"],
+    ["func"],
+    ["exception"],
+    ["call_stack"]
 ]
 
 # Adds argv everywhere
@@ -18,7 +26,7 @@ def test_language(name, argv):
     sys.stdout = open(f"tests_results/{name}.txt", "w")
 
     try:
-        sys.stdin = open(f"tests/input_{name}.txt", "r")
+        sys.stdin = open(f"tests/{name}_input.txt", "r")
     except FileNotFoundError:
         pass
     

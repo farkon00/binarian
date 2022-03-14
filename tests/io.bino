@@ -1,0 +1,7 @@
+input inp1
+input inp2
+
+output inp1 inp1
+output inp2 inp2
+
+or inp1 inp2

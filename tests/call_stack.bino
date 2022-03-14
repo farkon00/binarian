@@ -1,0 +1,16 @@
+func func1 (
+    func2
+)
+func func2 (
+    func3 1
+)
+func func3 : arg (
+    if arg (
+        func3 0
+    )
+    else (
+        not-keyword
+    )
+)
+
+func1
