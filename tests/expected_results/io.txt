@@ -1,0 +1,3 @@
+inp1 : inp2 : inp1 : 1
+inp2 : 0
+OR output : 1. Line : 7

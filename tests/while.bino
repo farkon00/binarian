@@ -1,0 +1,8 @@
+set inp 1
+
+while inp (
+    input inp
+    output inp in_loop
+)
+
+output inp out_loop

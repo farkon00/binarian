@@ -1,0 +1,15 @@
+func nut : arg ( 
+    output 1 side
+
+    if arg (
+        output arg if test_func
+    )
+    else (
+        output {not arg} else_test_func
+    )
+
+    return {not arg}
+)
+
+output {nut 1} nut
+output {nut 0} nut
