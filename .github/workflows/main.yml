@@ -27,6 +27,7 @@ jobs:
           path: ~/.local/share/virtualenvs
           key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
           
-      - name: Run test suite
+      - name: Run tests
+        shell: bash
         run: |
-          pytest run_tests.py
+          PYTHONPATH="$(pwd)" pytest run_tests.py
