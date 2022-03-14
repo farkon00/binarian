@@ -28,6 +28,6 @@ jobs:
           key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
           
       - name: Run tests
+        shell: bash
         run: |
-          cd /home/runner/work/binarian/binarian
-          pytest run_tests.py
+          PYTHONPATH="$(pwd)" pytest run_tests.py
