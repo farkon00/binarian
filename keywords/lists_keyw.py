@@ -53,5 +53,8 @@ def zip_keyword(lexic : list[str], state, full_vars : dict[str : object]):
     list1 = get_var(lexic[1], full_vars, state, List)
     list2 = get_var(lexic[2], full_vars, state, List)
 
+    list1 = List(list1 + [0] * (len(list2) - len(list1)))
+    list2 = List(list2 + [0] * (len(list1) - len(list2)))
+
     if state.is_expr:
         return List([List(i) for i in zip(list1, list2)])

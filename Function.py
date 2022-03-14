@@ -13,6 +13,8 @@ class Function:
 
     def execute(self, args : list[str], state, full_vars : dict[str : object]):
         starter_blocks = state.opened_blocks
+
+        is_expr_before = state.is_expr
         state.is_expr = False
 
         local = {self.args[j] : get_var(args[j], full_vars, state) for j in range(len(args))}
@@ -39,7 +41,10 @@ class Function:
             if ret != None and lexic[0] == "return":
                 state.opened_blocks -= 1
                 state.allowed_blocks -= 1
+                state.is_expr = is_expr_before
                 return ret
+
+        state.is_expr = is_expr_before
 
     def __str__(self):
         return f"<function : {' '.join(self.args)}>"
