@@ -37,7 +37,7 @@ class ExecutionState:
 
         self.RESTRICTED_NAMES = (
             "0", "1", "and", "or", "not", "set", "drop", "input", "output", "func",
-            "return", "call", "index", "len", "append", "for", "while", "(", ")", "[",
+            "return", "call", "index", "len", "append", "zip", "for", "while", "(", ")", "[",
             "]", "{", "}"
         )
         self.GLOBAL_FUNCS = {
