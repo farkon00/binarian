@@ -14,7 +14,8 @@ tests = [
     ["func"],
     ["exception"],
     ["call_stack"],
-    ["std", "-d"]
+    ["std", "-d"],
+    ["no-std", ["-no-std"]]
 ]
 
 # Adds argv everywhere
