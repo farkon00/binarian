@@ -35,7 +35,9 @@
   
   All files with binarian source code have extension .bino.
   
-  To run your code, run python file(binarian.py) or executable(binarian.exe). Also you can add -d flag after file name to see variable in the end of execution.
+  To run your code, run python file(binarian.py) or executable(binarian.exe). 
+  
+  Also you can add -d flag after file name to see variable in the end of execution. Or -no-std flag to not include standart library.
   
   Examples :
   ```
@@ -43,7 +45,7 @@
   python3 compiler.py your_file.bino
   python3.10 compiler.py your_file.bino -d
   python3 compiler.py other_file.bino -d
-  binarian.exe your_file.bino
+  binarian.exe your_file.bino -no-std
   ```
 
 # Basic syntax
