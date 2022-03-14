@@ -43,4 +43,4 @@ def call_keyword(lexic : list[str], state, full_vars : dict[str : object]):
 def return_keyword(lexic : list[str], state, is_func : bool, full_vars : dict[str : object]):
     binarian_assert(not is_func, 'Keyword "return" is restricted out of functions.', state)
 
-    return get_var(lexic[1], full_vars, state)
+    state.last_return =  get_var(lexic[1], full_vars, state)

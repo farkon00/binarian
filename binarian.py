@@ -26,6 +26,7 @@ class ExecutionState:
         # 1 - while
 
         self.call_stack : list[tuple[str, int]] = [] # func_name, line
+        self.last_return : object = None 
 
         self.code : str = code
         self.lines : list[str] = code.split("\n")

@@ -48,6 +48,9 @@ def execute_for(loop : list[int, int, list[str]], state, full_vars : dict[str : 
 
             state.GLOBAL_FUNCS["execute_line"](lexic, state, local=local)
 
+            if state.last_return != None:
+                return None
+
     try:
         if local != None:
             del local[loop_lexic[1]]
@@ -94,5 +97,8 @@ def execute_while(loop : list[int, int, list[str]], state, full_vars : dict[str 
                 continue
 
             state.GLOBAL_FUNCS["execute_line"](lexic, state, local=local)
+
+            if state.last_return != None:
+                return None
 
         full_vars = {**state.vars, **(local if local != None else {})}
