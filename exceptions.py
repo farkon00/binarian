@@ -26,10 +26,11 @@ def throw_exception(text : str, state, display_line=True):
     print(exc_text)
 
     if "-d" in argv:
-        del state.vars["0"]
-        del state.vars["1"]
-
-        print("\n" + str({i : str(j) for i, j in state.vars.items()}))
+        debug_vars = list(state.vars.items())
+        for i in state.std_lib_vars.items():
+            debug_vars.remove(i)
+        
+        print("\n" + str({i : str(j) for i, j in debug_vars}))
 
     exit(1)
 

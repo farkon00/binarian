@@ -30,6 +30,7 @@ class ExecutionState:
         self.code : str = code
         self.lines : list[str] = code.split("\n")
         self.std_lines : int = 0 # Shold be setted to right value in main 
+        self.std_lib_vars : dict[str : object] = {} 
 
         self.input_time : int = 0
 
@@ -191,6 +192,9 @@ def main():
     for i in range(len(state.lines)):
         state.current_line += 1
 
+        if state.current_line == state.std_lines:
+            state.std_lib_vars = state.vars.copy()
+
         line = state.lines[i]
 
         # Expressions executing
@@ -206,10 +210,11 @@ def main():
 
 
     if "-d" in argv:
-        del state.vars["0"]
-        del state.vars["1"]
-
-        print("\n" + str({i : str(j) for i, j in state.vars.items()}))
+        debug_vars = list(state.vars.items())
+        for i in state.std_lib_vars.items():
+            debug_vars.remove(i)
+        
+        print("\n" + str({i : str(j) for i, j in debug_vars}))
 
     print(f"\nFinished in {time() - start_time - state.input_time} sec")
         

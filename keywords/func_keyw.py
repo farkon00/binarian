@@ -26,7 +26,6 @@ def call_keyword(lexic : list[str], state, full_vars : dict[str : object]):
 
     func = get_var(lexic[0], full_vars, state, Function, error="Function")
 
-
     binarian_assert(len(func.args) != len(args), "You didn`t give enough arguments.", state)
 
     call_line = state.current_line
