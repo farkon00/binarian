@@ -11,7 +11,7 @@ def index_keyword(lexic : list[str], state, full_vars : dict[str : object]):
     binarian_assert(index >= len(list), "Index out of range.", state)
 
     if not state.is_expr:
-        print(f"INDEX output : {list[index]}. Line : {state.current_line + 1}")
+        print(f"INDEX output : {list[index]}. Line : {state.current_line - state.std_lines + 1}")
     else:
         return list[index]
 
@@ -34,7 +34,7 @@ def len_keyword(lexic : list[str], state, full_vars : dict[str : object]):
     _len = List(list(bin(len(_list)).replace('0b', ''))[::-1])
 
     if not state.is_expr:
-        print(f"LEN output : {_len}. Line : {state.current_line + 1}")
+        print(f"LEN output : {_len}. Line : {state.current_line - state.std_lines + 1}")
     else:
         return _len
 
