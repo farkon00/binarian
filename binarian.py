@@ -176,11 +176,15 @@ def main():
         code = open(argv[1], "r", encoding="utf-8").read().lower()
     except FileNotFoundError:
         raise FileNotFoundError("File does not exist.")
-    try:
-        std_lib = open("\\".join(__file__.split("\\")[:-1]) + "\\std.bino", "r", encoding="utf-8").read().lower()
-    except FileNotFoundError:
-        from std_lib_code import std_lib_code
-        std_lib = std_lib_code.lower()
+
+    if "-no-std" not in argv:
+        try:
+            std_lib = open("\\".join(__file__.split("\\")[:-1]) + "\\std.bino", "r", encoding="utf-8").read().lower()
+        except FileNotFoundError:
+            from std_lib_code import std_lib_code
+            std_lib = std_lib_code.lower()
+    else:
+        std_lib = ""
         
 
     code = delete_comments(std_lib + "\n" + code)
