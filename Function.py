@@ -34,14 +34,20 @@ class Function:
             if opened_blocks <= starter_blocks - 1:
                 state.opened_blocks -= 1
                 state.allowed_blocks -= 1
+                state.is_expr = is_expr_before
+                
                 return 0
 
-            ret = state.GLOBAL_FUNCS["execute_line"](lexic, state, local=local)
+            state.GLOBAL_FUNCS["execute_line"](lexic, state, local=local)
 
-            if ret != None and lexic[0] == "return":
+            if state.last_return != None:
                 state.opened_blocks -= 1
                 state.allowed_blocks -= 1
                 state.is_expr = is_expr_before
+
+                ret = state.last_return
+                state.last_return = None
+
                 return ret
 
         state.is_expr = is_expr_before
