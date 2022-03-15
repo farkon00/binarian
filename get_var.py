@@ -1,4 +1,4 @@
-from .types.list import List
+from .bin_types.list import List
 from .blocks_parser import parse_lists
 from .exceptions import *
 

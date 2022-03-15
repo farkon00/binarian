@@ -1,6 +1,6 @@
 from binarian.get_var import get_var
 from binarian.exceptions import binarian_assert
-from binarian.types.list import List
+from binarian.bin_types.list import List
 
 def for_keyword(lexic : list[str], state, full_vars : dict[str : object]):
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
