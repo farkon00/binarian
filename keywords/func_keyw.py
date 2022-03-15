@@ -1,4 +1,4 @@
-from binarian.types.function import Function
+from binarian.bin_types.function import Function
 from binarian.get_var import get_var
 from binarian.exceptions import binarian_assert
 
