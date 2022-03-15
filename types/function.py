@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 
-from blocks_parser import *
-from get_var import get_var
-from exceptions import *
+from binarian.blocks_parser import *
+from binarian.get_var import get_var
+from binarian.exceptions import *
 
 @dataclass
 class Function:

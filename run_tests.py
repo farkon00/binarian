@@ -1,5 +1,5 @@
 import sys
-from binarian import main
+from .binarian import main
 import pytest
 
 tests = [

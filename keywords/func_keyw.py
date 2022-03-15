@@ -1,6 +1,6 @@
-from Function import Function
-from get_var import get_var
-from exceptions import *
+from binarian.types.function import Function
+from binarian.get_var import get_var
+from binarian.exceptions import binarian_assert
 
 def func_keyword(lexic : list[str], state, in_vars : dict[str : object]):
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)

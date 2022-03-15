@@ -1,7 +1,7 @@
 from time import time
 
-from get_var import get_var
-from exceptions import *
+from binarian.get_var import get_var
+from binarian.exceptions import binarian_assert
 
 def input_keyword(lexic : list[str], in_vars : dict[str : object], state) -> None:
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
