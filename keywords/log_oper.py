@@ -1,5 +1,5 @@
-from exceptions import binarian_assert
-from get_var import get_var
+from funcs.exceptions import binarian_assert
+from funcs.get_var import get_var
 
 def and_keyword(lexic : list[str], state, full_vars : dict[str : object]) -> int:
     binarian_assert(len(lexic) <= 2, "You didn`t give enough arguments.", state)

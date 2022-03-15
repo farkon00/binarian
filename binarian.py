@@ -1,9 +1,9 @@
 import sys
 from time import time
 
-from code_preparer import *
-from blocks_parser import *
-from exceptions import *
+from funcs.code_preparer import *
+from funcs.blocks_parser import *
+from funcs.exceptions import *
 
 from keywords import *
 
