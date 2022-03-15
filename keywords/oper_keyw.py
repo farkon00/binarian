@@ -1,5 +1,5 @@
-from binarian.get_var import get_var
-from binarian.exceptions import binarian_assert, throw_exception
+from get_var import get_var
+from exceptions import binarian_assert, throw_exception
 
 def if_keyword(lexic : list[str], state, full_vars : dict[str : object]):
     binarian_assert("(" not in " ".join(lexic), 'Blocks must have starts and finishes matched with "(" and ")".', state)
