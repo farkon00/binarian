@@ -1,5 +1,5 @@
-from get_var import get_var
-from exceptions import binarian_assert
+from funcs.get_var import get_var
+from funcs.exceptions import binarian_assert
 
 def set_keyword(lexic : list[str], state, in_vars : dict[str : object], full_vars : dict[str : object]) -> None:
     # Error handeling

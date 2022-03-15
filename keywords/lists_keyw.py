@@ -1,5 +1,5 @@
-from get_var import get_var
-from exceptions import binarian_assert
+from funcs.get_var import get_var
+from funcs.exceptions import binarian_assert
 from bin_types.list import List
 
 def index_keyword(lexic : list[str], state, full_vars : dict[str : object]):
