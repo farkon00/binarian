@@ -1,4 +1,4 @@
-from exceptions import *
+from .exceptions import *
 
 def parse_brackets(line : str, mode : tuple[str, str], state, error : str = "Expression") -> tuple[int, int] | None:
     """Finds brackets indexes"""
