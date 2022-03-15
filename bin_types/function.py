@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 
-from binarian.blocks_parser import *
-from binarian.get_var import get_var
-from binarian.exceptions import *
+from blocks_parser import *
+import get_var
+from exceptions import *
 
 @dataclass
 class Function:
@@ -17,7 +17,7 @@ class Function:
         is_expr_before = state.is_expr
         state.is_expr = False
 
-        local = {self.args[j] : get_var(args[j], full_vars, state) for j in range(len(args))}
+        local = {self.args[j] : get_var.get_var(args[j], full_vars, state) for j in range(len(args))}
         for line in state.lines[self.start_line+1:]:
             state.current_line += 1
 

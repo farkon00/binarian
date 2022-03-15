@@ -1,11 +1,11 @@
 import sys
 from time import time
 
-from .code_preparer import *
-from .blocks_parser import *
-from .exceptions import *
+from code_preparer import *
+from blocks_parser import *
+from exceptions import *
 
-from .keywords import *
+from keywords import *
 
 class ExecutionState:
     """Class that contains all data about execution state and constants for execution"""
