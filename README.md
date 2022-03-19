@@ -1,3 +1,4 @@
+[![Test](https://github.com/farkon00/binarian/actions/workflows/main.yml/badge.svg)](https://github.com/farkon00/binarian/actions/workflows/main.yml)
 # Binarian
 # Content
   * [Global info](#global-info)
