@@ -6,6 +6,11 @@ def set_keyword(lexic : list[str], state, in_vars : dict[str : object], full_var
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
     binarian_assert(len(lexic) < 3, "You didn`t give enough arguments.", state)
     binarian_assert(lexic[1] in state.RESTRICTED_NAMES, "Variable name is unavailable.", state)
+
+    if len(lexic) >= 4:
+        binarian_assert(lexic[1] not in state.types, f"Type is not found : {lexic[1]}", state)
+        in_vars[lexic[2]] = get_var(lexic[3], full_vars, state)
+        return
     
     in_vars[lexic[1]] = get_var(lexic[2], full_vars, state)
 

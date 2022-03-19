@@ -1,5 +1,3 @@
-from asyncio import subprocess
-from re import sub
 import sys
 from .binarian import main
 from subprocess import run

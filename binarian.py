@@ -33,6 +33,12 @@ class ExecutionState:
 
         self.input_time : int = 0
 
+        self.types = {
+            "int" : int,
+            "function" : Function,
+            "list" : List
+        }
+
         self.RESTRICTED_NAMES = (
             "0", "1", "and", "or", "not", "set", "drop", "input", "output", "func",
             "return", "call", "index", "len", "append", "zip", "for", "while", "(",
