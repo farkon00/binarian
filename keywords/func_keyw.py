@@ -9,7 +9,11 @@ def func_keyword(lexic : list[str], state, in_vars : dict[str : object]):
 
     parts = " ".join(lexic).split(":")
 
-    func_name = parts[0].split()[1]
+    if (len(parts[0].split()) >= 3 and len(parts) >= 2) or  (len(parts[0].split()) >= 4 and len(parts) == 1):
+        binarian_assert(parts[0].split()[1] not in state.types, f"Type is not found : {parts[0].split()[1]}", state)
+        func_name = parts[0].split()[2]
+    else:
+        func_name = parts[0].split()[1]
     try:
         args = parts[1].split()
     except:

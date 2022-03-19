@@ -1,4 +1,4 @@
-func nut : arg ( 
+func int nut : arg ( 
     output 1 side
 
     if arg (
