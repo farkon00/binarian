@@ -30,4 +30,4 @@ jobs:
       - name: Run tests
         shell: bash
         run: |
-          PYTHONPATH="$(pwd)" pytest run_tests.py
+          PYTHONPATH="$(pwd)" pytest run_tests.py -k test_python

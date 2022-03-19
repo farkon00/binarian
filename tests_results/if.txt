@@ -1,4 +1,4 @@
 inp : else_test1 : 0
 inp : if_test2 : 0
 
-Finished in 0.007977485656738281 sec
+Finished in 0.0009984970092773438 sec
