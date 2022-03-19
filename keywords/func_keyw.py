@@ -7,7 +7,7 @@ def func_keyword(lexic : list[str], state, in_vars : dict[str : object]):
     binarian_assert(lexic[1] in state.RESTRICTED_NAMES, "Function name is unavailable.", state)
     binarian_assert("(" not in " ".join(lexic), 'Blocks must have starts and finishes matched with "(" and ")".', state)
 
-    parts = " ".join(lexic).split(":")
+    parts = " ".join(lexic).split(":", 1)
 
     if (len(parts[0].split()) >= 3 and len(parts) >= 2) or  (len(parts[0].split()) >= 4 and len(parts) == 1):
         binarian_assert(parts[0].split()[1] not in state.types, f"Type is not found : {parts[0].split()[1]}", state)
@@ -18,6 +18,20 @@ def func_keyword(lexic : list[str], state, in_vars : dict[str : object]):
         args = parts[1].split()
     except:
         args = []
+
+    temp = []
+    for i in args:
+        if ":" in i:
+            arg = i.split(":")
+            binarian_assert(arg[1] not in state.types, f"Type is not found : {arg[1]}", state)
+
+            temp.append(arg[0])
+        else:
+            temp.append(i)
+
+    args = temp
+    del temp
+
 
     if "(" in args: args.remove("(")
     if ")" in args: args.remove(")")
