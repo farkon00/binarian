@@ -178,15 +178,23 @@ def main(test_argv=None):
 
     try:
         code = open(argv[1], "r", encoding="utf-8").read().lower()
-    except FileNotFoundError:
+    except Exception:
         raise FileNotFoundError("File does not exist.")
 
     if "-no-std" not in argv:
         try:
-            std_lib = open("\\".join(__file__.split("\\")[:-1]) + "\\std.bino", "r", encoding="utf-8").read().lower()
+            std_path = "\\".join(__file__.split("\\")[:-1])
+            std_path += "\\" if std_path else ""
+            std_path += "std.bino"
+            
+            try:
+                std_lib = open(std_path, "r").read().lower()
+            except FileNotFoundError:
+                std_lib = open("std.bino", "r").read().lower()
         except FileNotFoundError:
-            from .std_lib_code import std_lib_code
-            std_lib = std_lib_code.lower()
+            print("\nSTD LIBRARY FILE WAS NOT FOUND!")
+            print(f"Path where std library was excepted {std_path} and your current directory\n\n")
+            std_lib = ""
     else:
         std_lib = ""
         
