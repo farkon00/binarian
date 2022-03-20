@@ -1,6 +1,6 @@
-set list [[0 1] [1 0]]
+set _list [[0 1] [1 0]]
 
-for i list (
+for i _list (
     output i pretty list
 
     for j i (
