@@ -51,6 +51,15 @@
   binarian.exe your_file.bino -no-std
   ```
 
+# Standart library
+  To use standart library std.bino should be in the same folder with binarian.py or binarian.exe. Latest version of standart library is stored in github repo in std.bino file. 
+
+  Standart library includes useful functions like sum, add, subt. Documentation for standart library is available in github repo in std_docs.md file(WIP).
+
+  Use -no-std flag in command to not include it while execution. If std.bino is not found warning will be displayed and execution will continue without including standart library.
+
+  Standart library uses [Lists as integers](#lists-as-integers), check this before using add, subt, sum functions etc.
+
 # Basic syntax
   All syntax is based on keywords and arguments. 
   ```
