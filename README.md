@@ -25,8 +25,10 @@
       * [while](#while)
     * [List keywords](#list-keywords)
       * [index](#index)
+      * [setindex](#setindex)
       * [len](#len)
       * [append](#append)
+      * [zip](#zip)
     * [Functions keywords](#functions-keywords)
       * [func](#func)
       * [return](#return)
@@ -334,12 +336,25 @@
   index list [0 1] // Prints 0
   ```
 
+  ### setindex
+  Synatax : `setindex list index value`
+
+  Sets list element with index `index` to `value`. Index is also a list, check [Lists as integers](#lists-as-integers) for more details.
+
+  You can't use this keyword in expression.
+
+  Example :
+  ```
+  set list [0 1 0]
+  setindex list [0 1] [1] // [0 1 1]
+  ```
+
   ### len
   Synatax : `len list`
 
   Returns length of list. Lenght is also a list, check [Lists as integers](#lists-as-integers) for more details.
 
-  If keyword using in expression, expression will replaced by result. Otherwise keyword output will be printed in console.
+  If keyword using in expression, expression will replaced by result.
 
   Example :
   ```
@@ -348,7 +363,7 @@
   ```
 
   ### append
-  Synatax : `len list element`
+  Synatax : `append list element`
 
   Appends element to end of the list.
 
@@ -358,6 +373,24 @@
   ```
   set list [0 1 0]
   append list 1 // List becomes [0 1 0 1]
+  ```
+
+  ### zip
+  Synatax : `zip list1 list2`
+
+  Zips two lists together. E. g. `[0 1 0]` and `[0 1 1 0]` will be ziped to `[[0 0] [1 1] [0 1] [0 0]]`
+
+  If keyword using in expression, expression will replaced by result.
+
+  Example :
+  ```
+  set list [0 1 0]
+  set list2 [1 0 1]
+  set res []
+  for i {zip list list2} (
+    append res {or {index i [0]} {index i [1]}}
+  )
+  // Res will be [1 1 1]
   ```
   
   ## Functions keywords
