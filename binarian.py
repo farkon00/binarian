@@ -1,6 +1,8 @@
 import sys
 from time import time
 
+from type_checking import *
+
 from funcs.code_preparer import *
 from funcs.blocks_parser import *
 from funcs.exceptions import *
@@ -33,16 +35,18 @@ class ExecutionState:
 
         self.input_time : int = 0
 
-        self.types = {
+        self.types : dict[str : type] = {
+            "object" : object,
             "int" : int,
             "function" : Function,
-            "list" : List
+            "list" : List,
+            "none" : None
         }
 
         self.RESTRICTED_NAMES = (
             "0", "1", "and", "or", "not", "set", "drop", "input", "output", "func",
             "return", "call", "index", "len", "append", "zip", "for", "while", "(",
-            ")", "[", "]", "{", "}"
+            ")", "[", "]", "{", "}", "object", "int", "list", "function", "none"
         )
         self.GLOBAL_FUNCS = {
             "execute_line" : execute_line,
@@ -210,6 +214,8 @@ def main(test_argv=None):
     state.std_lines = std_lib.count("\n") + 1
 
     binarian_assert(code.count("(") != code.count(")"), 'Blocks must have starts and finishes matched with "(" and ")".', state, display_line=False)
+    if "-tc" in argv:
+        type_check(state)
 
     for i in range(len(state.lines)):
         state.current_line += 1

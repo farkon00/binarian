@@ -1,7 +1,7 @@
 from sys import exit, argv
 
 def throw_exception(text : str, state, display_line=True):
-    exc_text = "\nWhile executing code, exception was thrown :\n\n"
+    exc_text = f"\nWhile {'executing code' if 'TypeCheck' not in str(type(state)) else 'type checking'}, exception was thrown :\n\n"
 
     if display_line:
         for j, i in enumerate(state.call_stack):

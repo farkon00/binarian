@@ -1,6 +1,7 @@
 from bin_types.list import List
 from .blocks_parser import parse_lists
 from .exceptions import *
+from .convert_type import *
 
 def get_var(var : str, full_vars : dict[str : object], state, _type : type = object, error = "Variable"):
     if var[0] != "[":
@@ -15,8 +16,8 @@ def get_var(var : str, full_vars : dict[str : object], state, _type : type = obj
 
     if not isinstance(ret, _type):
         # Makes better strs for types e. g. <class 'int'> -> int
-        type1 = str(_type)[str(_type).find("'")+1:str(_type).rfind("'")].split(".")[-1] 
-        type2 = str(type(ret))[str(type(ret)).find("'")+1:str(type(ret)).rfind("'")].split(".")[-1]
+        type1 = type_to_str(_type)
+        type2 = type_to_str(type(ret))
 
         throw_exception(f"Unexpected type, {type1} was expected, {type2} was given", state)
 

@@ -4,16 +4,17 @@ from funcs.exceptions import binarian_assert
 
 def func_keyword(lexic : list[str], state, in_vars : dict[str : object]):
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
-    binarian_assert(lexic[1] in state.RESTRICTED_NAMES, "Function name is unavailable.", state)
     binarian_assert("(" not in " ".join(lexic), 'Blocks must have starts and finishes matched with "(" and ")".', state)
 
     parts = " ".join(lexic).split(":", 1)
 
-    if (len(parts[0].split()) >= 3 and len(parts) >= 2) or  (len(parts[0].split()) >= 4 and len(parts) == 1):
+    if (len(parts[0].split()) >= 3 and len(parts) >= 2) or (len(parts[0].split()) >= 4 and len(parts) == 1):
         binarian_assert(parts[0].split()[1] not in state.types, f"Type is not found : {parts[0].split()[1]}", state)
         func_name = parts[0].split()[2]
     else:
         func_name = parts[0].split()[1]
+    binarian_assert(func_name in state.RESTRICTED_NAMES, "Function name is unavailable.", state)
+
     try:
         args = parts[1].split()
     except:
