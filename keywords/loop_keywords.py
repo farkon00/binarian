@@ -67,6 +67,7 @@ def while_keyword(lexic : list[str], state, full_vars : dict[str : object]):
     state.opened_loops.append([state.current_line, state.opened_blocks, [], 1])
 
 def execute_while(loop : list[int, int, list[str]], state, full_vars : dict[str : object], local : dict[str : object] = None):
+    end_line = state.current_line
     state.current_line = loop[0]
     loop_cond = " ".join(state.lines[loop[0]].split()[1:-1])
 
@@ -102,3 +103,5 @@ def execute_while(loop : list[int, int, list[str]], state, full_vars : dict[str 
                 return None
 
         full_vars = {**state.vars, **(local if local != None else {})}
+
+    state.current_line = end_line

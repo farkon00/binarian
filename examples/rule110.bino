@@ -19,10 +19,13 @@ while {not {eq i [1 0 0 1]}} (
         set q {index last-state j}
         set r {index last-state {add j [1]}}
         append new-state {or {and q {not p}} {xor q r}}
+        set j {add j [1]}
     )
     append new-state 0
     set last-state new-state
     append states last-state
+
+    set i {add i [1]}
 )
 
 for i states (

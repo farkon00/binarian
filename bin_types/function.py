@@ -12,7 +12,7 @@ class Function:
     start_line : int
 
     def execute(self, args : list[str], state, full_vars : dict[str : object]):
-        starter_blocks = state.opened_blocks
+        starter_blocks, starter_allowed = state.opened_blocks, state.allowed_blocks
 
         is_expr_before = state.is_expr
         state.is_expr = False
@@ -32,8 +32,8 @@ class Function:
 
             opened_blocks, _ = parse_blocks(line, state, ret=True)
             if opened_blocks <= starter_blocks - 1:
-                state.opened_blocks -= 1
-                state.allowed_blocks -= 1
+                state.opened_blocks = starter_blocks
+                state.allowed_blocks = starter_allowed
                 state.is_expr = is_expr_before
                 
                 return 0
@@ -41,8 +41,8 @@ class Function:
             state.GLOBAL_FUNCS["execute_line"](lexic, state, local=local)
 
             if state.last_return != None:
-                state.opened_blocks -= 1
-                state.allowed_blocks -= 1
+                state.opened_blocks = starter_blocks
+                state.allowed_blocks = starter_allowed
                 state.is_expr = is_expr_before
 
                 ret = state.last_return
