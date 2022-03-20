@@ -2,6 +2,7 @@
 # Binarian
 # Content
   * [Global info](#global-info)
+  * [Standart library](#standart-library)
   * [Basic syntax](#basic-syntax)
     * [Expressions](#expression)
     * [Lists](#lists)
