@@ -1,8 +1,8 @@
-func xor : val1 val2 (
+func int xor : val1:int val2:int (
     return {not {or {and val1 val2} {not {or val1 val2}}}}
 )
 
-func add : num1 num2 (
+func list add : num1:list num2:list (
     // Actually I created this language just to write this function. 
     set carry 0
     set ret []
@@ -24,14 +24,14 @@ func add : num1 num2 (
     return ret
 )
 
-func half-subt : a b (
+func list half-subt : a:int b:int (
     set dif {xor a b}
     set borrow {and {not a} b}
 
     return [dif borrow]
 )
 
-func subt : num1 num2 (
+func list subt : num1:list num2:list (
     // Please just not use this if first number is smaller than second one.
     // It can`t deal with negative numbers as everything in this language
 
@@ -54,7 +54,7 @@ func subt : num1 num2 (
     return ret
 )
 
-func eq : num1 num2 (
+func int eq : num1:list num2:list (
     for dig {zip num1 num2} (
         set a {index dig [0]}
         set b {index dig [1]}
@@ -67,7 +67,7 @@ func eq : num1 num2 (
     return 1
 )
 
-func sum : list (
+func list sum : list:list (
     set sum [0]
     for i list (
         set sum {add sum i}
