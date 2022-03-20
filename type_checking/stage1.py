@@ -1,4 +1,3 @@
-from ast import arg
 from funcs.blocks_parser import *
 from funcs.exceptions import binarian_assert
 from funcs.convert_type import *
@@ -15,7 +14,7 @@ def tc_line1(lexic, state):
     lexic = parse_lists(lexic)
 
     if state.opened_function:
-        if state.opened_blocks >= state.function_blocks - 1:
+        if state.opened_blocks <= state.function_blocks - 1:
             state.opened_function = None
             state.function_blocks = None
 
@@ -60,19 +59,20 @@ def tc_line1(lexic, state):
                 name = parts[0].split()[2]
             else:
                 ret = object
-                name = parts[0].split()[2]
+                name = parts[0].split()[1]
 
-            args_text = parts[1].split()
             args = []
-            for i in args_text:
-                if ":" in i:
-                    arg_splited = i.split(":")
-                    binarian_assert(arg_splited[1] not in state.types, f"Type is not found : {arg_splited[1]}", state)
-                    args.append((arg_splited[0], state.types[arg_splited[1]]))
-                else:
-                    args.append((i, object))
+            if len(parts) >= 2:
+                args_text = parts[1].split()
+                for i in args_text:
+                    if ":" in i:
+                        arg_splited = i.split(":")
+                        binarian_assert(arg_splited[1] not in state.types, f"Type is not found : {arg_splited[1]}", state)
+                        args.append((arg_splited[0], state.types[arg_splited[1]]))
+                    else:
+                        args.append((i, object))
 
-            func = TypeCheckedFunction(args, ret)
+            func = TypeCheckedFunction(args[:-1], ret)
             state.functions[name] = func
             state.opened_function = func
             state.function_blocks = state.opened_blocks

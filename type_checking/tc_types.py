@@ -5,19 +5,15 @@ class TypeCheckedFunction:
         self.args : list[tuple[str:type]] = args
         self.ret = ret
 
-        self.locals = {}
+        self.locals = {i : j for i, j in args}
 
 class TypeCheckingState:
     def __init__(self, state):
         self.vars : dict[str : type] = {"0" : int, "1" : int}
         self.functions : dict[str : TypeCheckedFunction] = {}
 
-        self.opened_function = None
-        self.function_blocks : int = None
+        self.reset()
 
-        self.current_line : int = 0
-        self.opened_blocks : int = 0
-        self.allowed_blocks : int = 0 # For parse_blocks function to work, unused anywhere else
         self.warnings : int = 0
 
         self.code : str = state.code
@@ -31,6 +27,7 @@ class TypeCheckingState:
         # (return, *arguments)
         # None  - not typechecked(e. g. name of var)
         self.keywords : dict[str : tuple[type]] = {
+            "input" : (None, None),
             "output" : (None, object, None),
             "and" : (int, int, int),
             "or" : (int, int, int),
@@ -43,5 +40,14 @@ class TypeCheckingState:
             "if" : (None, int),
             "for" : (None, None, List),
             "while" : (None, int),
+            "func" : (None,),
             "return" : (None, object)
         }
+
+    def reset(self):
+        self.opened_function = None
+        self.function_blocks : int = None
+
+        self.current_line : int = 0
+        self.opened_blocks : int = 0
+        self.allowed_blocks : int = 0 # For parse_blocks function to work, unused anywhere else
