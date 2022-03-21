@@ -54,8 +54,8 @@ f"Unmatching types, {type_to_str(get_type(lexic[1], state, full_vars))} was expe
 
         case "return":
             binarian_assert(not is_func, 'Keyword "return" is restricted out of functions.', state)
-            if get_type(lexic[1], state, full_vars) and get_type(lexic[1], state, full_vars) and\
-                object not in (get_type(lexic[1], state, full_vars), get_type(lexic[1], state, full_vars)):
+            if get_type(lexic[1], state, full_vars) and state.opened_function.ret and\
+                object not in (get_type(lexic[1], state, full_vars), state.opened_function.ret):
                 binarian_assert(
                     not issubclass(get_type(lexic[1], state, full_vars), state.opened_function.ret),
 f"Unexpected return type, {type_to_str(state.opened_function.ret)} was expected, \
@@ -68,7 +68,7 @@ f"Unexpected return type, {type_to_str(state.opened_function.ret)} was expected,
                 keyword = state.keywords[lexic[0]]
 
                 for j, i in enumerate(keyword[1:]):
-                    if not i or object in (i, get_type(lexic[j+1], state, full_vars)):
+                    if not i or not get_type(lexic[j+1], state, full_vars) or object in (i, get_type(lexic[j+1], state, full_vars)):
                         continue
                     binarian_assert(
                         not issubclass(get_type(lexic[j+1], state, full_vars), i),
@@ -81,7 +81,7 @@ f"Unexpected argument type, {type_to_str(i)} was expected, \
 
             if lexic[0] in state.functions:
                 for j, i in enumerate(state.functions[lexic[0]].args):
-                    if not i or object in (i, get_type(lexic[j+1], state, full_vars)):
+                    if not i or not get_type(lexic[j+1], state, full_vars) or object in (i, get_type(lexic[j+1], state, full_vars)):
                         continue
                     binarian_assert(
                         not issubclass(get_type(lexic[j+1], state, full_vars), i[1]),
