@@ -2,6 +2,6 @@
 While executing code, exception was thrown :
 
 line 3 :
-  and a {or 1 0
+  and a (or 1 0
 
-Expression must have start and finish matched with "{" and "}".
+Expression must have start and finish matched with "(" and ")".

@@ -32,12 +32,12 @@ def parse_blocks(line : str, state, ret : bool = False) -> str | tuple[int, int]
 
     opened_blocks, allowed_blocks = state.opened_blocks, state.allowed_blocks
 
-    closings = line.count(")")
+    closings = line.count("}")
 
     if opened_blocks <= allowed_blocks:
         allowed_blocks -= closings
 
-    opened_blocks += line.count("(")
+    opened_blocks += line.count("{")
     opened_blocks -= closings
 
     if ret:
@@ -46,4 +46,4 @@ def parse_blocks(line : str, state, ret : bool = False) -> str | tuple[int, int]
     state.opened_blocks = opened_blocks
     state.allowed_blocks = allowed_blocks
     
-    return line.replace(")", "")
+    return line.replace("}", "")

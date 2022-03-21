@@ -1,5 +1,5 @@
-func tc : arg:int arg2:list (
+func tc : arg:int arg2:list {
     return arg
-)
+}
 
 tc 1 0

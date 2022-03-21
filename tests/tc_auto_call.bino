@@ -1,6 +1,5 @@
-func list foo (
+func list foo {
     return []
-)
-
-set a {foo}
+}
+set a (foo)
 or a 1

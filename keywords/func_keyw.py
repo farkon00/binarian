@@ -4,7 +4,7 @@ from funcs.exceptions import binarian_assert
 
 def func_keyword(lexic : list[str], state, in_vars : dict[str : object]):
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
-    binarian_assert("(" not in " ".join(lexic), 'Blocks must have starts and finishes matched with "(" and ")".', state)
+    binarian_assert("{" not in " ".join(lexic), 'Blocks must have starts and finishes matched with "{" and "}".', state)
 
     parts = " ".join(lexic).split(":", 1)
 
@@ -34,9 +34,9 @@ def func_keyword(lexic : list[str], state, in_vars : dict[str : object]):
     del temp
 
 
-    if "(" in args: args.remove("(")
-    if ")" in args: args.remove(")")
-    if "()" in args: args.remove("()")
+    if "{" in args: args.remove("{")
+    if "}" in args: args.remove("}")
+    if "{}" in args: args.remove("{}")
 
     in_vars[func_name] = Function(args, state.current_line)
 

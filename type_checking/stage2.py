@@ -95,7 +95,7 @@ f"Unexpected argument type for {i[0]}, {type_to_str(i[1])} was expected, \
             state.warnings += 1
 
 def tc_expr2(line, state):
-    indexes = parse_brackets(line, ("{", "}"), state)
+    indexes = parse_brackets(line, ("(", ")"), state)
 
     if not indexes:
         return

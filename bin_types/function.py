@@ -22,10 +22,10 @@ class Function:
             state.current_line += 1
 
             # Expressions executing
-            binarian_assert(line.count("{") != line.count("}"), 'Expression must have start and finish matched with "{" and "}".', state)
+            binarian_assert(line.count("(") != line.count(")"), 'Expression must have start and finish matched with "{" and "}".', state)
 
             if state.opened_blocks <= state.allowed_blocks:
-                while "{" in line:
+                while "(" in line:
                     line = state.GLOBAL_FUNCS["execute_expr"](line, state, local=local)
             
             lexic = line.split()

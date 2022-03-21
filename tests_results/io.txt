@@ -2,4 +2,4 @@ inp1 : inp2 : inp1 : 1
 inp2 : 0
 OR output : 1. Line : 7
 
-Finished in 0.0009951591491699219 sec
+Finished in 0.001995086669921875 sec

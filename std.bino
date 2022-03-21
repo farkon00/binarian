@@ -1,77 +1,77 @@
-func int xor : val1:int val2:int (
-    return {not {or {and val1 val2} {not {or val1 val2}}}}
-)
+func int xor : val1:int val2:int {
+    return (not (or (and val1 val2) (not (or val1 val2))))
+}
 
-func list add : num1:list num2:list (
+func list add : num1:list num2:list {
     // Actually I created this language just to write this function. 
     set carry 0
     set ret []
 
-    for dig {zip num1 num2} (
-        set a {index dig [0]}
-        set b {index dig [1]}
+    for dig (zip num1 num2) {
+        set a (index dig [0])
+        set b (index dig [1])
 
-        set sum {xor {xor a b} carry}
-        set carry {or {and carry {xor a b}} {and a b}}
+        set sum (xor (xor a b) carry)
+        set carry (or (and carry (xor a b)) (and a b))
 
         append ret sum
-    )
+    }
 
-    if carry (
+    if carry {
         append ret carry
-    )
+    }
 
     return ret
-)
+}
 
-func list half-subt : a:int b:int (
-    set dif {xor a b}
-    set borrow {and {not a} b}
+func list half-subt : a:int b:int {
+    set dif (xor a b)
+    set borrow (and (not a) b)
 
     return [dif borrow]
-)
+}
 
-func list subt : num1:list num2:list (
+func list subt : num1:list num2:list {
     // Please just not use this if first number is smaller than second one.
     // It can`t deal with negative numbers as everything in this language
 
     set borrow 0
     set ret []
 
-    for dig {zip num1 num2} (
-        set a {index dig [0]}
-        set b {index dig [1]}
+    for dig (zip num1 num2) {
+        set a (index dig [0])
+        set b (index dig [1])
 
-        set half {half-subt a b}
-        set half2 {half-subt {index half [0]} borrow}
+        set half (half-subt a b)
+        set half2 (half-subt (index half [0]) borrow)
 
-        set dif {index half2 [0]}
-        set borrow {or {index half [1]} {index half2 [1]}}
+        set dif (index half2 [0])
+        set borrow (or (index half [1]) (index half2 [1]))
 
         append ret dif
-    )
+    }
 
     return ret
-)
+}
 
-func int eq : num1:list num2:list (
-    for dig {zip num1 num2} (
-        set a {index dig [0]}
-        set b {index dig [1]}
+func int eq : num1:list num2:list {
+    for dig (zip num1 num2) {
+        set a (index dig [0])
+        set b (index dig [1])
 
-        if {xor a b} (
+        if (xor a b) {
             return 0
-        )
-    )
+        }
+    }
 
     return 1
-)
+}
 
-func list sum : list:list (
+func list sum : list:list {
     set sum [0]
-    for i list (
-        set sum {add sum i}
-    )
+    for i list {
+        set sum (add sum i)
+    }
 
     return sum
-)
+}

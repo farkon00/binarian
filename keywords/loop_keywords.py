@@ -6,7 +6,7 @@ def for_keyword(lexic : list[str], state, full_vars : dict[str : object]):
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
     binarian_assert(len(lexic) < 3, "You didn`t give enough arguments.", state)
     binarian_assert(lexic[1] in state.RESTRICTED_NAMES, "Variable name is unavailable.", state)
-    binarian_assert("(" not in " ".join(lexic), 'Blocks must have starts and finishes matched with "(" and ")".', state)
+    binarian_assert("{" not in " ".join(lexic), 'Blocks must have starts and finishes matched with "{" and "}".', state)
     get_var(lexic[2], full_vars, state, List) # Checks for errors in list
 
     state.opened_loops.append([state.current_line, state.opened_blocks, [], 0])
@@ -15,7 +15,7 @@ def execute_for(loop : list[int, int, list[str]], state, full_vars : dict[str : 
     state.current_line = loop[0]
     
     loop_line = state.lines[loop[0]]
-    while "{" in loop_line:
+    while "(" in loop_line:
         loop_line = state.GLOBAL_FUNCS["execute_expr"](loop_line, state, local=local)
 
     loop_lexic = loop_line.split()
@@ -35,10 +35,10 @@ def execute_for(loop : list[int, int, list[str]], state, full_vars : dict[str : 
             state.current_line += 1
 
             # Expressions executing
-            binarian_assert(line.count("{") != line.count("}"), 'Expression must have start and finish matched with "{" and "}".', state)
+            binarian_assert(line.count("(") != line.count(")"), 'Expression must have start and finish matched with "(" and "}".', state)
 
             if state.opened_blocks <= state.allowed_blocks:
-                while "{" in line:
+                while "(" in line:
                     line = state.GLOBAL_FUNCS["execute_expr"](line, state, local=local)
                 
             
@@ -62,7 +62,7 @@ def execute_for(loop : list[int, int, list[str]], state, full_vars : dict[str : 
 def while_keyword(lexic : list[str], state, full_vars : dict[str : object]):
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
     binarian_assert(len(lexic) < 2, "You didn`t give enough arguments.", state)
-    binarian_assert("(" not in " ".join(lexic), 'Blocks must have starts and finishes matched with "(" and ")".', state)
+    binarian_assert("{" not in " ".join(lexic), 'Blocks must have starts and finishes matched with "{" and "}".', state)
 
     state.opened_loops.append([state.current_line, state.opened_blocks, [], 1])
 
@@ -75,7 +75,7 @@ def execute_while(loop : list[int, int, list[str]], state, full_vars : dict[str 
         state.current_line = loop[0]
         
         temp_loop_cond = loop_cond
-        while "{" in temp_loop_cond:
+        while "(" in temp_loop_cond:
             temp_loop_cond = state.GLOBAL_FUNCS["execute_expr"](temp_loop_cond, state, local=local)
         temp_loop_cond = get_var(temp_loop_cond, full_vars, state, int)
         if not temp_loop_cond:
@@ -86,10 +86,10 @@ def execute_while(loop : list[int, int, list[str]], state, full_vars : dict[str 
             state.current_line += 1
 
             # Expressions executing
-            binarian_assert(line.count("{") != line.count("}"), 'Expression must have start and finish matched with "{" and "}".', state)
+            binarian_assert(line.count("(") != line.count(")"), 'Expression must have start and finish matched with "{" and "}".', state)
 
             if state.opened_blocks <= state.allowed_blocks:
-                while "{" in line:
+                while "(" in line:
                     line = state.GLOBAL_FUNCS["execute_expr"](line, state, local=local)
                 
             

@@ -162,7 +162,7 @@ def execute_expr(line : str, state : ExecutionState, local : dict[str : object] 
     """Execute one expression"""
     state.is_expr = True
 
-    indexes = parse_brackets(line, ("{", "}"), state)
+    indexes = parse_brackets(line, ("(", ")"), state)
 
     if not indexes:
         state.is_expr = False
@@ -213,7 +213,7 @@ def main(test_argv=None):
     state = ExecutionState(code)
     state.std_lines = std_lib.count("\n") + 1
 
-    binarian_assert(code.count("(") != code.count(")"), 'Blocks must have starts and finishes matched with "(" and ")".', state, display_line=False)
+    binarian_assert(code.count("{") != code.count("}"), 'Blocks must have starts and finishes matched with "{" and "}".', state, display_line=False)
     if "-tc" in argv:
         type_check(state)
 
@@ -226,10 +226,10 @@ def main(test_argv=None):
         line = state.lines[i]
 
         # Expressions executing
-        binarian_assert(line.count("{") != line.count("}"), 'Expression must have start and finish matched with "{" and "}".', state)
+        binarian_assert(line.count("(") != line.count(")"), 'Expression must have start and finish matched with "(" and ")".', state)
 
         if state.opened_blocks <= state.allowed_blocks:
-            while "{" in line:
+            while "(" in line:
                 line = execute_expr(line, state)
 
         lexic = line.split()

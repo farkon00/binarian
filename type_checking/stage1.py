@@ -90,7 +90,7 @@ def tc_line1(lexic, state):
 
 
 def tc_expr1(line, state):
-    indexes = parse_brackets(line, ("{", "}"), state)
+    indexes = parse_brackets(line, ("(", ")"), state)
 
     if not indexes:
         return

@@ -1,17 +1,17 @@
 input inp
 
-if inp (
-    output {not inp} if_test1
-)
-else (
-    output {and inp 1} else_test1
-)
+if inp {
+    output (not inp) if_test1
+}
+else {
+    output (and inp 1) else_test1
+}
 
 input inp
 
-if inp (
-    output {not inp} if_test2
-)
-else (
-    output {and inp 1} else_test2
-)
+if inp {
+    output (not inp) if_test2
+}
+else {
+    output (and inp 1) else_test2
+}
