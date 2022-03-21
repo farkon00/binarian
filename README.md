@@ -126,9 +126,9 @@
 # Keywords
   ## Special keywords
   ### set
-  Syntax : `set var_name value`
+  Syntax : `set var_name value; set type var_name value`
   
-  This keyword uses to assign or change value of variables.
+  This keyword uses to assign or change value of variables. Typeing is optional. While type checking type may be figured out by value, if type isnt provided.
   
   Value must be 1 or 0.
   var_name writing without " or '.
@@ -416,15 +416,18 @@
   func name : arg1 arg2... {
     code
   }
+  func ret_type name : arg1:type arg2... {
+    code
+  }
   ```
 
-  Function declaration keyword.
+  Function declaration keyword. Typeing is optional and mixing up typed and not typed arguments is allowed. 
   
   ":" is not needed if no args used in function.
       
   Example :
   ```
-  func nor : arg1 arg2 {
+  func int nor : arg1:int arg2 {
     return (not (or arg1 arg2))
   }
   ```
