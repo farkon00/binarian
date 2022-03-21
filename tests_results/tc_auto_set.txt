@@ -1,0 +1,8 @@
+First stage of type checking completed successfully with 0 warnings
+
+While type checking, exception was thrown :
+
+line 2 :
+  set a 1
+
+Unmatching types, list was expected, int found.

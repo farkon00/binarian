@@ -1,0 +1,6 @@
+func list foo (
+    return []
+)
+
+set a {foo}
+or a 1

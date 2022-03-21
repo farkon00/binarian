@@ -1,0 +1,4 @@
+set int a 0
+set list b []
+and a 1
+and a b

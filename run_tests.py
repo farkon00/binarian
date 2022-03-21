@@ -16,7 +16,14 @@ tests = [
     ["exception"],
     ["call_stack"],
     ["std", "-d"],
-    ["no-std", ["-no-std"]]
+    ["no-std", ["-no-std"]],
+    ["tc_set", ["-tc"]],
+    ["tc_return", ["-tc"]],
+    ["tc_auto_set", ["-tc"]],
+    ["tc_keyw_args", ["-tc"]],
+    ["tc_func_args", ["-tc"]],
+    ["tc_func_args_in", ["-tc"]],
+    ["tc_auto_call", ["-tc"]]
 ]
 
 # Adds argv everywhere

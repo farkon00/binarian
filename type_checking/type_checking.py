@@ -9,11 +9,14 @@ def type_check(state):
 
     # Stage 1(type)
     for line in state.lines:
-        while "{" in line:
-            line = tc_expr1(line, state)
+        try:
+            while "{" in line:
+                line = tc_expr1(line, state)
 
-        lexic = line.split()
-        tc_line1(lexic, state)
+            lexic = line.split()
+            tc_line1(lexic, state)
+        except:
+            state.warnings += 1
         
         state.current_line += 1
 
