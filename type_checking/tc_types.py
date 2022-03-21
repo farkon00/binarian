@@ -27,6 +27,7 @@ class TypeCheckingState:
         # (return, *arguments)
         # None  - not typechecked(e. g. name of var)
         self.keywords : dict[str : tuple[type]] = {
+            "drop" : (None,),
             "input" : (None, None),
             "output" : (None, object, None),
             "and" : (int, int, int),
