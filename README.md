@@ -1,9 +1,10 @@
 [![Test](https://github.com/farkon00/binarian/actions/workflows/main.yml/badge.svg)](https://github.com/farkon00/binarian/actions/workflows/main.yml)
-# Binari}n
+# Binarian
 # Content
   * [Global info](#global-info)
   * [How to compile](#how-to-compile)
   * [Standart library](#standart-library)
+  * [Types](#types)
   * [Basic syntax](#basic-syntax)
     * [Expressions](#expression)
     * [Lists](#lists)
@@ -122,6 +123,24 @@
     return (and arg1 arg2)
   }
   ```
+
+# Types
+There are 5 types in binarian, one of them isnt recomended to use and was added for techinical porpuses.
+
+  ## int
+  Most common type in binarian, represented bu 1 and 0. In most other languages it named bool or boolean.
+
+  ## list
+  List can contain any objects of any other types(except none). Look to [Lists](#lists) for more details.
+
+  ## function
+  Type representing function usually defined by [func](#func) keyword.
+
+  ## object
+  Object is basically every possible value in binarian. So if type of something is object it can be anything.
+
+  ## none
+  Just not type checked type, very unrecomended to use. Was added for keywords that not return any value.
   
 # Keywords
   ## Special keywords
