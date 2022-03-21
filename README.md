@@ -1,5 +1,5 @@
-[![Test](https://github.com/farkon00/binarian/actions/workflows/main.yml/badge.svg)](https://github.com/farkon00/binarian/actions/workflows/main.yml)
-# Binarian
+[![Test]{https://github.com/farkon00/binarian/actions/workflows/main.yml/badge.svg)](https://github.com/farkon00/binarian/actions/workflows/main.yml)
+# Binari}n
 # Content
   * [Global info](#global-info)
   * [How to compile](#how-to-compile)
@@ -83,14 +83,14 @@
    Expressions is lines in lines. But logical operators not make auto output, they will be replaced by result. Also you can't use set, input and output in expressions.
    Syntax : 
    ```
-   keyword {keyword arg {keyword arg arg}} arg
+   keyword (keyword arg (keyword arg arg)) arg
    ```
    
    Example :
    ```
    input var1
    input var2
-   output {and var1 {not var2}}
+   output (and var1 (not var2))
    ```
 
   ## Lists
@@ -113,14 +113,14 @@
   
   Example :
   ```
-  func name : arg1 arg2 (
+  func name : arg1 arg2 {
     not arg1
     
     input inp1
-    output {and inp1 arg1} output
+    output (and inp1 arg1) output
     
-    return {and arg1 arg2}
-  )
+    return (and arg1 arg2)
+  }
   ```
   
 # Keywords
@@ -208,7 +208,7 @@
   input i1
   input i2
   and i1 i2
-  set var1 {and i1 1}
+  set var1 (and i1 1)
   ```
   
   ### or
@@ -224,7 +224,7 @@
   input i1
   input i2
   or i1 i2
-  set var1 {or i1 i2}
+  set var1 (or i1 i2)
   ```
   
   ### not
@@ -240,16 +240,16 @@
   input i1
   input i2
   not i1
-  set var1 {not {or i1 i2}}
+  set var1 (not (or i1 i2))
   ```
   
   ## Conditional operators
   ### if  
   Synatax :
   ``` 
-  if condition (
+  if condition {
     code
-  )
+  }
   ```
   Conditional operator if, executes code in block if condition is 1.
   
@@ -258,20 +258,20 @@
   Example :
   ```
   input a
-  if a (
+  if a {
     output a _a
-  )
+  }
   ```
   
   ### else 
   Synatax :
   ``` 
-  if condition (
+  if condition {
     code
-  )
-  else (
+  }
+  else {
     code
-  )
+  }
   ```
   Conditional operator else, executes code in block if condition of previous if operator is 0.
   
@@ -283,22 +283,22 @@
   ```
   input a
   
-  if a (
+  if a {
     output a _a
-  )
-  else (
+  }
+  else {
     input b
     output b _b
-  )
+  }
   ```
 
   ## Loops
   ### for
   Synatax :
   ``` 
-  for variable list (
+  for variable list {
     code
-  )
+  }
   ```
   For loop, aka foreach. Iterates throw `list`, every iteration executes code inside, sets `variable` to next value in list.
   After last loop iteration finished, `variable` is droped, so you can`t access it any more.
@@ -307,21 +307,21 @@
   ```
   set list [[0 1] [1 0]]
 
-  for i list (
+  for i list {
     output i pretty list
 
-    for j i (
+    for j i {
       output j pretty sub-list
-    )
-  )
+    }
+  }
   ```
 
   ### while
   Synatax :
   ``` 
-  while condition (
+  while condition {
     code
-  )
+  }
   ```
   While loop. Repeats code inside, while condition is 1.
 
@@ -332,10 +332,10 @@
   // This code will just output hi there : 1
   set var 1
 
-  while var (
+  while var {
     output 1 hi there
     set var 0
-  )
+  }
   ```
  
   ## List keywords
@@ -403,9 +403,9 @@
   set list [0 1 0]
   set list2 [1 0 1]
   set res []
-  for i {zip list list2} (
-    append res {or {index i [0]} {index i [1]}}
-  )
+  for i (zip list list2} {
+    append res (or (index i [0]) (index i [1]))
+  }
   // Res will be [1 1 1]
   ```
   
@@ -413,9 +413,9 @@
   ### func
   Synatax :
   ```
-  func name : arg1 arg2... (
+  func name : arg1 arg2... {
     code
-  )
+  }
   ```
 
   Function declaration keyword.
@@ -424,9 +424,9 @@
       
   Example :
   ```
-  func nor : arg1 arg2 (
-    return {not {or arg1 arg2}}
-  )
+  func nor : arg1 arg2 {
+    return (not (or arg1 arg2))
+  }
   ```
       
       
@@ -440,7 +440,7 @@
       
   Example : 
   ```
-  func nor : arg1 arg2 (
-    return {not {or arg1 arg2}}
-  )
+  func nor : arg1 arg2 {
+    return (not (or arg1 arg2))
+  }
   ```
