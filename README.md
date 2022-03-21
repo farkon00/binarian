@@ -2,6 +2,7 @@
 # Binarian
 # Content
   * [Global info](#global-info)
+  * [How to compile](#how-to-compile)
   * [Standart library](#standart-library)
   * [Basic syntax](#basic-syntax)
     * [Expressions](#expression)
@@ -51,9 +52,14 @@
   python3 compiler.py other_file.bino -d
   binarian.exe your_file.bino -no-std
   ```
+  
+# How to compile
+ If you want to compile binarian intepreter yourself for tests of your modifications, updating std.bino or other reasons. Pyinstaller is recomended.
+
+ Command for creating executable in current version is `pyinstaller binarian.py --paths "<path to source code directory>" --onefile --add-data "std.bino;."`
 
 # Standart library
-  To use standart library std.bino should be in the same folder with binarian.py or binarian.exe. Latest version of standart library is stored in github repo in std.bino file. 
+  Latest version of standart library is stored in github repo in std.bino file, if you want new features from standart library and stay with old version, use old source code of intepreter and new std.bino in directory with source code. New versions of standart library can work incorrectly on older versions. Look to [How to compile](#how-to-compile) for more information about creating executable.  
 
   Standart library includes useful functions like sum, add, subt. Documentation for standart library is available in github repo in std_docs.md file(WIP).
 
