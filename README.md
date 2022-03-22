@@ -71,8 +71,8 @@
 # Basic syntax
   All syntax is based on keywords and arguments. 
   ```
-  keyword1 arg1 arg2(not for all keywords)
-  keyword2 arg1 arg2(not for all keywords)
+  keyword1 arg1 arg2...
+  keyword2 arg1 arg2...
   keyword3 arg1
   ```
   
