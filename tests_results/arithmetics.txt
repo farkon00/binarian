@@ -1,6 +1,10 @@
-num_list : [1 2 3]
-num : 1
-inline_negative : -7
-inline_list : [12 65 -34]
+add : -15
+add-float : 4.3
+sub : -2
+sub-float : 32.7
+mul : 4
+mul-float : 16.25
+div : 3.0
+div-float : 2.875
 
-Finished in 0.001994609832763672 sec
+Finished in 0.002233266830444336 sec

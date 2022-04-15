@@ -1,14 +1,8 @@
-set num1 1
-set num2 2
-set num3 3
-set num0 0
-
-output [num1 num2 num3] num_list
-output num1 num
-output -7 inline_negative
-output [12 65 -34] inline_list
-
-output 1.23 float
-output [-34.0230 12.00] float_list
-
-// Actual arithmetics will be here after they will be added to language, for now just integers and float tests
+output (+ 1 -16) add 
+output (+ 3.3 1) add-float
+output (- 7 9) sub
+output (- 66 33.3) sub-float
+output (* 2 2) mul
+output (* 3.25 5) mul-float
+output (/ 6 2) div
+output (/ 5.75 2) div-float

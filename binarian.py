@@ -47,7 +47,7 @@ class ExecutionState:
         self.RESTRICTED_NAMES = (
             "and", "or", "not", "set", "drop", "input", "output", "func",
             "return", "index", "len", "append", "zip", "for", "while",
-            "object", "int", "list", "function", "none"
+            "object", "int", "list", "function", "none", "+", "-", "*", "/",
         )
         self.BRACKETS = ("(", ")", "[", "]", "{", "}")
         self.GLOBAL_FUNCS = {
@@ -150,6 +150,9 @@ def execute_line(lexic : list[str], state : ExecutionState, local : dict[str : o
         case "return":
             return return_keyword(lexic, state, is_func, full_vars)
 
+        # Arithmetics
+        case "+" | "-" | "*" | "/":
+            return arithmetics(lexic, state, full_vars)
 
         case _:
             if lexic[0] in full_vars:
