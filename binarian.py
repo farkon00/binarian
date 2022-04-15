@@ -150,9 +150,8 @@ def execute_line(lexic : list[str], state : ExecutionState, local : dict[str : o
         case "return":
             return return_keyword(lexic, state, is_func, full_vars)
 
-        # Arithmetics
-        case "+" | "-" | "*" | "/":
-            return arithmetics(lexic, state, full_vars)
+        case "+" | "-" | "*" | "/" | "**" | "%":
+            return execute_oper(lexic, state, full_vars)
 
         case _:
             if lexic[0] in full_vars:

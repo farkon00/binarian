@@ -10,4 +10,4 @@ from .func_keyw import *
 from .oper_keyw import *
 from .lists_keyw import *
 from .loop_keywords import *
-from .arithmetics import *
+from .operations import *

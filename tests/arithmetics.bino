@@ -6,3 +6,7 @@ output (* 2 2) mul
 output (* 3.25 5) mul-float
 output (/ 6 2) div
 output (/ 5.75 2) div-float
+
+// Advanced operations
+output (** 1 2) pow
+output (% 5 2) mod
