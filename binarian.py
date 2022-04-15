@@ -44,10 +44,13 @@ class ExecutionState:
             "none" : None
         }
 
+        self.operations = ("+", "-", "*", "/", "**", "%")
+
         self.RESTRICTED_NAMES = (
             "and", "or", "not", "set", "drop", "input", "output", "func",
             "return", "index", "len", "append", "zip", "for", "while",
             "object", "int", "list", "function", "none", "+", "-", "*", "/",
+            *self.operations
         )
         self.BRACKETS = ("(", ")", "[", "]", "{", "}")
         self.GLOBAL_FUNCS = {
@@ -94,6 +97,9 @@ def execute_line(lexic : list[str], state : ExecutionState, local : dict[str : o
             if j[1] == state.opened_blocks + 1:
                 state.opened_ifs.remove(j)
                 break
+
+    if lexic[0] in state.operations:
+        return execute_oper(lexic, state, full_vars)
 
     match lexic[0]:
         case "set":
@@ -150,8 +156,6 @@ def execute_line(lexic : list[str], state : ExecutionState, local : dict[str : o
         case "return":
             return return_keyword(lexic, state, is_func, full_vars)
 
-        case "+" | "-" | "*" | "/" | "**" | "%":
-            return execute_oper(lexic, state, full_vars)
 
         case _:
             if lexic[0] in full_vars:

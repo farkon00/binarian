@@ -9,7 +9,7 @@ class TypeCheckedFunction:
 
 class TypeCheckingState:
     def __init__(self, state):
-        self.vars : dict[str : type] = {"0" : int, "1" : int}
+        self.vars : dict[str : type] = {}
         self.functions : dict[str : TypeCheckedFunction] = {}
 
         self.reset()
@@ -30,9 +30,9 @@ class TypeCheckingState:
             "drop" : (None,),
             "input" : (None, None),
             "output" : (None, object, None),
-            "and" : (int, int, int),
-            "or" : (int, int, int),
-            "not" : (int, int),
+            "and" : (object, object, int),
+            "or" : (object, object, int),
+            "not" : (object, int),
             "index" : (object, List, List),
             "setindex" : (None, List, List, object),
             "len" : (List, List),
@@ -42,8 +42,12 @@ class TypeCheckingState:
             "for" : (None, None, List),
             "while" : (None, int),
             "func" : (None,),
-            "return" : (None, object)
+            "return" : (None, object),
         }
+
+        self.operations = ("+", "-", "*", "/", "**", "%")
+        self.int_operations = ()
+        self.float_operations = ("/")
 
     def reset(self):
         self.opened_function = None

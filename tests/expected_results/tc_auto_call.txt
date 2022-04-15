@@ -3,6 +3,6 @@ First stage of type checking completed successfully with 0 warnings
 While type checking, exception was thrown :
 
 line 5 :
-  or a 1
+  + a 1
 
-Unexpected argument type, int was expected, list found.
+Unexpected operation argument type, float or int was expected, list found.

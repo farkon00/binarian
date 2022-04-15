@@ -21,6 +21,17 @@ def tc_line1(lexic, state):
     if len(lexic) <= 0:
         return None
 
+    if lexic[0] in state.operations:
+        if lexic[0] in state.int_operations:
+            return int
+        elif lexic[0] in state.float_operations:
+            return float
+        elif isinstance(get_type(lexic[1], state, full_vars), float) or\
+         isinstance(get_type(lexic[2], state, full_vars), float):
+            return float
+        else:
+            return int
+
     match lexic[0]:
         case "set":
             if is_func:
