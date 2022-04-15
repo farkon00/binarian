@@ -1,0 +1,25 @@
+{
+    "name": "binarian",
+    "displayName": "Binarian",
+    "description": "Binarian is a programing language based on boolean logical operators.",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.65.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "binarian",
+            "aliases": ["Binarian", "binarian"],
+            "extensions": [".bino"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "binarian",
+            "scopeName": "source.bino",
+            "path": "./syntaxes/binarian.tmLanguage.json"
+        }]
+    }
+}

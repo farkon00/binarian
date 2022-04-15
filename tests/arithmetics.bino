@@ -1,0 +1,11 @@
+set num1 1
+set num2 2
+set num3 3
+set num0 0
+
+output [num1 num2 num3] num_list
+output num1 num
+output -7 inline_negative
+output [12 65 -34] inline_list
+
+// Actual arithmetics will be here after they will be added to language, for now just integers tests

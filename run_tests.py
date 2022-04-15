@@ -7,6 +7,7 @@ tests = [
     ["set_debug", ["-d"]],
     ["io"],
     ["log_oper"],
+    ["arithmetics"],
     ["expr"],
     ["drop", ["-d"]],
     ["if"],

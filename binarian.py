@@ -44,7 +44,7 @@ class ExecutionState:
         }
 
         self.RESTRICTED_NAMES = (
-            "0", "1", "and", "or", "not", "set", "drop", "input", "output", "func",
+            "and", "or", "not", "set", "drop", "input", "output", "func",
             "return", "call", "index", "len", "append", "zip", "for", "while", "(",
             ")", "[", "]", "{", "}", "object", "int", "list", "function", "none"
         )

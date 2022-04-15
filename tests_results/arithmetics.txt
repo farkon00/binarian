@@ -1,0 +1,6 @@
+num_list : [1 2 3]
+num : 1
+inline_negative : -7
+inline_list : [12 65 -34]
+
+Finished in 0.0009567737579345703 sec
