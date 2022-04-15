@@ -45,9 +45,10 @@ class ExecutionState:
 
         self.RESTRICTED_NAMES = (
             "and", "or", "not", "set", "drop", "input", "output", "func",
-            "return", "call", "index", "len", "append", "zip", "for", "while", "(",
-            ")", "[", "]", "{", "}", "object", "int", "list", "function", "none"
+            "return", "index", "len", "append", "zip", "for", "while",
+            "object", "int", "list", "function", "none"
         )
+        self.BRACKETS = ("(", ")", "[", "]", "{", "}")
         self.GLOBAL_FUNCS = {
             "execute_line" : execute_line,
             "execute_expr" : execute_expr,

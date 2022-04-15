@@ -1,7 +1,7 @@
 from bin_types.list import List
 from .blocks_parser import parse_lists
 from .exceptions import *
-from .convert_type import *
+from .utils import *
 
 def get_var(var : str, full_vars : dict[str : object], state, _type : type = object, error = "Variable"):
     if var[0] == "[":

@@ -1,6 +1,6 @@
 from funcs.blocks_parser import *
 from funcs.exceptions import binarian_assert
-from funcs.convert_type import *
+from funcs.utils import *
 from .get_type import get_type
 
 def tc_line2(lexic, state):

@@ -2,11 +2,12 @@ from time import time
 
 from funcs.get_var import get_var
 from funcs.exceptions import binarian_assert
+from funcs.utils import is_name_unavailable
 
 def input_keyword(lexic : list[str], in_vars : dict[str : object], state) -> None:
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
     binarian_assert(len(lexic) < 2, "You didn`t provide a variable name.", state)
-    binarian_assert(lexic[1] in state.RESTRICTED_NAMES, "Variable name is unavailable.", state)
+    binarian_assert(is_name_unavailable(lexic[1], state), "Variable name is unavailable.", state)
 
     input_start_time = time()
     inp = input(f"{lexic[1]} : ")

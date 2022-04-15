@@ -1,6 +1,7 @@
 from bin_types.function import Function
 from funcs.get_var import get_var
 from funcs.exceptions import binarian_assert
+from funcs.utils import is_name_unavailable
 
 def func_keyword(lexic : list[str], state, in_vars : dict[str : object]):
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
@@ -13,7 +14,8 @@ def func_keyword(lexic : list[str], state, in_vars : dict[str : object]):
         func_name = parts[0].split()[2]
     else:
         func_name = parts[0].split()[1]
-    binarian_assert(func_name in state.RESTRICTED_NAMES, "Function name is unavailable.", state)
+
+    binarian_assert(is_name_unavailable(func_name, state), "Function name is unavailable.", state)
 
     try:
         args = parts[1].split()

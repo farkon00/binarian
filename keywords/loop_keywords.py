@@ -1,11 +1,12 @@
 from funcs.get_var import get_var
 from funcs.exceptions import binarian_assert
 from bin_types.list import List
+from funcs.utils import is_name_unavailable
 
 def for_keyword(lexic : list[str], state, full_vars : dict[str : object]):
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
     binarian_assert(len(lexic) < 3, "You didn`t give enough arguments.", state)
-    binarian_assert(lexic[1] in state.RESTRICTED_NAMES, "Variable name is unavailable.", state)
+    binarian_assert(is_name_unavailable(lexic[1], state), "Variable name is unavailable.", state)
     binarian_assert("{" not in " ".join(lexic), 'Blocks must have starts and finishes matched with "{" and "}".', state)
     get_var(lexic[2], full_vars, state, List) # Checks for errors in list
 
@@ -23,7 +24,7 @@ def execute_for(loop : list[int, int, list[str]], state, full_vars : dict[str : 
 
     for loop_iter in get_var(loop_lexic[2], full_vars, state, List):
         if local != None:
-                local[loop_lexic[1]] = loop_iter
+            local[loop_lexic[1]] = loop_iter
         else:
             state.vars[loop_lexic[1]] = loop_iter
 
