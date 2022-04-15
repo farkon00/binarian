@@ -8,4 +8,7 @@ output num1 num
 output -7 inline_negative
 output [12 65 -34] inline_list
 
-// Actual arithmetics will be here after they will be added to language, for now just integers tests
+output 1.23 float
+output [-34.0230 12.00] float_list
+
+// Actual arithmetics will be here after they will be added to language, for now just integers and float tests

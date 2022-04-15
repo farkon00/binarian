@@ -38,6 +38,7 @@ class ExecutionState:
         self.types : dict[str : type] = {
             "object" : object,
             "int" : int,
+            "float" : float,
             "function" : Function,
             "list" : List,
             "none" : None

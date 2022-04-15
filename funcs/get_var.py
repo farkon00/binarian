@@ -4,13 +4,15 @@ from .exceptions import *
 from .utils import *
 
 def get_var(var : str, full_vars : dict[str : object], state, _type : type = object, error = "Variable"):
-    if var[0] == "[":
+    if var[0] == "[": # list parsing
         binarian_assert(var.count("[") != var.count("]"), 'Lists must have start and finish matched with "[" and "]"', state)
 
         elems = parse_lists(var[1:-1].split())
         ret = List([get_var(j, full_vars, state) for j in elems])
-    elif var.isdigit() or var[0] == "-" and var[1:].isdigit():
+    elif var.isdigit() or (var[0] == "-" and var[1:].isdigit()): # int parsing
         ret = int(var) if var[0] != "-" else -int(var[1:])
+    elif var.replace(".", "").isdigit() or (var[0] == "-" and var[1:].replace(".", "").isdigit()): # float parsing
+        ret = float(var) if var[0] != "-" else -float(var[1:])
     else:
         binarian_assert(var not in full_vars, f"{error} is not found : {var}", state)
 
