@@ -1,6 +1,7 @@
 # My devlopment env files and files for testing
 .vscode
 foo.bino
+vs_code/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
