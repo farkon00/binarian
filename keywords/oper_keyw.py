@@ -4,7 +4,7 @@ from funcs.exceptions import binarian_assert, throw_exception
 def if_keyword(lexic : list[str], state, full_vars : dict[str : object]):
     binarian_assert("{" not in " ".join(lexic), 'Blocks must have starts and finishes matched with "{" and "}".', state)
 
-    cond = get_var(lexic[1], full_vars, state, int)
+    cond = bool(get_var(lexic[1], full_vars, state))
     state.allowed_blocks += cond
 
     state.opened_ifs.append((bool(cond), state.opened_blocks))
