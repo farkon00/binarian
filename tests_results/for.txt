@@ -5,4 +5,4 @@ pretty list : [1 0]
 pretty sub-list : 1
 pretty sub-list : 0
 
-Finished in 0.00608372688293457 sec
+Finished in 0.0019655227661132812 sec

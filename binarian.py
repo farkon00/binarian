@@ -46,12 +46,14 @@ class ExecutionState:
             "none" : None
         }
 
-        self.operations : tuple[str] = ("+", "-", "*", "/", "**", "%")
+        self.operations : tuple[str] = (
+            "+", "-", "*", "/", "**", "%", ">", "<", ">=", "<=", "==", "!="
+        )
 
         self.RESTRICTED_NAMES : tuple[str] = (
             "and", "or", "not", "set", "drop", "input", "output", "func",
             "return", "index", "len", "append", "zip", "for", "while",
-            "object", "int", "list", "function", "none", "+", "-", "*", "/",
+            "object", "int", "float", "list", "function", "none",
             *self.operations
         )
         self.BRACKETS : tuple[str] = ("(", ")", "[", "]", "{", "}")

@@ -7,7 +7,7 @@ tests = [
     ["set_debug", ["-d"]],
     ["io"],
     ["log_oper"],
-    ["arithmetics"],
+    ["operations"],
     ["expr"],
     ["drop", ["-d"]],
     ["if"],
@@ -24,7 +24,8 @@ tests = [
     ["tc_keyw_args", ["-tc"]],
     ["tc_func_args", ["-tc"]],
     ["tc_func_args_in", ["-tc"]],
-    ["tc_auto_call", ["-tc"]]
+    ["tc_auto_call", ["-tc"]],
+    ["tc_operations", ["-tc"]]
 ]
 
 # Adds argv everywhere

@@ -6,22 +6,18 @@ def execute_oper(lexic : list[str], state, full_vars : dict[str : object]):
     arg1 = get_var(lexic[1], full_vars, state, _type=(int, float))
     arg2 = get_var(lexic[2], full_vars, state, _type=(int, float))
 
-    if lexic[0] == "+":
-        return arg1 + arg2
-
-    elif lexic[0] == "-":
-        return arg1 - arg2
-
-    elif lexic[0] == "*":
-        return arg1 * arg2
-
-    elif lexic[0] == "/":
-        return arg1 / arg2
-    
-    elif lexic[0] == "**":
-        return arg1 ** arg2
-
-    elif lexic[0] == "%":
-        return arg1 % arg2
+    match lexic[0]:
+        case "+":  return     arg1 + arg2
+        case "-":  return     arg1 - arg2
+        case "*":  return     arg1 * arg2
+        case "/":  return     arg1 / arg2  
+        case "**": return     arg1 ** arg2
+        case "%":  return     arg1 % arg2
+        case "==": return int(arg1 == arg2)
+        case "!=": return int(arg1 != arg2)
+        case ">":  return int(arg1 > arg2)
+        case "<":  return int(arg1 < arg2)
+        case ">=": return int(arg1 >= arg2)
+        case "<=": return int(arg1 <= arg2)
 
     assert False, "Unreachable, operation not found"

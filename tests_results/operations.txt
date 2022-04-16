@@ -1,0 +1,27 @@
+add : -15
+add-float : 4.3
+sub : -2
+sub-float : 32.7
+mul : 4
+mul-float : 16.25
+div : 3.0
+div-float : 2.875
+pow : 1
+mod : 1
+true : 1
+false : 0
+false : 0
+true : 1
+true : 1
+false : 0
+true : 1
+false : 0
+true : 1
+true : 1
+false : 0
+true : 1
+false : 0
+false : 0
+true : 1
+
+Finished in 0.0029964447021484375 sec

@@ -50,8 +50,10 @@ class TypeCheckingState:
             "return" : (None, object),
         }
 
-        self.operations : tuple[str] = ("+", "-", "*", "/", "**", "%")
-        self.int_operations : tuple[str] = ()
+        self.operations : tuple[str] = (
+            "+", "-", "*", "/", "**", "%", ">", "<", ">=", "<=", "==", "!="
+        )
+        self.int_operations : tuple[str] = (">", "<", ">=", "<=", "==", "!=")
         self.float_operations : tuple[str] = ("/")
 
     def reset(self):
