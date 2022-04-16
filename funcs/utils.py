@@ -1,4 +1,4 @@
-def type_to_str(_type, sep=" or "):
+def type_to_str(_type : type, sep : str =" or "):
     """
     Converts type or tuple of types to string
     e. g. <class 'bin_types.functions.Function'> -> function
@@ -23,11 +23,18 @@ def type_to_str(_type, sep=" or "):
 
     return res.lower()
 
-def is_name_unavailable(name, state):
+def is_name_unavailable(name : str, state):
+    """
+    Checks if name of variable or function is unavailiable
+    Not checks if its taken, just checks, that name isnt any literal or keyword etc.
+    """
     # 1 line - name is keyword
     # 2 line - name is integer
-    # 3 line - name includes brackets
+    # 3-4 line - name is float
+    # 5 line - name includes brackets
     return ((name in state.RESTRICTED_NAMES) or\
         (name.isdigit() or (name[0] == "-" and name[1:].isdigit())) or\
+        (name.replace(".", "").isdigit() or\
+         (name[0] == "-" and name[1:].replace(".", "").isdigit())) or\
         any([(i in name) for i in state.BRACKETS])
     )

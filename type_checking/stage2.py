@@ -3,7 +3,8 @@ from funcs.exceptions import binarian_assert
 from funcs.utils import *
 from .get_type import get_type
 
-def tc_line2(lexic, state):
+def tc_line2(lexic : str, state):
+    """Executes 2 stage of type checking for 1 keyword"""
     is_func = bool(state.opened_function)
     local = state.opened_function.locals if is_func else {}
     full_vars = {**state.vars, **local}
@@ -118,7 +119,8 @@ f"Unexpected argument type for {i[0]}, {type_to_str(i[1])} was expected, \
 
             state.warnings += 1
 
-def tc_expr2(line, state):
+def tc_expr2(line : str, state):
+    """Executes 2 stage of type checking for expression"""
     indexes = parse_brackets(line, ("(", ")"), state)
 
     if not indexes:

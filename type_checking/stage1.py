@@ -4,7 +4,8 @@ from funcs.utils import *
 from .get_type import get_type
 from .tc_types import TypeCheckedFunction
 
-def tc_line1(lexic, state):
+def tc_line1(lexic : list[str], state):
+    """Executes 1 stage of type checking for 1 keyword"""
     is_func = bool(state.opened_function)
     local = state.opened_function.locals if is_func else {}
     full_vars = {**state.vars, **local}
@@ -100,7 +101,8 @@ def tc_line1(lexic, state):
             state.warnings += 1
 
 
-def tc_expr1(line, state):
+def tc_expr1(line : str, state):
+    """Executes 1 stage of type checking for expession"""
     indexes = parse_brackets(line, ("(", ")"), state)
 
     if not indexes:

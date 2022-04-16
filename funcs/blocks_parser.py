@@ -9,7 +9,8 @@ def parse_brackets(line : str, mode : tuple[str, str], state, error : str = "Exp
         binarian_assert(start_ind == -1, f'{error} must have start and finish matched with "{mode[0]}" and "{mode[1]}".', state)
         return start_ind, end_ind
 
-def parse_lists(lexic : list[str]):
+def parse_lists(lexic : list[str]) -> list[str]:
+    """Finds [ and ] in lexic and combines all lexic beetween them"""
     arrays_opened = 0
     merged = 0
     
@@ -28,7 +29,7 @@ def parse_lists(lexic : list[str]):
 
 
 def parse_blocks(line : str, state, ret : bool = False) -> str | tuple[int, int]:
-    """Counts opened blocks"""
+    """Counts opened blocks and writes them to state, if not ret"""
 
     opened_blocks, allowed_blocks = state.opened_blocks, state.allowed_blocks
 

@@ -1,5 +1,7 @@
 import sys
+
 from time import time
+from types import FunctionType
 
 from type_checking import *
 
@@ -12,10 +14,10 @@ from keywords import *
 class ExecutionState:
     """Class that contains all data about execution state and constants for execution"""
     def __init__(self, code : str) -> None:
-        self.vars : dict[str : object] = {"0" : 0, "1" : 1}
+        self.vars : dict[str : object] = {}
         self.is_expr : bool = False
 
-        self.current_line = -1
+        self.current_line : int = -1
 
         self.opened_blocks : int = 0
         self.allowed_blocks : int = 0
@@ -44,23 +46,23 @@ class ExecutionState:
             "none" : None
         }
 
-        self.operations = ("+", "-", "*", "/", "**", "%")
+        self.operations : tuple[str] = ("+", "-", "*", "/", "**", "%")
 
-        self.RESTRICTED_NAMES = (
+        self.RESTRICTED_NAMES : tuple[str] = (
             "and", "or", "not", "set", "drop", "input", "output", "func",
             "return", "index", "len", "append", "zip", "for", "while",
             "object", "int", "list", "function", "none", "+", "-", "*", "/",
             *self.operations
         )
-        self.BRACKETS = ("(", ")", "[", "]", "{", "}")
-        self.GLOBAL_FUNCS = {
+        self.BRACKETS : tuple[str] = ("(", ")", "[", "]", "{", "}")
+        self.GLOBAL_FUNCS : dict[str : FunctionType] = {
             "execute_line" : execute_line,
             "execute_expr" : execute_expr,
             "parse_blocks" : parse_blocks,
             "parse_lists" : parse_lists
         }
 
-def execute_line(lexic : list[str], state : ExecutionState, local : dict[str : object] = None) -> int | None:
+def execute_line(lexic : list[str], state : ExecutionState, local : dict[str : object] = None) -> object | None:
     """Executes one keyword"""
 
     is_func = local != None
@@ -186,7 +188,7 @@ def execute_expr(line : str, state : ExecutionState, local : dict[str : object] 
 
     return ret
 
-def main(test_argv=None):
+def main(test_argv : list[str] = None) -> None:
     start_time = time()
 
     if test_argv:

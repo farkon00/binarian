@@ -1,13 +1,18 @@
 from bin_types.list import List
 
 class TypeCheckedFunction:
+    """
+    Class, that represents function while type checking
+    Contains types for all arguments, local variables and return type
+    """
     def __init__(self, args, ret=object):
         self.args : list[tuple[str:type]] = args
-        self.ret = ret
+        self.ret : type = ret
 
-        self.locals = {i : j for i, j in args}
+        self.locals : dict[str : type] = {i : j for i, j in args}
 
 class TypeCheckingState:
+    """Class that contains all data about type checking state"""
     def __init__(self, state):
         self.vars : dict[str : type] = {}
         self.functions : dict[str : TypeCheckedFunction] = {}
@@ -20,7 +25,7 @@ class TypeCheckingState:
         self.lines : list[str] = state.lines
         self.std_lines : int = state.std_lines
 
-        self.call_stack = [] # For throw_exception function to work, unused anywhere else
+        self.call_stack : list[tuple[str, int]] = [] # For throw_exception function to work, unused anywhere else
 
         self.types : dict[str : type] = state.types
 
@@ -45,12 +50,13 @@ class TypeCheckingState:
             "return" : (None, object),
         }
 
-        self.operations = ("+", "-", "*", "/", "**", "%")
-        self.int_operations = ()
-        self.float_operations = ("/")
+        self.operations : tuple[str] = ("+", "-", "*", "/", "**", "%")
+        self.int_operations : tuple[str] = ()
+        self.float_operations : tuple[str] = ("/")
 
     def reset(self):
-        self.opened_function = None
+        """Resets data beetween two stages of type checking"""
+        self.opened_function : TypeCheckedFunction = None
         self.function_blocks : int = None
 
         self.current_line : int = 0

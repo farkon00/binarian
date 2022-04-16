@@ -1,6 +1,7 @@
 from bin_types.list import List
 
-def get_type(var, state, full_vars):
+def get_type(var : str, state, full_vars : dict[str : object]):
+    """Returns type of variable or type of literal e. g. int, float, list etc."""
     if var[0] == "[":
         return List
     elif var.isdigit() or (var[0] == "-" and var[1:].isdigit()):

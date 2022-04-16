@@ -1,6 +1,11 @@
 from sys import exit, argv
 
-def throw_exception(text : str, state, display_line=True):
+def throw_exception(text : str, state, display_line : bool = True):
+    """
+    Throws binarina exception with binarian call stack
+    Cant be handeled by try-except block
+    If display_line is False, it wont print call stack 
+    """
     exc_text = f"\nWhile {'executing code' if 'TypeCheck' not in str(type(state)) else 'type checking'}, exception was thrown :\n\n"
 
     if display_line:
@@ -34,6 +39,12 @@ def throw_exception(text : str, state, display_line=True):
 
     exit(1)
 
-def binarian_assert(condition : bool, text : str, state, display_line=True):
+def binarian_assert(condition : bool, text : str, state, display_line : bool = True):
+    """
+    If condition is true throws binarian error
+    If display_line is False, it wont print call stack 
+    !WARNING!
+    Works opposite to regular asserts, THROWS EXCEPTION ON TRUE 
+    """
     if condition:
         throw_exception(text, state, display_line=display_line)

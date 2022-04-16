@@ -5,6 +5,10 @@ from .stage1 import *
 from .stage2 import *
 
 def type_check(state):
+    """
+    Type check program from state
+    Runs two stages of type checking
+    """
     state = TypeCheckingState(state)
 
     # Stage 1(type)

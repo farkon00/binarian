@@ -4,6 +4,10 @@ from .exceptions import *
 from .utils import *
 
 def get_var(var : str, full_vars : dict[str : object], state, _type : type = object, error = "Variable"):
+    """
+    Returns value of variable or parsed int, float, list etc.
+    If _type is specified checks, that type of return value is _type 
+    """
     if var[0] == "[": # list parsing
         binarian_assert(var.count("[") != var.count("]"), 'Lists must have start and finish matched with "[" and "]"', state)
 
@@ -18,6 +22,7 @@ def get_var(var : str, full_vars : dict[str : object], state, _type : type = obj
 
         ret = full_vars[var]
 
+    # Throws exception if type of return isnt _type
     if not isinstance(ret, _type):
         # Makes better strs for types e. g. <class 'int'> -> int
         type1 = type_to_str(_type)

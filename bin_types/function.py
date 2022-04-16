@@ -11,7 +11,8 @@ class Function:
     args : list[str]
     start_line : int
 
-    def execute(self, args : list[str], state, full_vars : dict[str : object]):
+    def execute(self, args : list[str], state, full_vars : dict[str : object]) -> object:
+        """Executes function"""
         starter_blocks, starter_allowed = state.opened_blocks, state.allowed_blocks
 
         is_expr_before = state.is_expr
@@ -22,7 +23,9 @@ class Function:
             state.current_line += 1
 
             # Expressions executing
-            binarian_assert(line.count("(") != line.count(")"), 'Expression must have start and finish matched with "{" and "}".', state)
+            binarian_assert(line.count("(") != line.count(")"),
+                'Expression must have start and finish matched with "{" and "}".', state
+            )
 
             if state.opened_blocks <= state.allowed_blocks:
                 while "(" in line:
@@ -30,6 +33,7 @@ class Function:
             
             lexic = line.split()
 
+            # Stops function without return
             opened_blocks, _ = parse_blocks(line, state, ret=True)
             if opened_blocks <= starter_blocks - 1:
                 state.opened_blocks = starter_blocks
@@ -40,6 +44,7 @@ class Function:
 
             state.GLOBAL_FUNCS["execute_line"](lexic, state, local=local)
 
+            # Stops function and retuerns return value on return
             if state.last_return != None:
                 state.opened_blocks = starter_blocks
                 state.allowed_blocks = starter_allowed

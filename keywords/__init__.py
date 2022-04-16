@@ -1,3 +1,5 @@
+"""Module, that contains all keywords functiion and execute_oper function."""
+
 import sys
 sys.path.append(".")
 

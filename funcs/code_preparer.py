@@ -9,6 +9,7 @@ def delete_com_line(line : str) -> str:
     return line
 
 def delete_comments(code : str) -> str:
+    """Deletes comments from code"""
     lines = code.split("\n")
     for i in range(len(lines)):
         lines[i] = delete_com_line(lines[i])
