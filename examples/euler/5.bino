@@ -1,0 +1,6 @@
+var l = [2 2 2 2 3 3 5 7 11 13 17 19]
+var res = 1
+for i l {
+    var res = (* i res)
+}
+output res res

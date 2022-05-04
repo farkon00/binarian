@@ -1,0 +1,14 @@
+var prev2 = 0
+var prev1 = 1
+var now = 1
+var sum = 0
+while (< now 4000000) {
+    var prev2 = prev1
+    var prev1 = now
+    var now = (+ prev1 prev2)
+    if (and (== (% now 2) 0) (< now 4000000)) {
+        var sum = (+ sum now)
+    }
+}
+
+output sum sum
