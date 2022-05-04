@@ -314,6 +314,45 @@ There are 6 types in binarian, one of them isnt recomended to use and was added 
   }
   ```
 
+  ## elif
+  Synatax :
+  ``` 
+  if condition {
+    code
+  }
+  elif condition {
+    code
+  }
+  ...
+  else {
+    code
+  }
+  ```
+  Conditional operator elif, executes code in block if condition of previous if operator is false(mostly it means, that value is "empty") and it's condition is true(mostly it means, that value isnt "empty").
+  
+  Not required for every if.
+  
+  Elif must go right after if.
+
+  You can chain as much elifs as you want and else isnt required after last elif.
+      
+  Example :
+  ```
+  input a
+  input b
+  
+  if a {
+    output a a
+  }
+  elif b {
+    output b b
+  }
+  else {
+    input c
+    output c c
+  }
+  ```
+
   ## Loops
   ### for
   Synatax :
