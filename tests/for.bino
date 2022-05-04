@@ -7,3 +7,11 @@ for i _list {
         output j pretty sub-list
     }
 }
+
+// Break test
+for i [0 0 1 0] {
+    if i {
+        break
+    }
+    output i i
+}

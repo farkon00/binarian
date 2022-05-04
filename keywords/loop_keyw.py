@@ -4,6 +4,9 @@ from funcs.exceptions import binarian_assert
 from bin_types.list import List
 from funcs.utils import is_name_unavailable
 
+def break_keyword(lexic : list[str], state):
+    state.is_breaked = True
+
 def for_keyword(lexic : list[str], state, full_vars : dict[str : object]):
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
     binarian_assert(len(lexic) < 3, "You didn`t give enough arguments.", state)
@@ -15,6 +18,7 @@ def for_keyword(lexic : list[str], state, full_vars : dict[str : object]):
 
 def execute_for(loop : list[int, int, list[str]], state, full_vars : dict[str : object], local : dict[str : object] = None):
     state.current_line = loop[0]
+    opened, allowed = state.opened_blocks, state.allowed_blocks
     
     loop_line = state.lines[loop[0]]
     while "(" in loop_line:
@@ -30,8 +34,6 @@ def execute_for(loop : list[int, int, list[str]], state, full_vars : dict[str : 
             state.vars[loop_lexic[1]] = loop_iter
 
         state.current_line = loop[0]
-        state.opened_blocks += 1
-        state.allowed_blocks += 1
 
         for line in loop[2]:
             state.current_line += 1
@@ -52,6 +54,16 @@ def execute_for(loop : list[int, int, list[str]], state, full_vars : dict[str : 
 
             if state.last_return != None:
                 return None
+
+            if state.is_breaked:
+                break
+
+        state.opened_blocks = opened
+        state.allowed_blocks = allowed
+
+        if state.is_breaked:
+            state.is_breaked = False
+            break
 
     try:
         if local != None:
@@ -104,6 +116,13 @@ def execute_while(loop : list[int, int, list[str]], state, full_vars : dict[str 
             if state.last_return != None:
                 return
 
+            if state.is_breaked:
+                break
+
         full_vars = {**state.vars, **(local if local != None else {})}
+
+        if state.is_breaked:
+            state.is_breaked = False
+            break
 
     state.current_line = end_line

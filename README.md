@@ -22,9 +22,11 @@
     * [Conditional operators](#conditional-operators)
       * [if](#if)
       * [else](#else)
+      * [elif](#elif)
     * [Loops](#loops)
       * [for](#for)
       * [while](#while)
+      * [break](#break)
     * [List keywords](#list-keywords)
       * [index](#index)
       * [setindex](#setindex)
@@ -394,6 +396,30 @@ There are 6 types in binarian, one of them isnt recomended to use and was added 
   while name {
     output 1 hi_there
     var name = 0
+  }
+  ```
+
+  ### break
+  Synatax :
+  ``` 
+  while condition {
+    code
+    break
+  }
+  for van list {
+    code 
+    break
+  }
+  ```
+  Stops `while` or `for` loop. Mostly used with conditions.
+      
+  Example :
+  ```
+  for i [0 0 1 0] {
+    if i {
+      break
+    }
+    output i i
   }
   ```
  

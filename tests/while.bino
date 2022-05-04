@@ -6,3 +6,12 @@ while inp {
 }
 
 output inp out_loop
+
+var i = 0
+while 1 {
+    if (>= i 5) {
+        break
+    }
+    output i i
+    var i = (+ i 1)
+}

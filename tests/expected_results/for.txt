@@ -4,3 +4,5 @@ pretty sub-list : 1
 pretty list : [1 0]
 pretty sub-list : 1
 pretty sub-list : 0
+i : 0
+i : 0
