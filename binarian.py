@@ -96,7 +96,7 @@ def execute_line(lexic : list[str], state : ExecutionState, local : dict[str : o
     if len(lexic) <= 0:
         return None
 
-    if lexic[0] != "else":
+    if lexic[0] not in ("else", "elif") and not state.is_expr:
         for j in state.opened_ifs:
             if j[1] == state.opened_blocks + 1:
                 state.opened_ifs.remove(j)
@@ -150,6 +150,9 @@ def execute_line(lexic : list[str], state : ExecutionState, local : dict[str : o
 
         case "else":
             else_keyword(lexic, state)
+
+        case "elif":
+            elif_keyword(lexic, state, full_vars)
 
         case "for":
             for_keyword(lexic, state, full_vars)

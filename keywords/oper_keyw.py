@@ -22,3 +22,21 @@ def else_keyword(lexic : list[str], state):
 
     if not if_[0]:
         state.allowed_blocks += 1
+
+def elif_keyword(lexic : list[str], state, full_vars : dict[str : object]):
+    binarian_assert("{" not in " ".join(lexic), 'Blocks must have starts and finishes matched with "{" and "}".', state)
+
+    for j in state.opened_ifs:
+        if j[1] == state.opened_blocks:
+            if_ = j
+            state.opened_ifs.remove(j)
+            break
+    else:
+        throw_exception(f"If operator for elif was not found.", state)
+
+    cond = bool(get_var(lexic[1], full_vars, state))
+
+    state.opened_ifs.append((cond and if_[0], state.opened_blocks))  
+
+    if not if_[0] and cond:
+        state.allowed_blocks += 1

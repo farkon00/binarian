@@ -3,18 +3,14 @@ while (<= i 100) {
     if (== (% i 15) 0) {
         output i fizzbuzz 
     }
+    elif (== (% i 5) 0) {
+        output i buzz
+    }
+    elif (== (% i 3) 0) {
+        output i fizz
+    }
     else {
-        if (== (% i 5) 0) {
-            output i buzz
-        }
-        else {
-            if (== (% i 3) 0) {
-                output i fizz
-            }
-            else {
-                output i _
-            }
-        }
+        output i _
     }
     var i = (+ i 1)
 }
