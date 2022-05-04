@@ -1,5 +1,5 @@
 from bin_types.list import List
-from binarian import binarian_assert
+from funcs.exceptions import binarian_assert
 
 def get_type(var : str, state, full_vars : dict[str : object], only_name : bool = False):
     """Returns type of variable or type of literal e. g. int, float, list etc."""
