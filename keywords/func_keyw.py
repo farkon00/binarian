@@ -24,6 +24,9 @@ def func_keyword(lexic : list[str], state, in_vars : dict[str : object]):
 
     temp = []
     for i in args:
+        if i == "{" or i == "}":
+            continue
+
         if ":" in i:
             arg = i.split(":")
             binarian_assert(arg[1] not in state.types, f"Type is not found : {arg[1]}", state)
@@ -31,6 +34,8 @@ def func_keyword(lexic : list[str], state, in_vars : dict[str : object]):
             temp.append(arg[0])
         else:
             temp.append(i)
+
+        binarian_assert(is_name_unavailable(temp[-1], state), f"Argument name is unavailable : {temp[-1]}", state)
 
     args = temp
     del temp

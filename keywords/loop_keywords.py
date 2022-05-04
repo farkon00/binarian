@@ -1,3 +1,4 @@
+from re import S
 from funcs.get_var import get_var
 from funcs.exceptions import binarian_assert
 from bin_types.list import List
@@ -78,12 +79,12 @@ def execute_while(loop : list[int, int, list[str]], state, full_vars : dict[str 
         temp_loop_cond = loop_cond
         while "(" in temp_loop_cond:
             temp_loop_cond = state.GLOBAL_FUNCS["execute_expr"](temp_loop_cond, state, local=local)
-        temp_loop_cond = get_var(temp_loop_cond, full_vars, state, int)
+        temp_loop_cond = get_var(temp_loop_cond, full_vars, state)
         if not temp_loop_cond:
             break
         del temp_loop_cond
         
-        for line in loop[2]:
+        for line in loop[2][:-1]:
             state.current_line += 1
 
             # Expressions executing
@@ -101,7 +102,7 @@ def execute_while(loop : list[int, int, list[str]], state, full_vars : dict[str 
             state.GLOBAL_FUNCS["execute_line"](lexic, state, local=local)
 
             if state.last_return != None:
-                return None
+                return
 
         full_vars = {**state.vars, **(local if local != None else {})}
 

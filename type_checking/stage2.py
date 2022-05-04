@@ -25,22 +25,24 @@ def tc_line2(lexic : str, state):
         # Check types
         exp_type = type_to_str((float, int))
 
-        binarian_assert(not issubclass(get_type(lexic[1], state, full_vars), float | int),
+        if get_type(lexic[1], state, full_vars) not in (object, None):
+            binarian_assert(not issubclass(get_type(lexic[1], state, full_vars), float | int),
 f"Unexpected operation argument type, {exp_type} was expected, \
 {type_to_str(get_type(lexic[1], state, full_vars))} found.", state
-        )
-        binarian_assert(not issubclass(get_type(lexic[2], state, full_vars), float | int),
+            )
+        if get_type(lexic[2], state, full_vars) not in (object, None):
+            binarian_assert(not issubclass(get_type(lexic[2], state, full_vars), float | int),
 f"Unexpected operation argument type, {exp_type} was expected, \
 {type_to_str(get_type(lexic[2], state, full_vars))} found.", state
-        )
+            )
 
         # Returns type
         if lexic[0] in state.int_operations:
             return int
         elif lexic[0] in state.float_operations:
             return float
-        elif isinstance(get_type(lexic[1], state, full_vars), float) or\
-         isinstance(get_type(lexic[2], state, full_vars), float):
+        elif issubclass(get_type(lexic[1], state, full_vars), float) or\
+         issubclass(get_type(lexic[2], state, full_vars), float):
             return float
         else:
             return int

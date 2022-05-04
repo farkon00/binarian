@@ -2,75 +2,33 @@ func int xor : val1:int val2:int {
     return (not (or (and val1 val2) (not (or val1 val2))))
 }
 
-func list add : num1:list num2:list {
-    // Actually I created this language just to write this function. 
-    set carry 0
-    set ret []
+func float floor : val:float {
+    // Returns float, but without fractional part
+    // When ability to change type to int is added, this should be changed to int
+    // TODO
+    return (- val (% val 1))
+}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
 
-    for dig (zip num1 num2) {
-        set a (index dig [0])
-        set b (index dig [1])
-
-        set sum (xor (xor a b) carry)
-        set carry (or (and carry (xor a b)) (and a b))
-
-        append ret sum
+func int list-eq : list1:list list2:list {
+    if (!= (len list1) (len list2)) {
+        return 0
     }
-
-    if carry {
-        append ret carry
-    }
-
-    return ret
-}
-
-func list half-subt : a:int b:int {
-    set dif (xor a b)
-    set borrow (and (not a) b)
-
-    return [dif borrow]
-}
-
-func list subt : num1:list num2:list {
-    // Please just not use this if first number is smaller than second one.
-    // It can`t deal with negative numbers as everything in this language
-
-    set borrow 0
-    set ret []
-
-    for dig (zip num1 num2) {
-        set a (index dig [0])
-        set b (index dig [1])
-
-        set half (half-subt a b)
-        set half2 (half-subt (index half [0]) borrow)
-
-        set dif (index half2 [0])
-        set borrow (or (index half [1]) (index half2 [1]))
-
-        append ret dif
-    }
-
-    return ret
-}
-
-func int eq : num1:list num2:list {
-    for dig (zip num1 num2) {
-        set a (index dig [0])
-        set b (index dig [1])
-
-        if (xor a b) {
+    
+    set i 0
+    while (< i (len list1)) {
+        if (!= (index list1 i) (index list2 i)) {
             return 0
         }
+        set i (+ i 1)
     }
 
     return 1
 }
 
-func list sum : list:list {
-    set sum [0]
-    for i list {
-        set sum (add sum i)
+func int sum : _list:list {
+    set sum 0
+    for i _list {
+        set sum (+ sum i)
     }
 
     return sum

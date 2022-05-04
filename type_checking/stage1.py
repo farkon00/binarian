@@ -27,8 +27,8 @@ def tc_line1(lexic : list[str], state):
             return int
         elif lexic[0] in state.float_operations:
             return float
-        elif isinstance(get_type(lexic[1], state, full_vars), float) or\
-         isinstance(get_type(lexic[2], state, full_vars), float):
+        elif issubclass(get_type(lexic[1], state, full_vars), float) or\
+         issubclass(get_type(lexic[2], state, full_vars), float):
             return float
         else:
             return int

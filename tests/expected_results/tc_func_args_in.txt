@@ -5,4 +5,4 @@ While type checking, exception was thrown :
 line 2 :
   set var (index tsil tin)
 
-Unexpected argument type, list was expected, int found.
+Unexpected argument type, int was expected, list found.

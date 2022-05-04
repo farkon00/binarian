@@ -183,7 +183,7 @@ def execute_expr(line : str, state : ExecutionState, local : dict[str : object] 
     start_ind, end_ind = indexes
 
     lexic = line[start_ind+1:end_ind].split()
-
+    
     ret = line[:start_ind] + str(execute_line(lexic, state, local=local)) + line[end_ind+1:]
 
     state.is_expr = False

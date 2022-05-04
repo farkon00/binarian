@@ -1,4 +1,4 @@
-func tc : tin:int tsil:list {
+func tc : tin:list tsil:list {
     set var (index tsil tin)
     return var
 }
