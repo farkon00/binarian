@@ -1,8 +1,8 @@
 // Input 
-set i [0]
+set i 0
 set initial []
-while (not (eq i [0 1 0 1])) {
-    set i (add i [1])
+while (< i 10) {
+    set i (+ i 1)
     input inp
     append initial inp
 }
@@ -10,22 +10,22 @@ while (not (eq i [0 1 0 1])) {
 set states [initial]
 
 set last-state initial
-set i [0]
-while (not (eq i [1 0 0 1])) {
-    set j [1]
+set i 0
+while (< i 9) {
+    set j 1
     set new-state [0]
-    while (not (eq j [1 0 0 1])) {
-        set p (index last-state (subt j [1]))
+    while (< j 9) {
+        set p (index last-state (- j 1))
         set q (index last-state j)
-        set r (index last-state (add j [1]))
+        set r (index last-state (+ j 1))
         append new-state (or (and q (not p)) (xor q r))
-        set j (add j [1])
+        set j (+ j 1)
     }
     append new-state 0
     set last-state new-state
     append states last-state
 
-    set i (add i [1])
+    set i (+ i 1)
 }
 
 for i states {
