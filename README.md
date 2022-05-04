@@ -8,7 +8,6 @@
   * [Basic syntax](#basic-syntax)
     * [Expressions](#expression)
     * [Lists](#lists)
-      * [Lists as integers](#lists-as-integers)
     * [Functions](#functions)
   * [Keywords](#keywords)
     * [Special keywords](#special-keywords)
@@ -31,13 +30,12 @@
       * [setindex](#setindex)
       * [len](#len)
       * [append](#append)
-      * [zip](#zip)
     * [Functions keywords](#functions-keywords)
       * [func](#func)
       * [return](#return)
 
 # Global info
-  Original compilers are written in python 3.10.
+  Original interpreters are written in CPython 3.10.
   
   All files with binarian source code have extension .bino.
   
@@ -47,10 +45,10 @@
   
   Examples :
   ```
-  python compiler.py your_file.bino
-  python3 compiler.py your_file.bino
-  python3.10 compiler.py your_file.bino -d
-  python3 compiler.py other_file.bino -d
+  python binarian.py your_file.bino
+  python3 binarian.py your_file.bino
+  python3.10 binarian.py your_file.bino -d
+  python3 binarian.py other_file.bino -d
   binarian.exe your_file.bino -no-std
   ```
   
@@ -62,11 +60,9 @@
 # Standart library
   Latest version of standart library is stored in github repo in std.bino file, if you want new features from standart library and stay with old version, use old source code of intepreter and new std.bino in directory with source code. New versions of standart library can work incorrectly on older versions. Look to [How to compile](#how-to-compile) for more information about creating executable.  
 
-  Standart library includes useful functions like sum, add, subt. Documentation for standart library is available in github repo in std_docs.md file(WIP).
+  Standart library includes useful functions like sum, list-eq, xor. Documentation for standart library is available in github repo in std_docs.md file.
 
   Use -no-std flag in command to not include it while execution. If std.bino is not found warning will be displayed and execution will continue without including standart library.
-
-  Standart library uses [Lists as integers](#lists-as-integers), check this before using add, subt, sum functions etc.
 
 # Basic syntax
   All syntax is based on keywords and arguments. 
@@ -81,7 +77,7 @@
   To write comments use '//'. All symbols in line after '//' will be marked as comments.
   
   ## Expression
-   Expressions is lines in lines. But logical operators not make auto output, they will be replaced by result. Also you can't use set, input and output in expressions.
+   Expressions is lines in lines, but while execution they will be replaced with returns of keywords or functions. Also you can't use set, input and output etc. in expressions.
    Syntax : 
    ```
    keyword (keyword arg (keyword arg arg)) arg
@@ -99,14 +95,9 @@
   To create list in binarian use square brackets : `[0 1 [1 1]]`.
 
   Check [List keywords](#list-keywords) for all possible keywords related to lists.
-
-  ### Lists as integers
-  Keywords and in future standart functions use lists as integers. Format of integer lists is just a positive binary number, but reversed. 
-  Check [wiki](https://en.wikipedia.org/wiki/Binary_number#Representation) for more details.
-  E.g. `[1 1 0]` is 3, `[1 1 1 0]` is 7. Zero in second example is optional, but you can put infinite number of zeros after number and nothing will be changed.
    
   ## Functions
-  To create function use [func](#func) keyword is global scope. Inline functions are unavaliable for now.
+  To create function use [func](#func) keyword is global scope.
   To call function use function name as keyword, than put all needed arguments after function name. To get return value of function put call in expression.
   To return value use [return](#return) keyword. If fucntion don\`t return any value, it will return 0.
   
@@ -114,7 +105,7 @@
   
   Example :
   ```
-  func name : arg1 arg2 {
+  func name : arg1, arg2 {
     not arg1
     
     input inp1
@@ -125,10 +116,13 @@
   ```
 
 # Types
-There are 5 types in binarian, one of them isnt recomended to use and was added for techinical porpuses.
+There are 6 types in binarian, one of them isnt recomended to use and was added for techinical porpuses.
 
   ## int
-  Most common type in binarian, represented bu 1 and 0. In most other languages it named bool or boolean.
+  Most common type in binarian, represents any integer from -9,223,372,036,854,775,808 to 9,223,372,036,854,775,808(64 bits limits). In binarian also takes place of boolean.
+
+  ## float
+  Number with floating decimal point, has slower arithmetics operation then int and range of values are smaller. But you can have fractions with it. 
 
   ## list
   List can contain any objects of any other types(except none). Look to [Lists](#lists) for more details.
@@ -144,20 +138,18 @@ There are 5 types in binarian, one of them isnt recomended to use and was added 
   
 # Keywords
   ## Special keywords
-  ### set
-  Syntax : `set var_name value; set type var_name value`
+  ### var
+  Syntax = : `var var_name = value; var type = var_name value`
   
-  This keyword uses to assign or change value of variables. Typeing is optional. While type checking type may be figured out by value, if type isnt provided.
+  This keyword uses to assign or change value of variables. Typing is optional. While type checking type may be figured out by value, if type isnt provided.
   
-  Value must be 1 or 0.
-  var_name writing without " or '.
   You can't use this keyword in expression.
-  Variable name can\`t be same as keyword. 
+  Variable name can\`t be same as keyword or have brackets in them. 
   
   Example : 
   ```
-  set var1 1
-  set var2 1
+  var var1 = 1
+  var var2 = 1
   and var1 var2
   or 0 var1
   ```
@@ -169,12 +161,12 @@ There are 5 types in binarian, one of them isnt recomended to use and was added 
   
   Variable need to be assigned before droping.
   You can't use this keyword in expression.
-  Variable name can\`t be same as keyword. 
+  Variable name can\`t be same as keyword or have brackets in them. 
   
   Example : 
   ```
-  set var1 1
-  set var2 1
+  var var1 = 1
+  var var2 = 1
   drop var1
   and var1 var2 // Will throw exception
   ```
@@ -182,12 +174,11 @@ There are 5 types in binarian, one of them isnt recomended to use and was added 
   ### input
   Syntax : `input var_name`
   
-  This keyword uses to input data from keyboard. In console user will see 'var_name : <user input here>'. Keyword assign variable with name var_name.
+  This keyword uses to input data from keyboard. In console user will see `var_name : <user input here>`. Keyword assign variable with name var_name.
   
-  Inputed value must be 1 or 0.
-  var_name writing without " or '.
   You can't use this keyword in expression.
-  Variable name can\`t be same as keyword. 
+  Variable name can\`t be same as keyword or have brackets in them. 
+  Input must be valid integer.
   
   Example : 
   ```
@@ -203,13 +194,13 @@ There are 5 types in binarian, one of them isnt recomended to use and was added 
 
   user_tip writing without " or '.
  
-  User tip can contain spaces, everything after value will be considered tip.
+  User tip cannot contain spaces.
  
   You can't use this keyword in expression.
   
   Example : 
   ```
-  set val1 1
+  var val1 = 1
   output val1 Hi! // Hi! : 1
   output 0 Its_zero // Its_zero : 0
   ```
@@ -219,15 +210,14 @@ There are 5 types in binarian, one of them isnt recomended to use and was added 
   
   Boolean logical operator and.
 
-  Values must be 1 or 0.
-  If keyword using in expression, expression will replaced by result. Otherwise keyword output will be printed in console.
+  If keyword used in expression, expression will replaced by result.
   
   Example : 
   ```
   input i1
   input i2
   and i1 i2
-  set var1 (and i1 1)
+  var var1 = (and i1 1)
   ```
   
   ### or
@@ -235,15 +225,14 @@ There are 5 types in binarian, one of them isnt recomended to use and was added 
   
   Boolean logical operator or.
 
-  Values must be 1 or 0.
-  If keyword using in expression, expression will replaced by result. Otherwise keyword output will be printed in console.
+  If keyword used in expression, expression will replaced by result.
   
   Example : 
   ```
   input i1
   input i2
   or i1 i2
-  set var1 (or i1 i2)
+  var var1 = (or i1 i2)
   ```
   
   ### not
@@ -251,15 +240,14 @@ There are 5 types in binarian, one of them isnt recomended to use and was added 
   
   Boolean logical operator not.
 
-  Value must be 1 or 0.
-  If keyword using in expression, expression will replaced by result. Otherwise keyword output will be printed in console.
+  If keyword used in expression, expression will replaced by result.
   
   Example : 
   ```
   input i1
   input i2
   not i1
-  set var1 (not (or i1 i2))
+  var var1 = (not (or i1 i2))
   ```
   
   ## Conditional operators
@@ -270,9 +258,7 @@ There are 5 types in binarian, one of them isnt recomended to use and was added 
     code
   }
   ```
-  Conditional operator if, executes code in block if condition is 1.
-  
-  Condition must be 0 or 1.
+  Conditional operator if, executes code in block if condition is true(mostly it means, that value isnt "empty").
       
   Example :
   ```
@@ -292,7 +278,7 @@ There are 5 types in binarian, one of them isnt recomended to use and was added 
     code
   }
   ```
-  Conditional operator else, executes code in block if condition of previous if operator is 0.
+  Conditional operator else, executes code in block if condition of previous if operator is false(mostly it means, that value is "empty").
   
   Not required for every if.
   
@@ -324,7 +310,7 @@ There are 5 types in binarian, one of them isnt recomended to use and was added 
       
   Example :
   ```
-  set list [[0 1] [1 0]]
+  var list = [[0 1] [1 0]]
 
   for i list {
     output i pretty list
@@ -342,18 +328,16 @@ There are 5 types in binarian, one of them isnt recomended to use and was added 
     code
   }
   ```
-  While loop. Repeats code inside, while condition is 1.
-
-  Condition must be 0 or 1.
+  While loop. Repeats code inside, while condition is true(mostly it means, that value isnt "empty").
       
   Example :
   ```
   // This code will just output hi there : 1
-  set var 1
+  var name = 1
 
-  while var {
-    output 1 hi there
-    set var 0
+  while name {
+    output 1 hi_there
+    var name = 0
   }
   ```
  
@@ -361,40 +345,40 @@ There are 5 types in binarian, one of them isnt recomended to use and was added 
   ### index
   Synatax : `index list index`
 
-  Gets list element with index `index`. Index is also a list, check [Lists as integers](#lists-as-integers) for more details.
+  Gets list element with index `index`.
 
-  If keyword using in expression, expression will replaced by result. Otherwise keyword output will be printed in console.
+  If keyword used in expression, expression will replaced by result.
 
   Example :
   ```
-  set list [0 1 0]
-  index list [0 1] // Prints 0
+  var list = [0 1 0]
+  output (index list 2) 3rd // Prints 0
   ```
 
   ### setindex
   Synatax : `setindex list index value`
 
-  Sets list element with index `index` to `value`. Index is also a list, check [Lists as integers](#lists-as-integers) for more details.
+  Sets list element with index `index` to `value`.
 
   You can't use this keyword in expression.
 
   Example :
   ```
-  set list [0 1 0]
-  setindex list [0 1] [1] // [0 1 1]
+  var list_ = [0 1 0]
+  setindex list_ 2 1 // [0 1 1]
   ```
 
   ### len
   Synatax : `len list`
 
-  Returns length of list. Lenght is also a list, check [Lists as integers](#lists-as-integers) for more details.
+  Returns length of list.
 
-  If keyword using in expression, expression will replaced by result.
+  If keyword used in expression, expression will replaced by result.
 
   Example :
   ```
   set list [0 1 0]
-  len list // Prints [1 1]
+  output (len list) len // Prints 3
   ```
 
   ### append
@@ -409,44 +393,26 @@ There are 5 types in binarian, one of them isnt recomended to use and was added 
   set list [0 1 0]
   append list 1 // List becomes [0 1 0 1]
   ```
-
-  ### zip
-  Synatax : `zip list1 list2`
-
-  Zips two lists together. E. g. `[0 1 0]` and `[0 1 1 0]` will be ziped to `[[0 0] [1 1] [0 1] [0 0]]`
-
-  If keyword using in expression, expression will replaced by result.
-
-  Example :
-  ```
-  set list [0 1 0]
-  set list2 [1 0 1]
-  set res []
-  for i (zip list list2} {
-    append res (or (index i [0]) (index i [1]))
-  }
-  // Res will be [1 1 1]
-  ```
   
   ## Functions keywords
   ### func
   Synatax :
   ```
-  func name : arg1 arg2... {
+  func name : arg1, arg2... {
     code
   }
-  func ret_type name : arg1:type arg2... {
+  func ret_type name : arg1:type, arg2... {
     code
   }
   ```
 
-  Function declaration keyword. Typeing is optional and mixing up typed and not typed arguments is allowed. 
+  Function declaration keyword. Typing is optional and mixing up typed and not typed arguments is allowed. 
   
   ":" is not needed if no args used in function.
       
   Example :
   ```
-  func int nor : arg1:int arg2 {
+  func int nor : arg1:int, arg2 {
     return (not (or arg1 arg2))
   }
   ```
@@ -462,7 +428,7 @@ There are 5 types in binarian, one of them isnt recomended to use and was added 
       
   Example : 
   ```
-  func nor : arg1 arg2 {
+  func nor : arg1, arg2 {
     return (not (or arg1 arg2))
   }
   ```

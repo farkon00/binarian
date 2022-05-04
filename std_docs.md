@@ -1,32 +1,11 @@
 # Standart library
 # Table of contents
-* [Arithmetical operations](#arithmetical-operations)
-  * [add](#add)
-  * [subt](#subt)
 * [Operators](#operators)
   * [xor](#xor)
-  * [eq](#eq)
+  * [list-eq](#list-eq)
 * [Additional functions](#additional-functions)
+  * [floor](#floor)
   * [sum](#sum)
-
-# Arithmetical operations
-  ## add
-  Return type : list
-  
-  Adds two numbers in list format. Returns sum of them in list format.
-
-  Arguments :
-  * num1 : list
-  * num2 : list
-
-  ## subt
-  Return type : list
-  
-  Subtracts two numbers in list format. Returns difference of them in list format.
-
-  Arguments :
-  * num1 : list
-  * num2 : list
 
 # Operators
   ## xor
@@ -38,16 +17,26 @@
   * num1 : int
   * num2 : int
 
-  ## eq
+  ## list-eq
   Return type : int
   
-  Returns 1 if num1 in format list as integer equals to num2 in the same format.
+  Returns 1 if all elements in `list1` is the same at in `list2`, else returns 0.
 
   Arguments :
-  * num1 : list
-  * num2 : list
+  * list1: list
+  * list2: list
 
 # Additional functions
+  ## floor
+  Return type : float
+  
+  Returns float without digets after decimal point.
+
+  !WARNING! It doesnt return int as you might expect. 
+
+  Arguments :
+  * val : float
+
   ## sum
   Return type : list
   
