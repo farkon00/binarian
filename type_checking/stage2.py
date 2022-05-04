@@ -80,6 +80,10 @@ f"Unmatching types, {type_to_str(get_type(parts[0][1], state, full_vars))} was e
                         state
                     )
 
+        case "convert":
+            binarian_assert(len(lexic) < 3, "Not enought arguments for convert", state)
+            return get_type(lexic[2], state, {}, True)
+
         case "func":
             parts = " ".join(lexic).split(":", 1)
             if len(parts[0].split()) >= 3:

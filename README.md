@@ -204,6 +204,23 @@ There are 6 types in binarian, one of them isnt recomended to use and was added 
   output val1 Hi! // Hi! : 1
   output 0 Its_zero // Its_zero : 0
   ```
+
+  ### convert
+  Syntax : `convert value type`
+  
+  Converts value to type `type`, if cant convert(for example converting int to list) throws exception.
+
+  If keyword used in expression, expression will replaced by result. 
+
+  Type must be lowercase, written same as specified in [Types](#types).
+  
+  Example : 
+  ```
+  input inp
+  var a = (convert inp float)  // Type cheking will automatically set type of variable to float,
+                               // but wont check if type can be converted to specified type
+  ```
+
   ## Logical operators keywords
   ### and
   Syntax : `and val1 val2`

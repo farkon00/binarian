@@ -35,6 +35,7 @@ class TypeCheckingState:
             "drop" : (None,),
             "input" : (None, None),
             "output" : (None, object, None),
+            "convert" : (object, object, None),
             "and" : (int, object, object),
             "or" : (int, object, object),
             "not" : (int, object),

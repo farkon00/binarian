@@ -118,6 +118,9 @@ def execute_line(lexic : list[str], state : ExecutionState, local : dict[str : o
         case "output":
             output_keyword(lexic, state, full_vars)
 
+        case "convert":
+            return convert_keyword(lexic, state, full_vars)
+
         case "and":
             return and_keyword(lexic, state, full_vars)
 

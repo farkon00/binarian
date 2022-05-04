@@ -66,6 +66,10 @@ def tc_line1(lexic : list[str], state):
             else:
                 state.vars[lexic[1]] = int
 
+        case "convert":
+            binarian_assert(len(lexic) < 3, "Not enought arguments for convert", state)
+            return get_type(lexic[2], state, {}, True)
+
         case "func":
             parts = " ".join(lexic).split(":", 1)
             if len(parts[0].split()) >= 3:

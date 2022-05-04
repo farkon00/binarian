@@ -26,19 +26,34 @@
   * list1: list
   * list2: list
 
-# Additional functions
-  ## floor
-  Return type : float
+# Type convertions shortcuts
+  ## to_int
+  Return type : int
   
-  Returns float without digets after decimal point.
-
-  !WARNING! It doesnt return int as you might expect. 
+  Shortcut for `(convert val int)`.
 
   Arguments :
-  * val : float
+  * val : object
 
-  ## sum
+  ## to_float
+  Return type : float
+  
+  Shortcut for `(convert val float)`.
+
+  Arguments :
+  * val : object
+
+  ## to_list
   Return type : list
+  
+  Shortcut for `(convert val list)`.
+
+  Arguments :
+  * val : object
+
+# Additional functions
+  ## sum
+  Return type : int
   
   Sums all numbers in list, in list format. Returns sum of them in list format.
 
