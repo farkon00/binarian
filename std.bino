@@ -15,6 +15,24 @@ func list to_list : val {
     return (convert val list)
 }
 
+func int ceil : val: float {
+    if (== (to_int val) val) {
+        return (to_int val)
+    } 
+    else {
+        return (to_int (+ val 1))
+    }
+}
+
+func int math_to_int : val: float {
+    if (>= (% val 1) 0.5) {
+        return (+ (to_int val) 1)
+    }
+    else {
+        return (to_int val)
+    }
+}
+
 func int list-eq : list1: list, list2: list {
     if (!= (len list1) (len list2)) {
         return 0

@@ -26,6 +26,23 @@
   * list1: list
   * list2: list
 
+# Math
+  ## ceil
+  Return type : int
+  
+  Return the ceiling of x, the smallest integer greater than or equal to x.
+
+  Arguments :
+  * val : object
+
+  ## math_to_int
+  Return type : int
+  
+  Regular to_int works like floor, this funtion uses standart mathematical way to round number with decimal point to integer.
+
+  Arguments :
+  * val : object
+
 # Type convertions shortcuts
   ## to_int
   Return type : int

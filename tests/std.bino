@@ -5,6 +5,14 @@ output (to_int 1.23) to-int-1
 output (to_int 1.0) to-int-1
 output (to_float 1) to-float-1.0
 
+output (ceil 1.23) ceil-2
+output (ceil 1.0) ceil-1
+output (ceil 146.11232) floor-147
+output (math_to_int 1.23) math-to-int-1
+output (math_to_int 1.0) math-to-int-1
+output (math_to_int 1.56) math-to-int-2
+output (math_to_int 456.89) math-to-int-457
+
 output (list-eq [1 1] [1 1]) eq-1
 output (list-eq [0 1] [0]) eq-0
 output (list-eq [0 1] [1 0]) eq-0

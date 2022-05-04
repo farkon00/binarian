@@ -3,6 +3,13 @@ xor-0 : 0
 to-int-1 : 1
 to-int-1 : 1
 to-float-1.0 : 1.0
+ceil-2 : 2
+ceil-1 : 1
+floor-147 : 147
+math-to-int-1 : 1
+math-to-int-1 : 1
+math-to-int-2 : 2
+math-to-int-457 : 457
 eq-1 : 1
 eq-0 : 0
 eq-0 : 0

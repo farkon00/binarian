@@ -45,6 +45,7 @@ class TypeCheckingState:
             "append" : (None, List, object),
             "zip" : (List, List, List),
             "if" : (None, object),
+            "else" : (None,),
             "for" : (None, None, List),
             "while" : (None, object),
             "func" : (None,),

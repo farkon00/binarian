@@ -8,4 +8,4 @@ expr1 : 1
 expr2 : 1
 expr3 : 0
 
-Finished in 0.006981849670410156 sec
+Finished in 0.0019960403442382812 sec
