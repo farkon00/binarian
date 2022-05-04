@@ -1,10 +1,9 @@
 output (xor 1 0) xor-1
 output (xor 1 1) xor-0
 
-output (floor 1.2) floor-1
-output (floor 1.8) floor-1
-output (floor 123.0) floor-123
-output (floor 123.1) floor-123
+output (to_int 1.23) to-int-1
+output (to_int 1.0) to-int-1
+output (to_float 1) to-float-1.0
 
 output (list-eq [1 1] [1 1]) eq-1
 output (list-eq [0 1] [0]) eq-0

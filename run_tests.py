@@ -18,6 +18,7 @@ tests = [
     ["call_stack"],
     ["std", "-d"],
     ["no-std", ["-no-std"]],
+    ["convert"],
     ["tc_set", ["-tc"]],
     ["tc_return", ["-tc"]],
     ["tc_auto_set", ["-tc"]],

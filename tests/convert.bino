@@ -1,0 +1,4 @@
+output (convert 123 float) float
+output (convert 123.456 float) float
+output (convert 123.456 int) int
+output (convert [0] list) list

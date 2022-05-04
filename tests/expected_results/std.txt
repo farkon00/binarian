@@ -1,9 +1,8 @@
 xor-1 : 1
 xor-0 : 0
-floor-1 : 1.0
-floor-1 : 1.0
-floor-123 : 123.0
-floor-123 : 123.0
+to-int-1 : 1
+to-int-1 : 1
+to-float-1.0 : 1.0
 eq-1 : 1
 eq-0 : 0
 eq-0 : 0
