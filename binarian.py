@@ -220,6 +220,10 @@ def main(test_argv : list[str] = None) -> None:
     else:
         argv = sys.argv
 
+    if "--help" in argv or len(argv) < 2:
+        print(help_string)
+        exit(0)
+
     try:
         code = open(argv[1], "r", encoding="utf-8").read().lower()
     except Exception:
@@ -280,6 +284,16 @@ def main(test_argv : list[str] = None) -> None:
 
     print(f"\nFinished in {time() - start_time - state.input_time} sec")
         
+help_string =\
+"""
+Usage: binarian <file> [options]
+
+Options:
+
+    -d          Debug mode, outputs variables values at the end of execution. 
+
+    -no-std     Disables std library.
+"""
 
 if __name__ == "__main__":
     main()
