@@ -27,6 +27,7 @@
       * [for](#for)
       * [while](#while)
       * [break](#break)
+      * [continue](#continue)
     * [List keywords](#list-keywords)
       * [index](#index)
       * [setindex](#setindex)
