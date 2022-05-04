@@ -51,7 +51,7 @@ class ExecutionState:
         )
 
         self.RESTRICTED_NAMES : tuple[str] = (
-            "and", "or", "not", "set", "drop", "input", "output", "func",
+            "and", "or", "not", "var", "drop", "input", "output", "func",
             "return", "index", "len", "append", "zip", "for", "while",
             "object", "int", "float", "list", "function", "none",
             *self.operations
@@ -106,8 +106,8 @@ def execute_line(lexic : list[str], state : ExecutionState, local : dict[str : o
         return execute_oper(lexic, state, full_vars)
 
     match lexic[0]:
-        case "set":
-            set_keyword(lexic, state, local if is_func else state.vars, full_vars)
+        case "var":
+            var_keyword(lexic, state, local if is_func else state.vars, full_vars)
 
         case "drop":
             drop_keyword(lexic, state, local if is_func else state.vars)

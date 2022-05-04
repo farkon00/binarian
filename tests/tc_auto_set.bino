@@ -1,2 +1,2 @@
-set a [1 0]
-set a 1
+var a = [1 0]
+var a = 1

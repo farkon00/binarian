@@ -3,6 +3,6 @@ First stage of type checking completed successfully with 0 warnings
 While type checking, exception was thrown :
 
 line 2 :
-  set a [0]
+  var a = [0]
 
 Unmatching types, int was expected, list found.

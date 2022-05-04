@@ -48,24 +48,35 @@ f"Unexpected operation argument type, {exp_type} was expected, \
             return int
 
     match lexic[0]:
-        case "set":
-            if len(lexic) >= 4:
-                binarian_assert(lexic[1] not in state.types, f"Type is not found : {lexic[1]}", state)
-                if (get_type(lexic[3], state, full_vars) and get_type(lexic[2], state, full_vars)) and\
-                object not in (get_type(lexic[3], state, full_vars), get_type(lexic[2], state, full_vars)):
+        case "var":
+            binarian_assert("=" not in " ".join(lexic), '"=" not found in var', state)
+            parts = [None, None]
+            for j, i in enumerate(lexic):
+                if "=" in i:
+                    spl = i.find("=")
+                    parts[0] = lexic[:j] + [i[:spl]]
+                    parts[1] = [i[spl + 1:]] + lexic[j + 1:]
+            binarian_assert(not len(parts[1]), 'Nothing was found after "=" in var', state)
+            if not parts[0][-1]: parts[0] = parts[0][:-1]
+            if not parts[1][0]: parts[1] = parts[1][1:]
+
+            if len(parts[0]) >= 3:
+                binarian_assert(parts[0][1] not in state.types, f"Type is not found : {lexic[1]}", state)
+                if (get_type(parts[1][0], state, full_vars) and get_type(parts[0][2], state, full_vars)) and\
+                object not in (get_type(parts[1][0], state, full_vars), get_type(parts[0][2], state, full_vars)):
                     binarian_assert(
-                        not issubclass(get_type(lexic[3], state, full_vars), get_type(lexic[2], state, full_vars)),
-f"Unmatching types, {type_to_str(get_type(lexic[2], state, full_vars))} was expected, \
-{type_to_str(get_type(lexic[3], state, full_vars))} found.",
+                        not issubclass(get_type(parts[1][0], state, full_vars), get_type(parts[0][2], state, full_vars)),
+f"Unmatching types, {type_to_str(get_type(parts[0][2], state, full_vars))} was expected, \
+{type_to_str(get_type(parts[1][0], state, full_vars))} found.",
                         state
                     )
             else:
-                if get_type(lexic[2], state, full_vars) and get_type(lexic[1], state, full_vars) and\
-                object not in (get_type(lexic[2], state, full_vars), get_type(lexic[1], state, full_vars)):
+                if get_type(parts[1][0], state, full_vars) and get_type(parts[0][1], state, full_vars) and\
+                object not in (get_type(parts[1][0], state, full_vars), get_type(parts[0][1], state, full_vars)):
                     binarian_assert(
-                        not issubclass(get_type(lexic[2], state, full_vars), get_type(lexic[1], state, full_vars)),
-f"Unmatching types, {type_to_str(get_type(lexic[1], state, full_vars))} was expected, \
-{type_to_str(get_type(lexic[2], state, full_vars))} found.",
+                        not issubclass(get_type(parts[1][0], state, full_vars), get_type(parts[0][1], state, full_vars)),
+f"Unmatching types, {type_to_str(get_type(parts[0][1], state, full_vars))} was expected, \
+{type_to_str(get_type(parts[1][0], state, full_vars))} found.",
                         state
                     )
 

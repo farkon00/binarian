@@ -1,4 +1,4 @@
-set _list [[0 1] [1 0]]
+var _list = [[0 1] [1 0]]
 
 for i _list {
     output i pretty list

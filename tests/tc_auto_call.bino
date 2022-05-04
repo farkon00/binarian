@@ -1,5 +1,5 @@
 func list foo {
     return []
 }
-set a (foo)
+var a = (foo)
 + a 1

@@ -1,4 +1,4 @@
 func tc : tin: list, tsil : list {
-    set var (index tsil tin)
-    return var
+    var ret = (index tsil tin)
+    return ret
 }

@@ -1,4 +1,4 @@
-set inp 1
+var inp = 1
 
 while inp {
     input inp

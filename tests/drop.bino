@@ -1,5 +1,5 @@
-set test 1
-set droped 0
+var test = 1
+var droped = 0
 
 drop droped
 output test test

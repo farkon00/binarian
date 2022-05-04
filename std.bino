@@ -14,21 +14,21 @@ func int list-eq : list1: list, list2: list {
         return 0
     }
     
-    set i 0
+    var i = 0
     while (< i (len list1)) {
         if (!= (index list1 i) (index list2 i)) {
             return 0
         }
-        set i (+ i 1)
+        var i = (+ i 1)
     }
 
     return 1
 }
 
 func int sum : _list: list {
-    set sum 0
+    var sum = 0
     for i _list {
-        set sum (+ sum i)
+        var sum = (+ sum i)
     }
 
     return sum

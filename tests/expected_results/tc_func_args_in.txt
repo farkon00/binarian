@@ -3,6 +3,6 @@ First stage of type checking completed successfully with 0 warnings
 While type checking, exception was thrown :
 
 line 2 :
-  set var (index tsil tin)
+  var ret = (index tsil tin)
 
 Unexpected argument type, int was expected, list found.

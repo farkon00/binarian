@@ -34,27 +34,31 @@ def tc_line1(lexic : list[str], state):
             return int
 
     match lexic[0]:
-        case "set":
+        case "var":
+            binarian_assert("=" not in " ".join(lexic), '"=" not found in var', state)
+            parts = [None, None]
+            for j, i in enumerate(lexic):
+                if "=" in i:
+                    spl = i.find("=")
+                    parts[0] = lexic[:j] + [i[:spl]]
+                    parts[1] = [i[spl + 1:]] + lexic[j + 1:]
+            binarian_assert(not len(parts[1]), 'Nothing was found after "=" in var', state)
+            if not parts[0][-1]: parts[0] = parts[0][:-1]
+            if not parts[1][0]: parts[1] = parts[1][1:]
+
             if is_func:
-                if len(lexic) >= 4:
-                    binarian_assert(lexic[1] not in state.types, f"Type is not found : {lexic[1]}", state)
-                    local[lexic[2]] = state.types[lexic[1]]
-                elif lexic[1] not in local:
-                    local[lexic[1]] = get_type(lexic[2], state, full_vars)
+                if len(parts[0]) >= 3:
+                    binarian_assert(parts[0][1] not in state.types, f"Type is not found : {parts[0][1]}", state)
+                    local[parts[0][2]] = state.types[parts[0][1]]
+                elif parts[0][1] not in local:
+                    local[parts[0][1]] = get_type(parts[1][0], state, full_vars)
             else:
-                if len(lexic) >= 4:
-                    binarian_assert(lexic[1] not in state.types, f"Type is not found : {lexic[1]}", state)
-                    state.vars[lexic[2]] = state.types[lexic[1]]
-
-                    if lexic[3] in state.functions:
-                        state.functions[lexic[2]] = lexic[3]
-
+                if len(parts[0]) >= 3:
+                    binarian_assert(parts[0][1] not in state.types, f"Type is not found : {parts[0][1]}", state)
+                    state.vars[parts[0][2]] = state.types[parts[0][1]]
                 else:
                     if lexic[1] not in state.vars:
-                        state.vars[lexic[1]] = get_type(lexic[2], state, full_vars)
-
-                    if lexic[2] in state.functions:
-                        state.functions[lexic[1]] = lexic[2]
+                        state.vars[parts[0][1]] = get_type(parts[1][0], state, full_vars)
 
         case "input":
             if is_func:
