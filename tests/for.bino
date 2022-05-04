@@ -15,3 +15,11 @@ for i [0 0 1 0] {
     }
     output i i
 }
+
+// Continue test
+for i [0 0 1 0] {
+    if i {
+        continue
+    }
+    output i cont
+}

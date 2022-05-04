@@ -406,7 +406,7 @@ There are 6 types in binarian, one of them isnt recomended to use and was added 
     code
     break
   }
-  for van list {
+  for var list {
     code 
     break
   }
@@ -420,6 +420,30 @@ There are 6 types in binarian, one of them isnt recomended to use and was added 
       break
     }
     output i i
+  }
+  ```
+
+  ### continue
+  Synatax :
+  ``` 
+  while condition {
+    code
+    continue
+  }
+  for var list {
+    code 
+    continue
+  }
+  ```
+  Stops current `while` or `for` loop iteration and starts the next one. Mostly used with conditions.
+      
+  Example :
+  ```
+  for i [0 0 1 0] {
+    if i {
+      continue
+    }
+    output i cont
   }
   ```
  

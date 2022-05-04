@@ -15,3 +15,12 @@ while 1 {
     output i i
     var i = (+ i 1)
 }
+
+var j = 0
+while (< j 5) {
+    var j = (+ j 1)
+    if (== (% j 2) 0) {
+        continue
+    }
+    output j j
+}

@@ -1,4 +1,3 @@
-from re import S
 from funcs.get_var import get_var
 from funcs.exceptions import binarian_assert
 from bin_types.list import List
@@ -6,6 +5,9 @@ from funcs.utils import is_name_unavailable
 
 def break_keyword(lexic : list[str], state):
     state.is_breaked = True
+
+def continue_keyword(lexic : list[str], state):
+    state.is_continued = True
 
 def for_keyword(lexic : list[str], state, full_vars : dict[str : object]):
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
@@ -17,6 +19,7 @@ def for_keyword(lexic : list[str], state, full_vars : dict[str : object]):
     state.opened_loops.append([state.current_line, state.opened_blocks, [], 0])
 
 def execute_for(loop : list[int, int, list[str]], state, full_vars : dict[str : object], local : dict[str : object] = None):
+    end_line = state.current_line
     state.current_line = loop[0]
     opened, allowed = state.opened_blocks, state.allowed_blocks
     
@@ -26,8 +29,8 @@ def execute_for(loop : list[int, int, list[str]], state, full_vars : dict[str : 
 
     loop_lexic = loop_line.split()
     loop_lexic = state.GLOBAL_FUNCS["parse_lists"](loop_lexic)
-
-    for loop_iter in get_var(loop_lexic[2], full_vars, state, List):
+    list_ = get_var(loop_lexic[2], full_vars, state, List)
+    for loop_iter in list_:
         if local != None:
             local[loop_lexic[1]] = loop_iter
         else:
@@ -58,11 +61,16 @@ def execute_for(loop : list[int, int, list[str]], state, full_vars : dict[str : 
             if state.is_breaked:
                 break
 
+            if state.is_continued:
+                state.is_continued = False
+                break
+
         state.opened_blocks = opened
         state.allowed_blocks = allowed
 
         if state.is_breaked:
             state.is_breaked = False
+            state.current_line = end_line
             break
 
     try:
@@ -119,10 +127,15 @@ def execute_while(loop : list[int, int, list[str]], state, full_vars : dict[str 
             if state.is_breaked:
                 break
 
+            if state.is_continued:
+                state.is_continued = False
+                break
+
         full_vars = {**state.vars, **(local if local != None else {})}
 
         if state.is_breaked:
             state.is_breaked = False
+            state.current_line = end_line
             break
 
     state.current_line = end_line

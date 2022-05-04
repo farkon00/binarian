@@ -30,6 +30,7 @@ class ExecutionState:
         self.call_stack : list[tuple[str, int]] = [] # func_name, line
         self.last_return : object = None 
         self.is_breaked : bool = False
+        self.is_continued: bool = False
 
         self.code : str = code
         self.lines : list[str] = code.split("\n")
@@ -71,6 +72,10 @@ def execute_line(lexic : list[str], state : ExecutionState, local : dict[str : o
     if state.is_breaked:
         state.current_line -= 1 # To show previous line with break in exception
         throw_exception("Break is restricted out of loops", state)
+
+    if state.is_continued:
+        state.current_line -= 1 # To show previous line with continue in exception
+        throw_exception("Continue is restricted out of loops", state)
 
     is_func = local != None
     full_vars = {**state.vars, **(local if is_func else {})}
@@ -167,6 +172,9 @@ def execute_line(lexic : list[str], state : ExecutionState, local : dict[str : o
         
         case "break":
             break_keyword(lexic, state)
+
+        case "continue":
+            continue_keyword(lexic, state)
 
         case "func":
             func_keyword(lexic, state, local if is_func else state.vars)
