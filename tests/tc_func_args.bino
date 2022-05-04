@@ -1,4 +1,4 @@
-func tc : arg:int arg2:list {
+func tc : arg:int, arg2: list {
     return arg
 }
 

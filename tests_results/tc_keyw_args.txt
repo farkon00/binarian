@@ -2,7 +2,7 @@ First stage of type checking completed successfully with 0 warnings
 
 While type checking, exception was thrown :
 
-line 4 :
-  and a b
+line 2 :
+  len a
 
-Unexpected argument type, int was expected, list found.
+Unexpected argument type, list was expected, int found.

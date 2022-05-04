@@ -18,17 +18,19 @@ def func_keyword(lexic : list[str], state, in_vars : dict[str : object]):
     binarian_assert(is_name_unavailable(func_name, state), "Function name is unavailable.", state)
 
     try:
-        args = parts[1].split()
+        args = parts[1].split(",")
     except:
         args = []
 
     temp = []
     for i in args:
-        if i == "{" or i == "}":
-            continue
+        i = i.replace("{", "")
+        i = i.replace("}", "")
+        i = i.strip()
 
         if ":" in i:
             arg = i.split(":")
+            arg = [arg[0].strip(), arg[1].strip()]
             binarian_assert(arg[1] not in state.types, f"Type is not found : {arg[1]}", state)
 
             temp.append(arg[0])

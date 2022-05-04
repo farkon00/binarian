@@ -75,16 +75,20 @@ def tc_line1(lexic : list[str], state):
 
             args = []
             if len(parts) >= 2:
-                args_text = parts[1].split()
+                args_text = parts[1].split(",")
                 for i in args_text:
+                    i = i.replace("{", "")
+                    i = i.replace("}", "")
+                    i = i.strip()
                     if ":" in i:
                         arg_splited = i.split(":")
+                        arg_splited = [arg_splited[0].strip(), arg_splited[1].strip()]
                         binarian_assert(arg_splited[1] not in state.types, f"Type is not found : {arg_splited[1]}", state)
                         args.append((arg_splited[0], state.types[arg_splited[1]]))
                     else:
                         args.append((i, object))
 
-            func = TypeCheckedFunction(args[:-1], ret)
+            func = TypeCheckedFunction(args, ret)
             state.functions[name] = func
             state.opened_function = func
             state.function_blocks = state.opened_blocks
