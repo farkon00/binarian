@@ -1,12 +1,14 @@
-from funcs.exceptions import binarian_assert
+from funcs.utils import check_args
 from funcs.get_var import *
 
-def execute_oper(lexic : list[str], state, full_vars : dict[str : object]):
-    binarian_assert(len(lexic) < 3, "Not enought arguments for operation", state)
-    arg1 = get_var(lexic[1], full_vars, state, _type=(int, float))
-    arg2 = get_var(lexic[2], full_vars, state, _type=(int, float))
+def execute_oper(op : list[str], state, local : dict[str : object]):
+    operation = op.args[0]
+    orig_args = op.args
+    op.args = op.args[1:]
+    arg1, arg2 = check_args(op, [int | float, int | float], state, local)
+    op.args = orig_args
 
-    match lexic[0]:
+    match operation:
         case "+":  return     arg1 + arg2
         case "-":  return     arg1 - arg2
         case "*":  return     arg1 * arg2

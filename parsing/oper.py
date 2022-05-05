@@ -33,7 +33,7 @@ class OpIds(Enum):
     call = auto()
 
 class Oper:
-    def __init__(self, id: OpIds, args: list[Oper | object] = None,
+    def __init__(self, id: OpIds, line: int, args: list[Oper | object] = None,
      oper: list[Oper] = None, types : list[type] = None):
         if args is None:
             args = []
@@ -50,6 +50,7 @@ class Oper:
         self.args = args
         self.oper = oper
         self.types = types
+        self.line = line
 
     def __str__(self):
         new = "\n"

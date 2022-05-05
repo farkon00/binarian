@@ -18,14 +18,14 @@ def get_args(lexic, state) -> Oper:
     for var in lexic:
         if var[0] == "[": # list parsing
             elems = get_args(var[1:-1].split(), state)
-            ret.append(Oper(OpIds.value, List(elems)))
+            ret.append(Oper(OpIds.value, state.current_line, [List(elems)]))
         elif var.isdigit() or (var[0] == "-" and var[1:].isdigit()): # int parsing
-            ret.append(Oper(OpIds.value, int(var) if var[0] != "-" else -int(var[1:])))
+            ret.append(Oper(OpIds.value, state.current_line, int(var) if var[0] != "-" else -int(var[1:])))
         elif var.replace(".", "").isdigit() or (var[0] == "-" and var[1:].replace(".", "").isdigit()): # float parsing
-            ret.append(Oper(OpIds.value, float(var) if var[0] != "-" else -float(var[1:])))
+            ret.append(Oper(OpIds.value, state.current_line, float(var) if var[0] != "-" else -float(var[1:])))
         elif var[0] == "(":
             ret.append(state.GLOBAL_FUNCS["parse_line"](var[1:-1], state))
         else:
-            ret.append(Oper(OpIds.variable, var))
+            ret.append(Oper(OpIds.variable, state.current_line, var))
 
     return ret

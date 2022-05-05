@@ -1,3 +1,4 @@
+from lib2to3.pgen2.token import OP
 import sys
 
 from time import time
@@ -22,13 +23,7 @@ class ExecutionState:
 
         self.current_line : int = -1
 
-        self.opened_blocks : int = 0
-        self.allowed_blocks : int = 0
-        self.opened_ifs : list[tuple[bool, int]] = [] # condition, opened_blocks
-        self.opened_loops : list[list[int, int, list[str], int]] = [] # line, opened_block, lines, type
-        # Types :
-        # 0 - for
-        # 1 - while
+        self.opened_ifs : list[bool] = []
 
         self.call_stack : list[tuple[str, int]] = [] # func_name, line
         self.last_return : object = None 
@@ -57,20 +52,21 @@ class ExecutionState:
 
         self.RESTRICTED_NAMES : tuple[str] = (
             "and", "or", "not", "var", "drop", "input", "output", "func",
-            "return", "index", "len", "append", "zip", "for", "while",
-            "object", "int", "float", "list", "function", "none",
+            "return", "index", "len", "append", "zip", "for", "while", "if",
+            "elif", "else", "object", "int", "float", "list", "function",
+            "none", "break", "continue",
             *self.operations
         )
         self.BRACKETS : tuple[str] = ("(", ")", "[", "]", "{", "}")
         self.GLOBAL_FUNCS : dict[str : FunctionType] = {
             "execute_line" : execute_line,
-            "execute_expr" : execute_expr,
-            "parse_blocks" : parse_blocks,
+            "execute_opers" : execute_opers,
             "parse_line" : parse_line
         }
 
-def execute_line(lexic : list[str], state : ExecutionState, local : dict[str : object] = None) -> object | None:
-    """Executes one keyword"""
+def execute_line(op : Oper, state : ExecutionState, local : dict[str : object] = None, is_expr : bool = True) -> object:
+    """Executes one operation"""
+    state.current_line = op.line
 
     if state.is_breaked:
         state.current_line -= 1 # To show previous line with break in exception
@@ -82,138 +78,123 @@ def execute_line(lexic : list[str], state : ExecutionState, local : dict[str : o
 
     is_func = local != None
     full_vars = {**state.vars, **(local if is_func else {})}
+    state.is_expr = is_expr 
 
-    allowed = state.allowed_blocks
-    opened = state.opened_blocks
+    if op.id not in (OpIds.else_, OpIds.elif_) and not state.is_expr and state.opened_ifs:
+        del state.opened_ifs[-1]
 
-    line = parse_blocks(" ".join(lexic), state)
+    if op.id == OpIds.operation:
+        return execute_oper(op, state, full_vars)
 
-    for i in state.opened_loops.copy():
-        i[2].append(" ".join(lexic))
-        if i[1] > state.opened_blocks:
-            state.opened_loops.remove(i)
-            if i[3] == 0:
-                execute_for(i, state, full_vars, local if is_func else None)
+    match op.id:
+        case OpIds.variable:
+            binarian_assert(op.args[0] not in full_vars, f"Variable {op.args[0]} is not defined", state)
+            return full_vars[op.args[0]]
+
+        case OpIds.value:
+            ret = op.args[0]
+            if isinstance(ret, list):
+                res = List()
+                for i in ret:
+                    res.append(execute_line(i, state, local))
+                return res
             else:
-                execute_while(i, state, full_vars, local if is_func else None)
+                return ret
 
-    if opened > allowed:
-        return None
+        case OpIds.var:
+            var_keyword(op, state, local if is_func else state.vars, local)
 
-    if len(lexic) <= 0:
-        return None
+        case OpIds.drop:
+            drop_keyword(op, state, local if is_func else state.vars)
 
-    lexic = line.split()
-    lexic = parse_lists(lexic)
+        case OpIds.input:
+            input_keyword(op, local if is_func else state.vars, state)
 
-    if len(lexic) <= 0:
-        return None
+        case OpIds.output:
+            output_keyword(op, state, local)
 
-    if lexic[0] not in ("else", "elif") and not state.is_expr:
-        for j in state.opened_ifs:
-            if j[1] == state.opened_blocks + 1:
-                state.opened_ifs.remove(j)
-                break
+        case OpIds.convert:
+            return convert_keyword(op, state, local)
 
-    if lexic[0] in state.operations:
-        return execute_oper(lexic, state, full_vars)
+        case OpIds.and_:
+            return and_keyword(op, state, local)
 
-    match lexic[0]:
-        case "var":
-            var_keyword(lexic, state, local if is_func else state.vars, full_vars)
+        case OpIds.or_:
+            return or_keyword(op, state, local)
 
-        case "drop":
-            drop_keyword(lexic, state, local if is_func else state.vars)
+        case OpIds.not_:
+            return not_keyword(op, state, local)
 
-        case "input":
-            input_keyword(lexic, local if is_func else state.vars, state)
+        case OpIds.index:
+            return index_keyword(op, state, local)
 
-        case "output":
-            output_keyword(lexic, state, full_vars)
+        case OpIds.setindex:
+            return setindex_keyword(op, state, local)
 
-        case "convert":
-            return convert_keyword(lexic, state, full_vars)
+        case OpIds.len:
+            return len_keyword(op, state, local)
 
-        case "and":
-            return and_keyword(lexic, state, full_vars)
+        case OpIds.append:
+            return append_keyword(op, state, local)
 
-        case "or":
-            return or_keyword(lexic, state, full_vars)
+        case OpIds.zip:
+            return zip_keyword(op, state, local)
 
-        case "not":
-            return not_keyword(lexic, state, full_vars)
+        case OpIds.if_:
+            if_keyword(op, state, local)
 
-        case "index":
-            return index_keyword(lexic, state, full_vars)
+        case OpIds.else_:
+            else_keyword(op, state, local)
 
-        case "setindex":
-            return setindex_keyword(lexic, state, full_vars)
+        case OpIds.elif_:
+            elif_keyword(op, state, local)
 
-        case "len":
-            return len_keyword(lexic, state, full_vars)
+        case OpIds.for_:
+            for_keyword(op, state, local)
 
-        case "append":
-            return append_keyword(lexic, state, full_vars)
-
-        case "zip":
-            return zip_keyword(lexic, state, full_vars)
-
-        case "if":
-            if_keyword(lexic, state, full_vars)
-
-        case "else":
-            else_keyword(lexic, state)
-
-        case "elif":
-            elif_keyword(lexic, state, full_vars)
-
-        case "for":
-            for_keyword(lexic, state, full_vars)
-
-        case "while":
-            while_keyword(lexic, state, full_vars)
+        case OpIds.while_:
+            while_keyword(op, state, local)
         
-        case "break":
-            break_keyword(lexic, state)
+        case OpIds.break_:
+            break_keyword(op, state)
 
-        case "continue":
-            continue_keyword(lexic, state)
+        case OpIds.continue_:
+            continue_keyword(op, state)
 
-        case "func":
-            func_keyword(lexic, state, local if is_func else state.vars)
+        case OpIds.func:
+            func_keyword(op, state, local if is_func else state.vars) # TODO
 
-        case "return":
-            return return_keyword(lexic, state, is_func, full_vars)
+        case OpIds.return_:
+            return return_keyword(op, state, is_func, local)
 
 
         case _:
-            if lexic[0] in full_vars:
+            if op == OpIds.call:
                 state.opened_blocks += 1
                 state.allowed_blocks += 1
-                return call_keyword(lexic, state, full_vars)
+                return call_keyword(op, state, local) # TODO
 
             throw_exception(f"Keyword or function wasn`t found.", state)
 
+def execute_opers(opers : list[Oper], state : ExecutionState, local : dict[str : object] = None,
+ main : bool = False, is_loop : bool = False) -> object:
+    """Executes list of operations"""
+    for i in opers:
+        if state.current_line == state.std_lines and main:
+            state.std_lib_vars = state.vars.copy()
 
-def execute_expr(line : str, state : ExecutionState, local : dict[str : object] = None) -> str:
-    """Execute one expression"""
-    state.is_expr = True
+        execute_line(i, state, local, is_expr=False)
 
-    indexes = parse_brackets(line, ("(", ")"), state)
+        if state.last_return is not None:
+            return
 
-    if not indexes:
-        state.is_expr = False
-        return line
+        if is_loop:
+            if state.is_breaked:
+                break
 
-    start_ind, end_ind = indexes
-
-    lexic = line[start_ind+1:end_ind].split()
-    
-    ret = line[:start_ind] + str(execute_line(lexic, state, local=local)) + line[end_ind+1:]
-
-    state.is_expr = False
-
-    return ret
+            if state.is_continued:
+                state.is_continued = False
+                break
 
 def main(test_argv : list[str] = None) -> None:
     start_time = time()
@@ -249,33 +230,18 @@ def main(test_argv : list[str] = None) -> None:
     else:
         std_lib = ""
 
-    code = delete_comments(std_lib + code)
+    code = delete_comments(std_lib + "\n" + code)
     state = ExecutionState(code)
     state.std_lines = std_lib.count("\n") + 1
+    ops = parse_to_ops(state)
+
+    if "-opers" in argv:
+        print("\n".join([str(i) for i in ops]))
 
     if "-tc" in argv:
         type_check(state)
 
-    """for i in range(len(state.lines)):
-        state.current_line += 1
-
-        if state.current_line == state.std_lines:
-            state.std_lib_vars = state.vars.copy()
-
-        line = state.lines[i]
-
-        # Expressions executing
-        binarian_assert(line.count("(") != line.count(")"), 'Expression must have start and finish matched with "(" and ")".', state)
-
-        if state.opened_blocks <= state.allowed_blocks:
-            while "(" in line:
-                line = execute_expr(line, state)
-
-        lexic = line.split()
-
-        execute_line(lexic, state)
-    """
-    print("\n".join([str(i) for i in parse_to_ops(state)]))
+    execute_opers(ops, state, main=True)
 
     if "-d" in argv:
         debug_vars = list(state.vars.items())
@@ -295,6 +261,10 @@ Options:
     -d          Debug mode, outputs variables values at the end of execution. 
 
     -no-std     Disables std library.
+
+    -opers      Outputs file parsed to operations before execution. Will print all std operations too.
+
+    --help      Show this message.
 """
 
 if __name__ == "__main__":

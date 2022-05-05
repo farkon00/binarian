@@ -1,5 +1,0 @@
-inp1 : inp2 : inp1 : 1
-inp2 : 0
-OR output : 1. Line : 7
-
-Finished in 0.000993967056274414 sec

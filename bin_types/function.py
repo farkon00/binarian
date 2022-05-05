@@ -11,15 +11,13 @@ class Function:
     args : list[str]
     start_line : int
 
-    def execute(self, args : list[str], state, full_vars : dict[str : object]) -> object:
+    def execute(self, args : list[str], state) -> object:
         """Executes function"""
-        starter_blocks, starter_allowed = state.opened_blocks, state.allowed_blocks
-
         is_expr_before = state.is_expr
         state.is_expr = False
 
-        local = {self.args[j] : get_var.get_var(args[j], full_vars, state) for j in range(len(args))}
-        for line in state.lines[self.start_line+1:]:
+        local = {self.args[j] : args[j] for j in range(len(args))}
+        for line in op.oper:
             state.current_line += 1
 
             # Expressions executing

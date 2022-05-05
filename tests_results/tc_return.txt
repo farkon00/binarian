@@ -1,8 +1,0 @@
-First stage of type checking completed successfully with 0 warnings
-
-While type checking, exception was thrown :
-
-line 2 :
-  return 0
-
-Unexpected return type, list was expected, int found

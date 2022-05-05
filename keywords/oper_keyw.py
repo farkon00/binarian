@@ -1,42 +1,32 @@
-from funcs.get_var import get_var
+from funcs.utils import check_args
 from funcs.exceptions import binarian_assert, throw_exception
 
-def if_keyword(lexic : list[str], state, full_vars : dict[str : object]):
-    binarian_assert("{" not in " ".join(lexic), 'Blocks must have starts and finishes matched with "{" and "}".', state)
+def if_keyword(op : list[str], state, local : dict[str : object]):
+    cond = bool(check_args(op, [object], state, local))
 
-    cond = bool(get_var(lexic[1], full_vars, state))
-    state.allowed_blocks += cond
+    if cond:
+        state.GLOBAL_FUNCS["execute_opers"](op.oper, state, local)
 
-    state.opened_ifs.append((bool(cond), state.opened_blocks))
+    state.opened_ifs.append(cond)
 
-def else_keyword(lexic : list[str], state):
-    binarian_assert("{" not in " ".join(lexic), 'Blocks must have starts and finishes matched with "{" and "}".', state)
+def else_keyword(op : list[str], state, local):
+    binarian_assert(len(state.opened_ifs) <= 0, f"If operator for else was not found.", state)
 
-    for j in state.opened_ifs:
-        if j[1] == state.opened_blocks:
-            if_ = j
-            state.opened_ifs.remove(j)
-            break
-    else:
-        throw_exception(f"If operator for else was not found.", state)
+    if_ = state.opened_ifs[-1]
+    del state.opened_ifs[-1]
 
-    if not if_[0]:
-        state.allowed_blocks += 1
+    if not if_:
+        state.GLOBAL_FUNCS["execute_opers"](op.oper, state, local)
 
-def elif_keyword(lexic : list[str], state, full_vars : dict[str : object]):
-    binarian_assert("{" not in " ".join(lexic), 'Blocks must have starts and finishes matched with "{" and "}".', state)
+def elif_keyword(op : list[str], state, local : dict[str : object]):
+    binarian_assert(len(state.opened_ifs) <= 0, f"If operator for else was not found.", state)
 
-    for j in state.opened_ifs:
-        if j[1] == state.opened_blocks:
-            if_ = j
-            state.opened_ifs.remove(j)
-            break
-    else:
-        throw_exception(f"If operator for elif was not found.", state)
+    if_ = state.opened_ifs[-1]
+    del state.opened_ifs[-1]
 
-    cond = bool(get_var(lexic[1], full_vars, state))
+    cond = bool(check_args(op, [object], state, local))
 
-    state.opened_ifs.append((cond and if_[0], state.opened_blocks))  
+    if cond and not if_:
+        state.GLOBAL_FUNCS["execute_opers"](op.oper, state, local)
 
-    if not if_[0] and cond:
-        state.allowed_blocks += 1
+    state.opened_ifs.append(True if if_ else cond)  

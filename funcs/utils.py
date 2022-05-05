@@ -1,3 +1,5 @@
+from funcs.exceptions import binarian_assert
+
 def type_to_str(_type : type, sep : str =" or "):
     """
     Converts type or tuple of types to string
@@ -22,6 +24,18 @@ def type_to_str(_type : type, sep : str =" or "):
     res = res.split(".")[-1] # removes modules names
 
     return res.lower()
+
+def check_args(op, types : list[type], state, local) -> list | object:
+    ret = []
+    for i, type_ in zip(op.args, types + [object] * (len(op.args) - len(types))):
+        res = state.GLOBAL_FUNCS['execute_line'](i, state, local)
+        binarian_assert(not isinstance(res, type_), 
+            f"Unexpected argument type {type_to_str(type_)} was expected,\ {type_to_str(type(res))} found.", state)
+        ret.append(res)
+
+    if len(ret) > 1:
+        return ret
+    return ret[0]
 
 def is_name_unavailable(name : str, state):
     """

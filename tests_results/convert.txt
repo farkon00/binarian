@@ -1,6 +1,0 @@
-float : 123.0
-float : 123.456
-int : 123
-list : [0]
-
-Finished in 0.000993490219116211 sec

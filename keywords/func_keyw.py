@@ -1,7 +1,7 @@
 from bin_types.function import Function
 from funcs.get_var import get_var
 from funcs.exceptions import binarian_assert
-from funcs.utils import is_name_unavailable
+from funcs.utils import is_name_unavailable, check_args
 
 def func_keyword(lexic : list[str], state, in_vars : dict[str : object]):
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
@@ -49,26 +49,27 @@ def func_keyword(lexic : list[str], state, in_vars : dict[str : object]):
 
     in_vars[func_name] = Function(args, state.current_line)
 
-def call_keyword(lexic : list[str], state, full_vars : dict[str : object]):
-    args = lexic[1:]
+def call_keyword(op : list[str], state, local : dict[str : object]):
+    func = check_args(op, [Function], state, local)
+    args = func[1:]
+    func = func[0]
 
-    func = get_var(lexic[0], full_vars, state, Function, error="Function")
-
-    binarian_assert(len(func.args) != len(args), "You didn`t give enough arguments.", state)
+    binarian_assert(len(func.args) > len(args), f"You didn`t give enough arguments, {len(func.args)} was expected.", state)
+    binarian_assert(len(func.args) < len(args), f"You gave too much arguments, {len(func.args)} was expected.", state)
 
     call_line = state.current_line
 
-    state.call_stack.append((lexic[0], state.current_line))
+    state.call_stack.append((op[0], state.current_line))
     state.current_line = func.start_line
 
-    ret = func.execute(args, state, full_vars)
+    ret = func.execute(args, state)
 
     del state.call_stack[-1]
     state.current_line = call_line
 
     return ret
 
-def return_keyword(lexic : list[str], state, is_func : bool, full_vars : dict[str : object]):
+def return_keyword(op : list[str], state, is_func : bool, local : dict[str : object]):
     binarian_assert(not is_func, 'Keyword "return" is restricted out of functions.', state)
 
-    state.last_return =  get_var(lexic[1], full_vars, state)
+    state.last_return = check_args(op, [object], state, local)
