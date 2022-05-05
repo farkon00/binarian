@@ -1,7 +1,10 @@
 import sys
 
 from time import time
+from pprint import pprint
 from types import FunctionType
+
+from parsing.parsing import *
 
 from type_checking import *
 
@@ -251,11 +254,10 @@ def main(test_argv : list[str] = None) -> None:
     state = ExecutionState(code)
     state.std_lines = std_lib.count("\n") + 1
 
-    binarian_assert(code.count("{") != code.count("}"), 'Blocks must have starts and finishes matched with "{" and "}".', state, display_line=False)
     if "-tc" in argv:
         type_check(state)
 
-    for i in range(len(state.lines)):
+    """for i in range(len(state.lines)):
         state.current_line += 1
 
         if state.current_line == state.std_lines:
@@ -273,7 +275,8 @@ def main(test_argv : list[str] = None) -> None:
         lexic = line.split()
 
         execute_line(lexic, state)
-
+    """
+    print("\n".join([str(i) for i in parse_to_ops(state)]))
 
     if "-d" in argv:
         debug_vars = list(state.vars.items())

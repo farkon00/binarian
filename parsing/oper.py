@@ -2,10 +2,12 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum, auto
+from typing import Iterable
 
 class OpIds(Enum):
     operation = auto()
     value = auto()
+    variable = auto()
     var = auto()
     drop = auto()
     input = auto()
@@ -30,8 +32,23 @@ class OpIds(Enum):
     return_ = auto()
     call = auto()
 
-@dataclass
 class Oper:
-    id: auto
-    args: list[Oper | object] # object is for value operation
-    oper: list[Oper] = []
+    def __init__(self, id: OpIds, args: list[Oper | object] = None, oper: list[Oper] = None):
+        if args is None:
+            args = []
+        elif not isinstance(args, list | tuple):
+            args = [args]
+        if oper is None:
+            oper = []
+        self.id = id
+        self.args = args
+        self.oper = oper
+
+    def __str__(self):
+        new = "\n"
+        return\
+f"""(
+    "id": {self.id.name},
+    "args": {new.join([str(i) for i in self.args])},
+    "oper": {new.join([str(i) for i in self.oper])}
+),"""
