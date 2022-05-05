@@ -1,6 +1,7 @@
 from .oper import *
 from .get_args import *
 from funcs.exceptions import binarian_assert
+from type_checking.get_type import get_type
 
 def parse_to_ops(state):
     opers = []
@@ -33,6 +34,28 @@ def parse_line(line, state):
         return op
 
     match lexic[0]:
+        case "var":
+            parts = [None, None]
+            for j, i in enumerate(lexic):
+                if "=" in i:
+                    spl = i.find("=")
+                    parts[0] = lexic[:j] + [i[:spl]]
+                    parts[1] = [i[spl + 1:]] + lexic[j + 1:]
+                    break
+
+            if not parts[0][-1]: parts[0] = parts[0][:-1]
+            if not parts[1][0]: parts[1] = parts[1][1:]
+            binarian_assert(len(parts[0]) < 2 and parts[1], "Variable must have name and value.", state)
+            
+            if len(parts[0]) == 3:
+                type_ = get_type(parts[0][1], state, {}, True)
+                name = parts[0][2].strip()
+            else:
+                type_ = None
+                name = parts[0][1].strip()
+
+            return Oper(OpIds.var, [name, get_args(parts[1], state)], types=type_)
+
         case "drop":
             binarian_assert(len(lexic) != 2, "Drop must have one argument.", state)
             return Oper(OpIds.drop, lexic[1])
@@ -47,8 +70,7 @@ def parse_line(line, state):
             return op
 
         case "convert":
-            binarian_assert(lexic[-1] not in state.types, "Convert should have type as last argument.", state)
-            op = Oper(OpIds.convert, get_args(lexic[1:-1], state) + [state.types[lexic[-1]]])
+            op = Oper(OpIds.convert, get_args(lexic[1:-1], state) + [get_type(lexic[-1], state, {}, True)])
             binarian_assert(len(op.args) != 2, "Convert must have two argument.", state)
             return op
 
