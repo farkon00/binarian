@@ -18,9 +18,9 @@ class OpIds(Enum):
     not_ = auto()
     index = auto()
     setindex = auto()
-    len_ = auto()
+    len = auto()
     append = auto()
-    zip_ = auto()
+    zip = auto()
     if_ = auto()
     else_ = auto()
     elif_ = auto()
@@ -49,6 +49,6 @@ class Oper:
         return\
 f"""(
     "id": {self.id.name},
-    "args": {new.join([str(i) for i in self.args])},
+    "args": {new.join([str(i) for i in self.args])}
     "oper": {new.join([str(i) for i in self.oper])}
 ),"""
