@@ -153,6 +153,38 @@ def parse_line(line, state, started=True):
             binarian_assert(len(lexic) != 1, f"{lexic[0][0].upper() + lexic[0][1:]} must have no arguments.", state)
             return Oper(type.__getattribute__(OpIds, lexic[0] + "_"))
 
+        case "func":
+            parts = line.split(":", maxsplit=1)
+            parts[0] = parts[0].split()
+
+            binarian_assert(len(parts[0]) < 2, "Function must have name.", state)
+            if len(parts[0]) == 2:
+                name = parts[0][1].strip()
+                ret_type = object
+            elif len(parts[0]) == 3:
+                name = parts[0][2].strip()
+                ret_type = get_type(parts[0][1], state, {}, True)
+            else:
+                throw_exception("Function first part must have only 2 arguments.", state)
+
+            args = []
+            args_types = []
+            if parts[1]:
+                for i in parts[1].split(","):
+                    i = i.split(":")
+                    if len(i) == 2: 
+                        args.append(i[0].strip())
+                        args_types.append(get_type(i[1].strip(), state, {}, True))
+                    elif len(i) == 1 and i[0].strip():
+                        args.append(i[0].strip())
+                        args_types.append(object)
+                    else:
+                        throw_exception("Argument must have only one or fewer : and must have a name.", state)
+
+            op = Oper(OpIds.func, [name, *args], types=[ret_type, *args_types])
+            op.oper = parse_block(state, state.current_line)
+            return op
+
         case "return":
             op = Oper(OpIds.return_, get_args(lexic[1:], state))
             binarian_assert(len(op.args) != 1, "Return must have one argument.", state)
