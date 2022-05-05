@@ -250,7 +250,7 @@ def main(test_argv : list[str] = None) -> None:
         std_lib = """""
         
     std_lib = ""
-    code = delete_comments(std_lib + "\n" + code)
+    code = delete_comments(std_lib + code)
     state = ExecutionState(code)
     state.std_lines = std_lib.count("\n") + 1
 

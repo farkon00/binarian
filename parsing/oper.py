@@ -21,11 +21,11 @@ class OpIds(Enum):
     len = auto()
     append = auto()
     zip = auto()
-    if_ = auto() # TODO
-    else_ = auto() # TODO
-    elif_ = auto() # TODO
-    for_ = auto() # TODO
-    while_ = auto() # TODO
+    if_ = auto()
+    else_ = auto()
+    elif_ = auto()
+    for_ = auto()
+    while_ = auto()
     break_ = auto()
     continue_ = auto()
     func = auto() # TODO

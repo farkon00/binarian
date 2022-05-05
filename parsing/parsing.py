@@ -1,18 +1,20 @@
 from .oper import *
 from .get_args import *
-from funcs.exceptions import binarian_assert
+from funcs.exceptions import binarian_assert, throw_exception
 from type_checking.get_type import get_type
 
 def parse_to_ops(state):
     opers = []
-    for line_index, i in enumerate(state.lines):
+    for line_index in range(len(state.lines)):
         # For skiping, that was already parsed inside blocks 
-        if state.current_line > line_index + 1:
+        if state.current_line > line_index:
             continue
 
         state.current_line += 1
+        if state.current_line >= len(state.lines):
+            break
         line = state.lines[state.current_line]
-        line = line.replace("}", "")
+        line = line.replace("}", "").replace("{", "")
 
         binarian_assert(line.count("(") != line.count(")"), 'Expression must have start and finish matched with "(" and ")".', state)
 
@@ -22,11 +24,41 @@ def parse_to_ops(state):
 
     return opers
 
-def parse_line(line, state):
+def parse_block(state, start):
+    opers = []
+    started = False
+    if state.lines[start].endswith("{"):
+        started = True
+    for line_index in range(start, len(state.lines)):
+        # For skiping, that was already parsed inside other blocks
+        if state.current_line > line_index:
+            continue
+
+        state.current_line += 1
+        if state.current_line >= len(state.lines):
+            break
+
+        line = state.lines[state.current_line]
+
+        binarian_assert(line.count("(") != line.count(")"), 'Expression must have start and finish matched with "(" and ")".', state)
+
+        op = parse_line(line.replace("}", "").replace("{", ""), state, started=started)
+        if op:
+            opers.append(op)
+
+        if "}" in line:
+            return opers
+
+    throw_exception('Block must have start and finish matched with ""{" and "}"', state, False)
+
+def parse_line(line, state, started=True):
     lexic = line.split()
 
     if len(lexic) <= 0:
         return
+
+    if not started and not line.startswith("{"):
+        throw_exception("Block not found", state)
 
     if lexic[0] in state.operations:
         op = Oper(OpIds.operation, lexic[0:1] + get_args(lexic[1:], state)) 
@@ -65,7 +97,7 @@ def parse_line(line, state):
             return Oper(OpIds.input, lexic[1])
 
         case "output":
-            op = Oper(OpIds.not_, get_args(lexic[1:-1], state) + [lexic[-1]])
+            op = Oper(OpIds.output, get_args(lexic[1:-1], state) + [lexic[-1]])
             binarian_assert(len(op.args) != 2, "Output must have two argument.", state)
             return op
 
@@ -97,6 +129,24 @@ def parse_line(line, state):
         case "len":
             op = Oper(OpIds.len, get_args(lexic[1:], state))
             binarian_assert(len(op.args) != 1, "Len must have one argument.", state)
+            return op
+
+        case "if" | "elif" | "while":
+            op = Oper(type.__getattribute__(OpIds, lexic[0] + "_"), get_args(lexic[1:], state))
+            binarian_assert(len(op.args) != 1, f"{lexic[0][0].upper() + lexic[0][1:]} must have one argument.", state)
+            op.oper = parse_block(state, state.current_line)
+            return op
+        
+        case "else":
+            op = Oper(OpIds.else_, get_args(lexic[1:], state))
+            binarian_assert(len(op.args) != 0, "Else must have no argument.", state)
+            op.oper = parse_block(state, state.current_line)
+            return op
+
+        case "for":
+            op = Oper(OpIds.for_, [lexic[1]] + get_args(lexic[2:], state))
+            binarian_assert(len(op.args) != 2, "For must have two argument.", state)
+            op.oper = parse_block(state, state.current_line)
             return op
 
         case "break" | "continue":
