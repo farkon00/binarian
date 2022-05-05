@@ -28,7 +28,7 @@ class OpIds(Enum):
     while_ = auto()
     break_ = auto()
     continue_ = auto()
-    func = auto() # TODO
+    func = auto()
     return_ = auto()
     call = auto()
 

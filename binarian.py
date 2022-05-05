@@ -232,7 +232,7 @@ def main(test_argv : list[str] = None) -> None:
     except Exception:
         raise FileNotFoundError("File does not exist.")
 
-    """if "-no-std" not in argv:
+    if "-no-std" not in argv:
         try:
             std_path = "\\".join(__file__.split("\\")[:-1])
             std_path += "\\" if std_path else ""
@@ -247,9 +247,8 @@ def main(test_argv : list[str] = None) -> None:
             print(f"Path where std library was excepted {std_path} and your current directory\n\n")
             std_lib = ""
     else:
-        std_lib = """""
-        
-    std_lib = ""
+        std_lib = ""
+
     code = delete_comments(std_lib + code)
     state = ExecutionState(code)
     state.std_lines = std_lib.count("\n") + 1

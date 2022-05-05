@@ -62,7 +62,7 @@ def parse_line(line, state, started=True):
 
     if lexic[0] in state.operations:
         op = Oper(OpIds.operation, lexic[0:1] + get_args(lexic[1:], state)) 
-        binarian_assert(len(op.args) != 2, "Operation must have two argument.", state)
+        binarian_assert(len(op.args) != 3, "Operation must have two argument.", state)
         return op
 
     match lexic[0]:
