@@ -9,21 +9,25 @@ def parse_brackets(line : str, mode : tuple[str, str], state, error : str = "Exp
         binarian_assert(start_ind == -1, f'{error} must have start and finish matched with "{mode[0]}" and "{mode[1]}".', state)
         return start_ind, end_ind
 
-def parse_lists(lexic : list[str]) -> list[str]:
+def parse_lists_and_expr(lexic : list[str]) -> list[str]:
     """Finds [ and ] in lexic and combines all lexic beetween them"""
     arrays_opened = 0
+    expr_opened = 0
     merged = 0
     
     for i in range(len(lexic)):
         now_lex = lexic[i-merged]
         
-        if arrays_opened > 0:
+        if arrays_opened > 0 or expr_opened > 0:
             lexic[i-1-merged] += " " + now_lex
             del lexic[i-merged]
             merged += 1
 
         arrays_opened += now_lex.count("[")
         arrays_opened -= now_lex.count("]")
+
+        expr_opened += now_lex.count("(")
+        expr_opened -= now_lex.count(")")
 
     return lexic
 

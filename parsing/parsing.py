@@ -41,19 +41,30 @@ def parse_line(line, state):
             binarian_assert(len(lexic) != 2, "Input must have one argument.", state)
             return Oper(OpIds.input, lexic[1])
 
-        case "and" | "or":
-            op = Oper(type.__getattribute__(OpIds, lexic[0] + "_"), get_args(lexic[1:], state))
-            binarian_assert(len(op.args) != 2, f"{lexic[0][0].upper() + lexic[0][1:]} must have two argument.", state)
+        case "output":
+            op = Oper(OpIds.not_, get_args(lexic[1:-1], state) + [lexic[-1]])
+            binarian_assert(len(op.args) != 2, "Output must have two argument.", state)
             return op
 
-        case "index" | "append" | "zip":
-            op = Oper(type.__getattribute__(OpIds, lexic[0]), get_args(lexic[1:], state))
+        case "convert":
+            binarian_assert(lexic[-1] not in state.types, "Convert should have type as last argument.", state)
+            op = Oper(OpIds.convert, get_args(lexic[1:-1], state) + [state.types[lexic[-1]]])
+            binarian_assert(len(op.args) != 2, "Convert must have two argument.", state)
+            return op
+
+        case "and" | "or":
+            op = Oper(type.__getattribute__(OpIds, lexic[0] + "_"), get_args(lexic[1:], state))
             binarian_assert(len(op.args) != 2, f"{lexic[0][0].upper() + lexic[0][1:]} must have two argument.", state)
             return op
 
         case "not":
             op = Oper(OpIds.not_, get_args(lexic[1:], state))
             binarian_assert(len(op.args) != 1, "Not must have one argument.", state)
+            return op
+
+        case "index" | "append" | "zip":
+            op = Oper(type.__getattribute__(OpIds, lexic[0]), get_args(lexic[1:], state))
+            binarian_assert(len(op.args) != 2, f"{lexic[0][0].upper() + lexic[0][1:]} must have two argument.", state)
             return op
 
         case "setindex":
@@ -67,5 +78,13 @@ def parse_line(line, state):
             return op
 
         case "break" | "continue":
-            binarian_assert(len(lexic) != 1, "Break must have no arguments.", state)
+            binarian_assert(len(lexic) != 1, f"{lexic[0][0].upper() + lexic[0][1:]} must have no arguments.", state)
             return Oper(type.__getattribute__(OpIds, lexic[0] + "_"))
+
+        case "return":
+            op = Oper(OpIds.return_, get_args(lexic[1:], state))
+            binarian_assert(len(op.args) != 1, "Return must have one argument.", state)
+            return op
+
+        case _:
+            return Oper(OpIds.call, [Oper(OpIds.variable, lexic[0])] + get_args(lexic[1:], state))

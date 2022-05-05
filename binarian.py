@@ -66,7 +66,7 @@ class ExecutionState:
             "execute_line" : execute_line,
             "execute_expr" : execute_expr,
             "parse_blocks" : parse_blocks,
-            "parse_lists" : parse_lists
+            "parse_line" : parse_line
         }
 
 def execute_line(lexic : list[str], state : ExecutionState, local : dict[str : object] = None) -> object | None:
