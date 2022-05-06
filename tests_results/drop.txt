@@ -2,4 +2,4 @@ test : 1
 
 {'test': '1'}
 
-Finished in 0.0029931068420410156 sec
+Finished in 0.0019943714141845703 sec

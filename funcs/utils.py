@@ -30,7 +30,7 @@ def check_args(op, types : list[type], state, local) -> list | object:
     for i, type_ in zip(op.args, types + [object] * (len(op.args) - len(types))):
         res = state.GLOBAL_FUNCS['execute_line'](i, state, local)
         binarian_assert(not isinstance(res, type_), 
-            f"Unexpected argument type {type_to_str(type_)} was expected,\ {type_to_str(type(res))} found.", state)
+            f"Unexpected argument type {type_to_str(type_)} was expected, {type_to_str(type(res))} found.", state)
         ret.append(res)
 
     if len(ret) > 1:
