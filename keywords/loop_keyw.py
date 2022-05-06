@@ -1,4 +1,3 @@
-from funcs.get_var import get_var
 from funcs.exceptions import binarian_assert
 from funcs.utils import type_to_str
 from bin_types.list import List

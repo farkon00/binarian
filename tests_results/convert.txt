@@ -3,4 +3,4 @@ float : 123.456
 int : 123
 list : [0]
 
-Finished in 0.002588987350463867 sec
+Finished in 0.0029916763305664062 sec

@@ -1,6 +1,5 @@
 from typing import Iterable
 from bin_types.function import Function
-from funcs.get_var import get_var
 from funcs.exceptions import binarian_assert
 from funcs.utils import is_name_unavailable, check_args
 

@@ -1,7 +1,6 @@
 import sys
 
 from time import time
-from pprint import pprint
 from types import FunctionType
 
 from parsing.parsing import *
@@ -9,7 +8,6 @@ from parsing.parsing import *
 from type_checking import *
 
 from funcs.code_preparer import *
-from funcs.blocks_parser import *
 from funcs.exceptions import *
 
 from keywords import *

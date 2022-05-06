@@ -1,5 +1,4 @@
 from funcs.utils import check_args
-from funcs.get_var import *
 
 def execute_oper(op : list[str], state, local : dict[str : object]):
     operation = op.args[0]

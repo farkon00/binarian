@@ -1,5 +1,4 @@
 from funcs.exceptions import *
-from funcs.get_var import get_var
 from type_checking.get_type import get_type
 from funcs.utils import type_to_str
 

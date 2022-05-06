@@ -3,7 +3,7 @@ from .oper import *
 from bin_types.list import List
 
 from funcs.exceptions import binarian_assert
-from funcs.blocks_parser import parse_lists_and_expr
+from funcs.brackets_parser import parse_lists_and_expr
 
 def get_args(lexic, state) -> Oper:
     """
