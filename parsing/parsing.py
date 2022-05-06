@@ -29,7 +29,7 @@ def parse_to_ops(state):
 def parse_block(state, start):
     opers = []
     started = False
-    if state.lines[start].endswith("{"):
+    if state.lines[start].strip().endswith("{"):
         started = True
     for line_index in range(start, len(state.lines)):
         # For skiping, that was already parsed inside other blocks
@@ -59,7 +59,7 @@ def parse_line(line, state, started=True):
     if len(lexic) <= 0:
         return
 
-    if not started and not line.startswith("{"):
+    if not started and not line.strip().startswith("{"):
         throw_exception("Block not found", state)
 
     if lexic[0] in state.operations:
@@ -180,7 +180,7 @@ def parse_line(line, state, started=True):
 
             args = []
             args_types = []
-            if parts[1]:
+            if len(parts) > 1:
                 for i in parts[1].split(","):
                     i = i.split(":")
                     if len(i) == 2: 

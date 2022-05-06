@@ -1,15 +1,17 @@
 from dataclasses import dataclass
 
+from urllib3 import Retry
+
 from funcs.blocks_parser import *
-import funcs.get_var as get_var
 from funcs.exceptions import *
 
-@dataclass
 class Function:
     """Class that represents function in binarian"""
 
-    args : list[str]
-    start_line : int
+    def __init__(self, oper):
+        self.body = oper.oper
+        self.args = oper.args[1:]
+        self.name = oper.args[0]
 
     def execute(self, args : list[str], state) -> object:
         """Executes function"""
@@ -17,43 +19,18 @@ class Function:
         state.is_expr = False
 
         local = {self.args[j] : args[j] for j in range(len(args))}
-        for line in op.oper:
-            state.current_line += 1
+        state.GLOBAL_FUNCS["execute_opers"](self.body, state, local)
 
-            # Expressions executing
-            binarian_assert(line.count("(") != line.count(")"),
-                'Expression must have start and finish matched with "{" and "}".', state
-            )
+        # Stops function and returns return value on return
+        if state.last_return != None:
+            state.is_expr = is_expr_before
 
-            if state.opened_blocks <= state.allowed_blocks:
-                while "(" in line:
-                    line = state.GLOBAL_FUNCS["execute_expr"](line, state, local=local)
-            
-            lexic = line.split()
+            ret = state.last_return
+            state.last_return = None
 
-            # Stops function without return
-            opened_blocks, _ = parse_blocks(line, state, ret=True)
-            if opened_blocks <= starter_blocks - 1:
-                state.opened_blocks = starter_blocks
-                state.allowed_blocks = starter_allowed
-                state.is_expr = is_expr_before
-                
-                return 0
-
-            state.GLOBAL_FUNCS["execute_line"](lexic, state, local=local)
-
-            # Stops function and retuerns return value on return
-            if state.last_return != None:
-                state.opened_blocks = starter_blocks
-                state.allowed_blocks = starter_allowed
-                state.is_expr = is_expr_before
-
-                ret = state.last_return
-                state.last_return = None
-
-                return ret
-
-        state.is_expr = is_expr_before
+            return ret
+        else:
+            return 0
 
     def __str__(self):
         return f"<function : {' '.join(self.args)}>"

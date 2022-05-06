@@ -1,0 +1,15 @@
+
+While executing code, exception was thrown :
+
+line 16 :
+  func1
+line 2 in func1 :
+  func2
+line 5 in func2 :
+  func3 1
+line 9 in func3 :
+  func3 0
+line 12 in func3 :
+  not-keyword
+
+Variable not-keyword is not defined

@@ -1,0 +1,6 @@
+float : 123.0
+float : 123.456
+int : 123
+list : [0]
+
+Finished in 0.002992868423461914 sec

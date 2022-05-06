@@ -30,6 +30,9 @@ def for_keyword(op : list[str], state, local : dict[str : object]):
             state.current_line = op.oper[-1].line
             break
 
+        if state.last_return != None:
+            break
+
     try:
         if local != None:
             del local[var_name]
@@ -48,11 +51,12 @@ def while_keyword(op : list[str], state, local : dict[str : object]):
 
         state.GLOBAL_FUNCS["execute_opers"](op.oper, state, local, is_loop=True)
 
-        local = {**state.vars, **(local if local != None else {})}
-
         if state.is_breaked:
             state.is_breaked = False
             state.current_line = op.oper[-1].line
+            break
+
+        if state.last_return != None:
             break
 
     state.current_line = op.oper[-1].line

@@ -1,7 +1,8 @@
+side : 1
+if_test_func : 1
+nut : 0
+side : 1
+else_test_func : 1
+nut : 1
 
-While executing code, exception was thrown :
-
-line 1 :
-  output 1 side
-
-Block not found
+Finished in 0.003988981246948242 sec

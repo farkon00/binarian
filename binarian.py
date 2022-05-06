@@ -1,4 +1,3 @@
-from lib2to3.pgen2.token import OP
 import sys
 
 from time import time
@@ -162,25 +161,22 @@ def execute_line(op : Oper, state : ExecutionState, local : dict[str : object] =
             continue_keyword(op, state)
 
         case OpIds.func:
-            func_keyword(op, state, local if is_func else state.vars) # TODO
+            func_keyword(op, state, local if is_func else state.vars)
 
         case OpIds.return_:
             return return_keyword(op, state, is_func, local)
 
+        case OpIds.call:
+            return call_keyword(op, state, local)
 
         case _:
-            if op == OpIds.call:
-                state.opened_blocks += 1
-                state.allowed_blocks += 1
-                return call_keyword(op, state, local) # TODO
-
             throw_exception(f"Keyword or function wasn`t found.", state)
 
 def execute_opers(opers : list[Oper], state : ExecutionState, local : dict[str : object] = None,
  main : bool = False, is_loop : bool = False) -> object:
     """Executes list of operations"""
     for i in opers:
-        if state.current_line == state.std_lines and main:
+        if state.current_line < state.std_lines and main:
             state.std_lib_vars = state.vars.copy()
 
         execute_line(i, state, local, is_expr=False)
