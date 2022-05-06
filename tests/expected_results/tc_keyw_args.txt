@@ -5,4 +5,4 @@ While type checking, exception was thrown :
 line 2 :
   len a
 
-Unexpected argument type, list was expected, int found.
+Unexpected argument type, list was expected, int found

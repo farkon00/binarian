@@ -235,7 +235,7 @@ def main(test_argv : list[str] = None) -> None:
         print("\n".join([str(i) for i in ops]))
 
     if "-tc" in argv:
-        type_check(state)
+        type_check(ops, state)
 
     execute_opers(ops, state, main=True)
 

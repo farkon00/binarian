@@ -1,126 +1,99 @@
-from funcs.blocks_parser import *
-from funcs.exceptions import binarian_assert
-from funcs.utils import *
-from .get_type import get_type
+from bin_types.function import Function
+from parsing.oper import OpIds
 from .tc_types import TypeCheckedFunction
 
-def tc_line1(lexic : list[str], state):
+def tc_line1(op : list[str], state):
     """Executes 1 stage of type checking for 1 keyword"""
     is_func = bool(state.opened_function)
     local = state.opened_function.locals if is_func else {}
     full_vars = {**state.vars, **local}
 
-    line = parse_blocks(" ".join(lexic), state)
-    lexic = line.split()
-    lexic = parse_lists(lexic)
+    state.current_line = op.line
 
-    if state.opened_function:
-        if state.opened_blocks <= state.function_blocks - 1:
-            state.opened_function = None
-            state.function_blocks = None
+    match op.id:
+        case OpIds.value:
+            return type(op.args[0])
 
-    if len(lexic) <= 0:
-        return None
+        case OpIds.variable:
+            if op.args[0] not in full_vars:
+                state.warnings += 1
+                return object
 
-    if lexic[0] in state.operations:
-        if lexic[0] in state.int_operations:
-            return int
-        elif lexic[0] in state.float_operations:
-            return float
-        elif issubclass(get_type(lexic[1], state, full_vars), float) or\
-         issubclass(get_type(lexic[2], state, full_vars), float):
-            return float
-        else:
-            return int
+            return full_vars[op.args[0]]
 
-    match lexic[0]:
-        case "var":
-            binarian_assert("=" not in " ".join(lexic), '"=" not found in var', state)
-            parts = [None, None]
-            for j, i in enumerate(lexic):
-                if "=" in i:
-                    spl = i.find("=")
-                    parts[0] = lexic[:j] + [i[:spl]]
-                    parts[1] = [i[spl + 1:]] + lexic[j + 1:]
-            binarian_assert(not len(parts[1]), 'Nothing was found after "=" in var', state)
-            if not parts[0][-1]: parts[0] = parts[0][:-1]
-            if not parts[1][0]: parts[1] = parts[1][1:]
-
-            if is_func:
-                if len(parts[0]) >= 3:
-                    binarian_assert(parts[0][1] not in state.types, f"Type is not found : {parts[0][1]}", state)
-                    local[parts[0][2]] = state.types[parts[0][1]]
-                elif parts[0][1] not in local:
-                    local[parts[0][1]] = get_type(parts[1][0], state, full_vars)
+        case OpIds.operation:
+            if op.args[0] in state.int_operations:
+                return int
+            elif op.args[0] in state.float_operations:
+                return float
+            elif issubclass(tc_line1(op.args[1], state), float) or\
+            issubclass(tc_line1(op.args[2], state), float):
+                return float
             else:
-                if len(parts[0]) >= 3:
-                    binarian_assert(parts[0][1] not in state.types, f"Type is not found : {parts[0][1]}", state)
-                    state.vars[parts[0][2]] = state.types[parts[0][1]]
+                return int
+
+        case OpIds.var:
+            if is_func:
+                if op.types:
+                    local[op.args[0]] = op.types[0]
+                elif local.get(op.args[0], None) in (None, object):
+                    local[op.args[0]] = tc_line1(op.args[1], state)
+            else:
+                if op.types:
+                    state.vars[op.args[0]] = op.types[0]
+                elif state.vars.get(op.args[0], None) in (None, object):
+                    state.vars[op.args[0]] = tc_line1(op.args[1], state)
+
+        case OpIds.input:
+            if is_func:
+                local[op.args[0]] = int
+            else:
+                state.vars[op.args[0]] = int
+
+        case OpIds.convert:
+            return op.args[1]
+
+        case OpIds.if_ | OpIds.else_ | OpIds.elif_ | OpIds.while_:
+            for i in op.oper:
+                tc_line1(i, state)
+
+        case OpIds.for_:
+            if is_func:
+                local[op.args[0]] = object
+            else:
+                state.vars[op.args[0]] = object
+
+            for i in op.oper:
+                tc_line1(i, state)
+
+            try:
+                if is_func:
+                    del local[op.args[0]]
                 else:
-                    if lexic[1] not in state.vars:
-                        state.vars[parts[0][1]] = get_type(parts[1][0], state, full_vars)
+                    del state.vars[op.args[0]]
+            except KeyError:
+                pass
 
-        case "input":
-            if is_func:
-                local[lexic[1]] = int
-            else:
-                state.vars[lexic[1]] = int
-
-        case "convert":
-            binarian_assert(len(lexic) < 3, "Not enought arguments for convert", state)
-            return get_type(lexic[2], state, {}, True)
-
-        case "func":
-            parts = " ".join(lexic).split(":", 1)
-            if len(parts[0].split()) >= 3:
-                ret = parts[0].split()[1]
-                binarian_assert(ret not in state.types, f"Type is not found : {lexic[1]}", state)
-                ret = state.types[ret]
-                name = parts[0].split()[2]
-            else:
-                ret = object
-                name = parts[0].split()[1]
-
-            args = []
-            if len(parts) >= 2:
-                args_text = parts[1].split(",")
-                for i in args_text:
-                    i = i.replace("{", "")
-                    i = i.replace("}", "")
-                    i = i.strip()
-                    if ":" in i:
-                        arg_splited = i.split(":")
-                        arg_splited = [arg_splited[0].strip(), arg_splited[1].strip()]
-                        binarian_assert(arg_splited[1] not in state.types, f"Type is not found : {arg_splited[1]}", state)
-                        args.append((arg_splited[0], state.types[arg_splited[1]]))
-                    else:
-                        args.append((i, object))
-
-            func = TypeCheckedFunction(args, ret)
-            state.functions[name] = func
+        case OpIds.func:
+            func = TypeCheckedFunction(op.oper, list(zip(op.args[1:], op.types[1:])), op.types[0])
+            state.functions[op.args[0]] = func
+            full_vars[op.args[0]] = Function
             state.opened_function = func
-            state.function_blocks = state.opened_blocks
+            for i in op.oper:
+                tc_line1(i, state)
+            state.opened_function = None
+
+        case OpIds.call:
+            func = op.args[0].args[0]
+            if func not in state.functions:
+                state.warnings += 1
+                return object
+            return state.functions[func].ret
 
         case _:
-            if lexic[0] in state.keywords:
-                keyword = state.keywords[lexic[0]]
+            if op.id.name in state.keywords:
+                keyword = state.keywords[op.id.name]
 
                 return keyword[0]
 
-            if lexic[0] in state.functions:
-                return state.functions[lexic[0]].ret
-
             state.warnings += 1
-
-
-def tc_expr1(line : str, state):
-    """Executes 1 stage of type checking for expession"""
-    indexes = parse_brackets(line, ("(", ")"), state)
-
-    if not indexes:
-        return
-    start_ind, end_ind = indexes
-
-    lexic = line[start_ind+1:end_ind].split()
-
-    return line[:start_ind] + type_to_str(tc_line1(lexic, state)) + line[end_ind+1:]
