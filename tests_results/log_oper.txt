@@ -5,4 +5,4 @@ or : 1
 not : 0
 not : 1
 
-Finished in 0.006983280181884766 sec
+Finished in 0.0029926300048828125 sec

@@ -3,9 +3,9 @@ from funcs.utils import check_args
 from bin_types.list import List
 
 def index_keyword(op : list[str], state, local : dict[str : object]):
-    list, index = check_args(op, [List, int], state, local)
+    list, index = check_args(op, [List | str, int], state, local)
 
-    binarian_assert(index >= len(list), "Index out of range.", state)
+    binarian_assert(index >= len(list) if index > 0 else abs(index) > len(list), "Index out of range.", state)
 
     if state.is_expr:
         return list[index]
@@ -15,12 +15,12 @@ def setindex_keyword(op : list[str], state, local : dict[str : object]):
 
     list, index, val = check_args(op, [List, int, object], state, local)
 
-    binarian_assert(index >= len(list), "Index out of range.", state)
+    binarian_assert(abs(index) -1 if index < 0 else index >= len(list), "Index out of range.", state)
 
     list[index] = val
 
 def len_keyword(op : list[str], state, local : dict[str : object]):
-    _list = check_args(op, [List], state, local)
+    _list = check_args(op, [List | str], state, local)
 
     if state.is_expr:
         return len(_list)

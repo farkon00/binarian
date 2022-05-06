@@ -41,7 +41,6 @@ class ExecutionState:
             "str" : str,
             "function" : Function,
             "list" : List,
-            "none" : None
         }
 
         self.operations : tuple[str] = (

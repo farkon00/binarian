@@ -13,7 +13,7 @@ def for_keyword(op : list[str], state, local : dict[str : object]):
 
     var_name = op.args[0]
     list_ = state.GLOBAL_FUNCS["execute_line"](op.args[1], state, local)
-    binarian_assert(not isinstance(list_, List), f"Cant iterate throw {type_to_str(type(list_))}.", state)
+    binarian_assert(not isinstance(list_, List | str), f"Cant iterate throw {type_to_str(type(list_))}.", state)
     for loop_iter in list_:
         if local != None:
             local[var_name] = loop_iter
