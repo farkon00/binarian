@@ -1,7 +1,3 @@
-from dataclasses import dataclass
-
-from urllib3 import Retry
-
 from funcs.brackets_parser import *
 from funcs.exceptions import *
 
