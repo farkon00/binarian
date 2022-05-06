@@ -1,10 +1,6 @@
-and 1 0
-and 1 1
-or 0 0
-or 1 0
-not 1
-not 0
-
-output (and 1 1) expr1
-output (or 1 0) expr2
-output (not 1) expr3
+output (and 1 0) and
+output (and 1 1) and
+output (or 0 0) or
+output (or 1 0) or
+output (not 1) not
+output (not 0) not

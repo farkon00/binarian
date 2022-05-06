@@ -1,141 +1,61 @@
-from funcs.get_var import get_var
 from funcs.exceptions import binarian_assert
+from funcs.utils import type_to_str
 from bin_types.list import List
-from funcs.utils import is_name_unavailable
 
-def break_keyword(lexic : list[str], state):
+def break_keyword(op : list[str], state):
     state.is_breaked = True
 
-def continue_keyword(lexic : list[str], state):
+def continue_keyword(op : list[str], state):
     state.is_continued = True
 
-def for_keyword(lexic : list[str], state, full_vars : dict[str : object]):
+def for_keyword(op : list[str], state, local : dict[str : object]):
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
-    binarian_assert(len(lexic) < 3, "You didn`t give enough arguments.", state)
-    binarian_assert(is_name_unavailable(lexic[1], state), "Variable name is unavailable.", state)
-    binarian_assert("{" not in " ".join(lexic), 'Blocks must have starts and finishes matched with "{" and "}".', state)
-    get_var(lexic[2], full_vars, state, List) # Checks for errors in list
 
-    state.opened_loops.append([state.current_line, state.opened_blocks, [], 0])
-
-def execute_for(loop : list[int, int, list[str]], state, full_vars : dict[str : object], local : dict[str : object] = None):
-    end_line = state.current_line
-    state.current_line = loop[0]
-    opened, allowed = state.opened_blocks, state.allowed_blocks
-    
-    loop_line = state.lines[loop[0]]
-    while "(" in loop_line:
-        loop_line = state.GLOBAL_FUNCS["execute_expr"](loop_line, state, local=local)
-
-    loop_lexic = loop_line.split()
-    loop_lexic = state.GLOBAL_FUNCS["parse_lists"](loop_lexic)
-    list_ = get_var(loop_lexic[2], full_vars, state, List)
+    var_name = op.args[0]
+    list_ = state.GLOBAL_FUNCS["execute_line"](op.args[1], state, local)
+    binarian_assert(not isinstance(list_, List), f"Cant iterate throw {type_to_str(type(list_))}.", state)
     for loop_iter in list_:
         if local != None:
-            local[loop_lexic[1]] = loop_iter
+            local[var_name] = loop_iter
         else:
-            state.vars[loop_lexic[1]] = loop_iter
+            state.vars[var_name] = loop_iter
 
-        state.current_line = loop[0]
+        state.current_line = op.line
 
-        for line in loop[2]:
-            state.current_line += 1
-
-            # Expressions executing
-            binarian_assert(line.count("(") != line.count(")"), 'Expression must have start and finish matched with "(" and "}".', state)
-
-            if state.opened_blocks <= state.allowed_blocks:
-                while "(" in line:
-                    line = state.GLOBAL_FUNCS["execute_expr"](line, state, local=local)
-                
-            
-            lexic = line.split()
-            if len(lexic) <= 0:
-                continue
-
-            state.GLOBAL_FUNCS["execute_line"](lexic, state, local=local)
-
-            if state.last_return != None:
-                return None
-
-            if state.is_breaked:
-                break
-
-            if state.is_continued:
-                state.is_continued = False
-                break
-
-        state.opened_blocks = opened
-        state.allowed_blocks = allowed
+        state.GLOBAL_FUNCS["execute_opers"](op.oper, state, local, is_loop=True)
 
         if state.is_breaked:
             state.is_breaked = False
-            state.current_line = end_line
+            state.current_line = op.oper[-1].line
+            break
+
+        if state.last_return != None:
             break
 
     try:
         if local != None:
-            del local[loop_lexic[1]]
+            del local[var_name]
         else:
-            del state.vars[loop_lexic[1]]
+            del state.vars[var_name]
     except KeyError:
         pass
 
-def while_keyword(lexic : list[str], state, full_vars : dict[str : object]):
+def while_keyword(op : list[str], state, local : dict[str : object]):
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
-    binarian_assert(len(lexic) < 2, "You didn`t give enough arguments.", state)
-    binarian_assert("{" not in " ".join(lexic), 'Blocks must have starts and finishes matched with "{" and "}".', state)
 
-    state.opened_loops.append([state.current_line, state.opened_blocks, [], 1])
-
-def execute_while(loop : list[int, int, list[str]], state, full_vars : dict[str : object], local : dict[str : object] = None):
-    end_line = state.current_line
-    state.current_line = loop[0]
-    loop_cond = " ".join(state.lines[loop[0]].split()[1:-1])
 
     while True:
-        state.current_line = loop[0]
-        
-        temp_loop_cond = loop_cond
-        while "(" in temp_loop_cond:
-            temp_loop_cond = state.GLOBAL_FUNCS["execute_expr"](temp_loop_cond, state, local=local)
-        temp_loop_cond = get_var(temp_loop_cond, full_vars, state)
-        if not temp_loop_cond:
+        if not state.GLOBAL_FUNCS["execute_line"](op.args[0], state, local):
             break
-        del temp_loop_cond
-        
-        for line in loop[2][:-1]:
-            state.current_line += 1
 
-            # Expressions executing
-            binarian_assert(line.count("(") != line.count(")"), 'Expression must have start and finish matched with "{" and "}".', state)
-
-            if state.opened_blocks <= state.allowed_blocks:
-                while "(" in line:
-                    line = state.GLOBAL_FUNCS["execute_expr"](line, state, local=local)
-                
-            
-            lexic = line.split()
-            if len(lexic) <= 0:
-                continue
-
-            state.GLOBAL_FUNCS["execute_line"](lexic, state, local=local)
-
-            if state.last_return != None:
-                return
-
-            if state.is_breaked:
-                break
-
-            if state.is_continued:
-                state.is_continued = False
-                break
-
-        full_vars = {**state.vars, **(local if local != None else {})}
+        state.GLOBAL_FUNCS["execute_opers"](op.oper, state, local, is_loop=True)
 
         if state.is_breaked:
             state.is_breaked = False
-            state.current_line = end_line
+            state.current_line = op.oper[-1].line
             break
 
-    state.current_line = end_line
+        if state.last_return != None:
+            break
+
+    state.current_line = op.oper[-1].line

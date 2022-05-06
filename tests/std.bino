@@ -17,5 +17,5 @@ output (list-eq [1 1] [1 1]) eq-1
 output (list-eq [0 1] [0]) eq-0
 output (list-eq [0 1] [1 0]) eq-0
 
-output (sum [6 11 3]) 6 + 11 + 3 =
-output (sum [5 13 9 2]) 5 + 13 + 9 + 2 =
+output (sum [6 11 3]) 6+11+3=
+output (sum [5 13 9 2]) 5+13+9+2=

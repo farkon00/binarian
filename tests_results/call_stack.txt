@@ -12,4 +12,4 @@ line 9 in func3 :
 line 12 in func3 :
   not-keyword
 
-Keyword or function wasn`t found.
+Variable not-keyword is not defined

@@ -5,6 +5,5 @@ from binarian import *
 
 from . import exceptions
 from . import utils 
-from . import get_var
 from . import code_preparer
-from . import blocks_parser
+from . import brackets_parser

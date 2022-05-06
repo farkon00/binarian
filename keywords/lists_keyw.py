@@ -1,53 +1,39 @@
-from funcs.get_var import get_var
 from funcs.exceptions import binarian_assert
+from funcs.utils import check_args
 from bin_types.list import List
 
-def index_keyword(lexic : list[str], state, full_vars : dict[str : object]):
-    binarian_assert(len(lexic) <= 2, "You didn`t give enough arguments.", state)
-
-    index = get_var(lexic[2], full_vars, state, int)
-    list = get_var(lexic[1], full_vars, state, List)
+def index_keyword(op : list[str], state, local : dict[str : object]):
+    list, index = check_args(op, [List, int], state, local)
 
     binarian_assert(index >= len(list), "Index out of range.", state)
 
     if state.is_expr:
         return list[index]
 
-def setindex_keyword(lexic : list[str], state, full_vars : dict[str : object]):
+def setindex_keyword(op : list[str], state, local : dict[str : object]):
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
-    binarian_assert(len(lexic) <= 3, "You didn`t give enough arguments.", state)
 
-    list = get_var(lexic[1], full_vars, state, List)
-    index = get_var(lexic[2], full_vars, state, int)
-    val = get_var(lexic[3], full_vars, state)
+    list, index, val = check_args(op, [List, int, object], state, local)
 
     binarian_assert(index >= len(list), "Index out of range.", state)
 
     list[index] = val
 
-def len_keyword(lexic : list[str], state, full_vars : dict[str : object]):
-    binarian_assert(len(lexic) <= 1, "You didn`t give enough arguments.", state)
-
-    _list = get_var(lexic[1], full_vars, state, List)
-    _len = len(_list)
+def len_keyword(op : list[str], state, local : dict[str : object]):
+    _list = check_args(op, [List], state, local)
 
     if state.is_expr:
-        return _len
+        return len(_list)
 
-def append_keyword(lexic : list[str], state, full_vars : dict[str : object]):
+def append_keyword(op : list[str], state, local : dict[str : object]):
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
-    binarian_assert(len(lexic) <= 2, "You didn`t give enough arguments.", state)
 
-    _list = get_var(lexic[1], full_vars, state, List)
-    _object = get_var(lexic[2], full_vars, state,)
+    _list, _object = check_args(op, [List, object], state, local)
 
     _list.append(_object)
 
-def zip_keyword(lexic : list[str], state, full_vars : dict[str : object]):
-    binarian_assert(len(lexic) <= 2, "You didn`t give enough arguments.", state)
-
-    list1 = get_var(lexic[1], full_vars, state, List)
-    list2 = get_var(lexic[2], full_vars, state, List)
+def zip_keyword(op : list[str], state, local : dict[str : object]):
+    list1, list2 = check_args(op, [List, List], state, local)
 
     list1 = List(list1 + [0] * (len(list2) - len(list1)))
     list2 = List(list2 + [0] * (len(list1) - len(list2)))

@@ -1,7 +1,8 @@
 import sys
 sys.path.append(".")
 
-from binaian import *
+from binarian import *
 
-from .oper import *
-from .parsing import *
+from . import oper
+from . import get_args
+from . import parsing 

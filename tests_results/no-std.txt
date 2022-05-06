@@ -4,4 +4,4 @@ While executing code, exception was thrown :
 line 1 :
   xor 0 1
 
-Keyword or function wasn`t found.
+Variable xor is not defined

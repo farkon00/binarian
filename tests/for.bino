@@ -1,10 +1,10 @@
 var _list = [[0 1] [1 0]]
 
 for i _list {
-    output i pretty list
+    output i pretty-list
 
     for j i {
-        output j pretty sub-list
+        output j pretty-sub-list
     }
 }
 

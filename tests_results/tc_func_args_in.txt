@@ -5,4 +5,4 @@ While type checking, exception was thrown :
 line 2 :
   var ret = (index tsil tin)
 
-Unexpected argument type, int was expected, list found.
+Unexpected argument type, int was expected, list found

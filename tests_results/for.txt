@@ -1,13 +1,13 @@
-pretty list : [0 1]
-pretty sub-list : 0
-pretty sub-list : 1
-pretty list : [1 0]
-pretty sub-list : 1
-pretty sub-list : 0
+pretty-list : [0 1]
+pretty-sub-list : 0
+pretty-sub-list : 1
+pretty-list : [1 0]
+pretty-sub-list : 1
+pretty-sub-list : 0
 i : 0
 i : 0
 cont : 0
 cont : 0
 cont : 0
 
-Finished in 0.0030057430267333984 sec
+Finished in 0.009383678436279297 sec

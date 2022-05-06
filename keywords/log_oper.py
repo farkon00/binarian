@@ -1,26 +1,19 @@
-from funcs.exceptions import binarian_assert
-from funcs.get_var import get_var
+from funcs.utils import check_args
 
-def and_keyword(lexic : list[str], state, full_vars : dict[str : object]) -> int:
-    binarian_assert(len(lexic) <= 2, "You didn`t give enough arguments.", state)
+def and_keyword(op : list[str], state, local : dict[str : object]) -> int:
+    arg1, arg2 = check_args(op, [object, object], state, local)
 
-    if not state.is_expr:
-        print(f"AND output : {int(get_var(lexic[1], full_vars, state) and get_var(lexic[2], full_vars, state))}. Line : {state.current_line - state.std_lines + 1}")
-    else:
-        return int(get_var(lexic[1], full_vars, state) and get_var(lexic[2], full_vars, state))
+    if state.is_expr:
+        return int(arg1 and arg2)
 
-def or_keyword(lexic : list[str], state, full_vars : dict[str : object]) -> int:
-    binarian_assert(len(lexic) <= 2, "You didn`t give enough arguments.", state)
+def or_keyword(op : list[str], state, local : dict[str : object]) -> int:
+    arg1, arg2 = check_args(op, [object, object], state, local)
 
-    if not state.is_expr:
-        print(f"OR output : {int(get_var(lexic[1], full_vars, state) or get_var(lexic[2], full_vars, state))}. Line : {state.current_line - state.std_lines + 1}")
-    else:
-        return int(get_var(lexic[1], full_vars, state) or get_var(lexic[2], full_vars, state))
+    if state.is_expr:
+        return int(arg1 or arg2)
 
-def not_keyword(lexic : list[str], state, full_vars : dict[str : object]) -> int:
-    binarian_assert(len(lexic) <= 1, "You didn`t give enough arguments.", state)
-    
-    if not state.is_expr:
-        print(f"NOT output : {int(not get_var(lexic[1], full_vars, state))}. Line : {state.current_line - state.std_lines + 1}")
-    else:
-        return int(not get_var(lexic[1], full_vars, state))
+def not_keyword(op : list[str], state, local : dict[str : object]) -> int:
+    arg = check_args(op, [object], state, local)
+
+    if state.is_expr:
+        return int(not arg)
