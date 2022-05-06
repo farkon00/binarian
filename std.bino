@@ -11,6 +11,10 @@ func float to_float : val {
     return (convert val float)
 }
 
+func str to_str : val {
+    return (convert val str)
+}
+
 func list to_list : val {
     return (convert val list)
 }

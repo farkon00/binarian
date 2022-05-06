@@ -38,6 +38,7 @@ class ExecutionState:
             "object" : object,
             "int" : int,
             "float" : float,
+            "str" : str,
             "function" : Function,
             "list" : List,
             "none" : None
