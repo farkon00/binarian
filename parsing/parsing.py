@@ -15,7 +15,6 @@ def parse_to_ops(state):
         if state.current_line >= len(state.lines):
             break
         line = state.lines[state.current_line]
-        line = line.replace("}", "").replace("{", "")
 
         binarian_assert(line.count("(") != line.count(")"), 'Expression must have start and finish matched with "(" and ")".', state)
 
@@ -28,9 +27,7 @@ def parse_to_ops(state):
 
 def parse_block(state, start):
     opers = []
-    started = False
-    if state.lines[start].strip().endswith("{"):
-        started = True
+    binarian_assert(not state.lines[start].strip().endswith("{"), 'Block not found', state)
     for line_index in range(start, len(state.lines)):
         # For skiping, that was already parsed inside other blocks
         if state.current_line > line_index:
@@ -42,9 +39,7 @@ def parse_block(state, start):
 
         line = state.lines[state.current_line]
 
-        binarian_assert(line.count("(") != line.count(")"), 'Expression must have start and finish matched with "(" and ")".', state)
-
-        op = parse_line(line.replace("}", "").replace("{", ""), state, started=started)
+        op = parse_line(line, state)
         if op:
             opers.append(op)
 
@@ -53,14 +48,19 @@ def parse_block(state, start):
 
     throw_exception('Block must have start and finish matched with ""{" and "}"', state, False)
 
-def parse_line(line, state, started=True):
+def parse_line(line, state):
     lexic = line.split()
 
     if len(lexic) <= 0:
         return
 
-    if not started and not line.strip().startswith("{"):
-        throw_exception("Block not found", state)
+    lexic[0] = lexic[0].replace("}", "").replace("{", "")
+
+    if lexic[0].strip() == "":
+        del lexic[0]
+
+    if len(lexic) <= 0:
+        return
 
     if lexic[0] in state.operations:
         op = Oper(OpIds.operation, state.current_line, lexic[0:1] + get_args(lexic[1:], state)) 
@@ -164,7 +164,7 @@ def parse_line(line, state, started=True):
 
         case "func":
             parts = line.split(":", maxsplit=1)
-            parts[0] = parts[0].split()
+            parts[0] = parts[0].replace("{", "").replace("}", "").split()
 
             binarian_assert(len(parts[0]) < 2, "Function must have name.", state)
             if len(parts[0]) == 2:
@@ -181,7 +181,7 @@ def parse_line(line, state, started=True):
             args = []
             args_types = []
             if len(parts) > 1:
-                for i in parts[1].split(","):
+                for i in parts[1].replace("{", "").replace("}", "").split(","):
                     i = i.split(":")
                     if len(i) == 2: 
                         args.append(i[0].strip())

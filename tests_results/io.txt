@@ -2,4 +2,4 @@ inp1 : inp2 : inp1 : 1
 inp2 : 0
 or : 1
 
-Finished in 0.004986763000488281 sec
+Finished in 0.005984306335449219 sec
