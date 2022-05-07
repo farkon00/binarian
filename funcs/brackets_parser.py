@@ -5,7 +5,6 @@ def parse_lexic(lexic : list[str], state) -> list[str]:
     arrays_opened = 0
     expr_opened = 0
     is_string_opened = False
-    merged = 0
 
     line = " ".join(lexic)
     res = [""]
