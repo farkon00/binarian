@@ -1,21 +1,23 @@
-output (xor 1 0) xor-1
-output (xor 1 1) xor-0
+print (xor 1 0)
+print (xor 1 1)
 
-output (to_int 1.23) to-int-1
-output (to_int 1.0) to-int-1
-output (to_float 1) to-float-1.0
+print (to_int 1.23)
+print (to_int 1.0)
+print (to_float 1)
+print (to_list "abc")
+print (to_str [123 "17" "a\n"])
 
-output (ceil 1.23) ceil-2
-output (ceil 1.0) ceil-1
-output (ceil 146.11232) floor-147
-output (math_to_int 1.23) math-to-int-1
-output (math_to_int 1.0) math-to-int-1
-output (math_to_int 1.56) math-to-int-2
-output (math_to_int 456.89) math-to-int-457
+print (ceil 1.23)
+print (ceil 1.0)
+print (ceil 146.11232)
+print (math_to_int 1.23)
+print (math_to_int 1.0)
+print (math_to_int 1.56)
+print (math_to_int 456.89)
 
-output (list-eq [1 1] [1 1]) eq-1
-output (list-eq [0 1] [0]) eq-0
-output (list-eq [0 1] [1 0]) eq-0
+print (join [1 2 69] ", ")
+print (join [1 2 "3"] "")
+print (join ["a" "bc" 42] "\n")
 
-output (sum [6 11 3]) 6+11+3=
-output (sum [5 13 9 2]) 5+13+9+2=
+print (sum [6 11 3])
+print (sum [5 13 9 2])

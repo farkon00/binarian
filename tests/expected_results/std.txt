@@ -1,7 +1,23 @@
-
-While executing code, exception was thrown :
-
-line 1 :
-  output (xor 1 0) xor-1
-
-Output must have one argument.
+1
+0
+1
+1
+1.0
+["a" "b" "c"]
+[123 "17" "a
+"]
+2
+1
+147
+1
+1
+2
+457
+1, 1, 2, 69
+1123
+a
+a
+bc
+42
+20
+29

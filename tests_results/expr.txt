@@ -4,4 +4,4 @@
 [0 1]
 condition
 
-Finished in 0.005983591079711914 sec
+Finished in 0.005980491638183594 sec
