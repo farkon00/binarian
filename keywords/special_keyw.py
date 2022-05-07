@@ -16,8 +16,8 @@ def convert_keyword(op : Oper, state, local : dict[str : object]):
         return final
 
 def pyeval_keyword(op : Oper, state, local : dict[str : object]):
-    code, imports, exports = check_args(op, [list, list, list], state, local)
-    
+    code, imports, exports = check_args(op, [List, List, List], state, local)
+
     glob = {i : (list(j) if isinstance(j, List) else j) for i, j in imports}
     try:
         exec("\n".join(code), glob)
