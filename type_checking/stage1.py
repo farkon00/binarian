@@ -26,6 +26,8 @@ def tc_line1(op : list[str], state):
                 return int
             elif op.args[0] in state.float_operations:
                 return float
+            elif op.args[0] in state.iter_operations:
+                return tc_line1(op.args[1], state)
             elif issubclass(tc_line1(op.args[1], state), float) or\
             issubclass(tc_line1(op.args[2], state), float):
                 return float

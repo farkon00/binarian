@@ -1,3 +1,4 @@
+from bin_types.list import List
 from funcs.exceptions import binarian_assert
 from funcs.utils import type_to_str
 from parsing.oper import OpIds
@@ -26,13 +27,21 @@ def tc_line2(op : str, state):
             arg1 = tc_line2(op.args[1], state)
             arg2 = tc_line2(op.args[2], state)
 
-            if arg1 not in (object, None):
+            if arg1 not in (object, None) and op.args[0] not in state.iter_operations:
                 binarian_assert(not issubclass(arg1, float | int),
                 f"Unexpected operation argument type, {exp_type} was expected, {type_to_str(arg1)} found.", state
                 )
-            if arg2 not in (object, None):
+            if arg2 not in (object, None) and op.args[0] not in state.iter_operations:
                 binarian_assert(not issubclass(arg2, float | int),
                 f"Unexpected operation argument type, {exp_type} was expected, {type_to_str(arg2)} found.", state
+                )
+
+            if issubclass(arg1, str | List) or issubclass(arg2, str | List):
+                binarian_assert(arg1 != arg2, 
+                    f"Cant perform operation with different types : {type_to_str(arg1)} and {type_to_str(arg2)}", state
+                )
+                binarian_assert(op.args[0] not in state.iter_operations, 
+                    f"Cant perform \"{op.args[0]}\" on {type_to_str(arg1)} and {type_to_str(arg2)}", state
                 )
 
             # Returns type

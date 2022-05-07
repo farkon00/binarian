@@ -5,4 +5,4 @@ While type checking, exception was thrown :
 line 5 :
   + a 1
 
-Unexpected operation argument type, float or int was expected, list found.
+Cant perform operation with different types : list and int

@@ -46,6 +46,9 @@ class ExecutionState:
         self.operations : tuple[str] = (
             "+", "-", "*", "/", "**", "%", ">", "<", ">=", "<=", "==", "!="
         )
+        self.iter_operations : tuple[str] = (
+            "+", "==", "!="
+        ) 
 
         self.RESTRICTED_NAMES : tuple[str] = (
             "and", "or", "not", "var", "drop", "input", "output", "func",
