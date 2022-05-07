@@ -33,6 +33,7 @@ func list try_input_int : tip: str {
 }
 
 
+// Math
 func int ceil : val: float {
     if (== (to_int val) val) {
         return (to_int val)
@@ -90,7 +91,7 @@ func int is_numeric : string: str {
 }
 
 // Lists
-func int in : val: int, _list: list {
+func int in : val: object, _list: list {
     for i _list {
         if (== val i) {
             return 1

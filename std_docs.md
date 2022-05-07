@@ -4,13 +4,20 @@
   * [xor](#xor)
 * [Input/Output](#inputoutput)
   * [print](#print)
+  * [try_input_int](#try_input_int)
+* [Math](#math)
+  * [ceil](#ceil)
+  * [math_to_int](#to_int)
 * [Type convertions shortcuts](#type-convertions-shortcuts)
   * [to_int](#to_int)
   * [to_float](#to_float)
   * [to_str](#to_str)
   * [to_list](#to_list)
-* [Additional functions](#additional-functions)
+* [Str functions](#str-functions)
   * [join](#join)
+  * [is_numeric](#is_numeric)
+* [List functions](#list-function)
+  * [in](#in)
   * [sum](#sum)
 
 # Operators
@@ -31,6 +38,14 @@
 
   Arguments :
   * value : obejct
+
+  ## try_input_int
+  Return type : list(always length 2)
+  
+  Inputs integer from user, before input outputs `tip`. Returns list of two integers, first integer represents was converting to intger successful(1 if was successful, if not 0) and parsed integer, 0 if parsing wasnt successful.
+
+  Arguments :
+  * tip : str
 
 # Math
   ## ceil
@@ -82,16 +97,7 @@
   Arguments :
   * val : object
 
-# Additional functions
-  ## sum
-  Return type : int
-  
-  Sums all numbers in list, in list format. Returns sum of them in list format.
-
-  Arguments :
-  * num1 : list
-  * num2 : list
-
+# Str functions
   ## join
   Return type : str
   
@@ -100,3 +106,30 @@
   Arguments :
   * list_ : list
   * sep : str
+
+  ## is_numeric
+  Return type : int
+  
+  Returns 1 if str can be converted to integer.
+
+  Arguments :
+  * string : str
+
+# List function
+  ## in
+  Return type : int
+  
+  Returns 1 if element is in list.
+
+  Arguments :
+  * val : object
+  * _list : list
+
+  ## sum
+  Return type : int
+  
+  Sums all numbers in list, in list format. Returns sum of them in list format.
+
+  Arguments :
+  * num1 : list
+  * num2 : list
