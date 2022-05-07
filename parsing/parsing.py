@@ -128,9 +128,9 @@ def parse_line(line, state):
             binarian_assert(len(op.args) != 2, f"{lexic[0][0].upper() + lexic[0][1:]} must have two argument.", state)
             return op
 
-        case "setindex":
-            op = Oper(OpIds.setindex, state.current_line, get_args(lexic[1:], state))
-            binarian_assert(len(op.args) != 3, "Setindex must have three argument.", state)
+        case "setindex" | "pyeval":
+            op = Oper(type.__getattribute__(OpIds, lexic[0]), state.current_line, get_args(lexic[1:], state))
+            binarian_assert(len(op.args) != 3, f"{lexic[0][0].upper() + lexic[0][1:]} must have three argument.", state)
             return op
 
         case "len":
