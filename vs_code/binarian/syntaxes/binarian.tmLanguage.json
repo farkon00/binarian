@@ -1,0 +1,50 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Binarian",
+	"patterns": [
+		{"include": "#keywords"},
+		{"include": "#types"},
+		{"include": "#strings"},
+		{"include": "#numbers"},
+		{"include": "#comments"}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.binarian",
+				"match": "\\b(var|drop|output|input|convert|and|or|not|index|setindex|len|append|zip|if|else|elif|for|while|break|continue|func|return)\\b"
+			}]
+		},
+		"types": {
+			"patterns": [{
+				"name": "entity.name.type",
+				"match": "\\b(int|float|str|list|object)\\b"
+			}]
+		},
+		"numbers" : {
+			"patterns": [{
+				"name": "constant.numeric",
+				"match": "\\b([0-9]([.]([0-9])*)?)\\b"
+			}]
+		},
+		"strings": {
+			"name": "string.quoted.double.binarian",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.binarian",
+					"match": "\\\\."
+				}
+			]
+		},
+		"comments": {
+			"patterns": [{
+					"name": "comment.line.binarian",
+					"begin": "//",
+					"end": "$"
+				}]
+		}
+	},
+	"scopeName": "text.binarian"
+}
