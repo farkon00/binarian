@@ -32,12 +32,3 @@ def append_keyword(op : Oper, state, local : dict[str : object]):
     _list, _object = check_args(op, [List, object], state, local)
 
     _list.append(_object)
-
-def zip_keyword(op : Oper, state, local : dict[str : object]):
-    list1, list2 = check_args(op, [List, List], state, local)
-
-    list1 = List(list1 + [0] * (len(list2) - len(list1)))
-    list2 = List(list2 + [0] * (len(list1) - len(list2)))
-
-    if state.is_expr:
-        return List([List(i) for i in zip(list1, list2)])

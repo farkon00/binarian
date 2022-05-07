@@ -1,7 +1,7 @@
 print (xor 1 1)
 print (and 0 1)
 
-for i (zip [1 0] [1 1]) {
+for i (+ [0 42] [23 69]) {
     print i
 }
 

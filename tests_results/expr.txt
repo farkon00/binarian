@@ -1,7 +1,9 @@
 0
 0
-[1 1]
-[0 1]
+0
+42
+23
+69
 condition
 
-Finished in 0.01536703109741211 sec
+Finished in 0.0069806575775146484 sec

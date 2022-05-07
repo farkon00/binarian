@@ -140,10 +140,7 @@ def execute_line(op : Oper, state : ExecutionState, local : dict[str : object] =
 
         case OpIds.append:
             return append_keyword(op, state, local)
-
-        case OpIds.zip:
-            return zip_keyword(op, state, local)
-
+            
         case OpIds.if_:
             if_keyword(op, state, local)
 
