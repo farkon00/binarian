@@ -19,7 +19,7 @@ def execute_oper(op : list[str], state, local : dict[str : object]):
         )
 
     match operation:
-        case "+":  return     arg1 + arg2
+        case "+":  return     arg1 + arg2 if not isinstance(arg1, List) else List(arg1 + arg2)
         case "-":  return     arg1 - arg2
         case "*":  return     arg1 * arg2
         case "/":  return     arg1 / arg2  

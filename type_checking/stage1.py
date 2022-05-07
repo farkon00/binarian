@@ -1,4 +1,5 @@
 from bin_types.function import Function
+from bin_types.list import List
 from parsing.oper import OpIds
 from .tc_types import TypeCheckedFunction
 
@@ -26,11 +27,17 @@ def tc_line1(op : list[str], state):
                 return int
             elif op.args[0] in state.float_operations:
                 return float
-            elif op.args[0] in state.iter_operations:
-                return tc_line1(op.args[1], state)
             elif issubclass(tc_line1(op.args[1], state), float) or\
             issubclass(tc_line1(op.args[2], state), float):
                 return float
+            elif issubclass(tc_line1(op.args[1], state), str) or\
+            issubclass(tc_line1(op.args[2], state), str) and\
+            op.args[0] in state.iter_operations:
+                return str
+            elif issubclass(tc_line1(op.args[1], state), List) or\
+            issubclass(tc_line1(op.args[2], state), List) and\
+            op.args[0] in state.iter_operations:
+                return List
             else:
                 return int
 

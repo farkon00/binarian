@@ -20,7 +20,7 @@ func list to_list : val {
 }
 
 func int print : value: object {
-    output (to_str value)
+    output (+ (to_str value) "\n")
 }
 
 func int ceil : val: float {

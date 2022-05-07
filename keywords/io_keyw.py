@@ -16,4 +16,4 @@ def output_keyword(op : list[str], state, local : dict[str : object]):
 
     text = check_args(op, [str], state, local)
 
-    print(text)
+    print(text, end="")

@@ -53,6 +53,14 @@ def tc_line2(op : str, state):
                 return float
             elif arg2 not in (object, None) and issubclass(arg2 if arg2 else object, float):
                 return float
+            elif issubclass(tc_line2(op.args[1], state), str) or\
+            issubclass(tc_line2(op.args[2], state), str) and\
+            op.args[0] in state.iter_operations:
+                return str
+            elif issubclass(tc_line2(op.args[1], state), List) or\
+            issubclass(tc_line2(op.args[2], state), List) and\
+            op.args[0] in state.iter_operations:
+                return List
             else:
                 return int
 
