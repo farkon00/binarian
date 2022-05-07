@@ -15,9 +15,23 @@ func list to_list : val {
     return (convert val list)
 }
 
+
+// IO
 func int print : value: object {
     output (+ (to_str value) "\n")
 }
+
+func list try_input_int : tip: str {
+    output tip
+    var inp = (input)
+    if (is_numeric inp) {
+        return [1 (to_int inp)]
+    } 
+    else {
+        return [0 0]
+    }
+}
+
 
 func int ceil : val: float {
     if (== (to_int val) val) {
@@ -37,10 +51,13 @@ func int math_to_int : val: float {
     }
 }
 
+
 func int xor : val1: int, val2: int {
     return (not (or (and val1 val2) (not (or val1 val2))))
 }
 
+
+// Strings
 func str join : list_: list, sep: str {
     var result = ""
     var first = 1
@@ -53,6 +70,32 @@ func str join : list_: list, sep: str {
     } 
 
     return result
+}
+
+func int is_numeric : string: str {
+    var first = 1
+    for i string {
+        if first {
+            var first = 0
+            if (== i "-") {
+                continue
+            }
+        }
+        if (not (in i (to_list "0123456789"))) {
+            return 0
+        }
+    }
+
+    return 1
+}
+
+// Lists
+func int in : val: int, _list: list {
+    for i _list {
+        if (== val i) {
+            return 1
+        }
+    }
 }
 
 func int sum : _list: list {

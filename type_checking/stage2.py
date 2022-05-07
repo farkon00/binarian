@@ -37,7 +37,7 @@ def tc_line2(op : str, state):
                 )
 
             if issubclass(arg1, str | List) or issubclass(arg2, str | List):
-                binarian_assert(arg1 != arg2, 
+                binarian_assert(arg1 != arg2 and op.args[0] not in state.diff_types_operations, 
                     f"Cant perform operation with different types : {type_to_str(arg1)} and {type_to_str(arg2)}", state
                 )
                 binarian_assert(op.args[0] not in state.iter_operations, 

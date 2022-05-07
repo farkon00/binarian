@@ -61,6 +61,7 @@ class TypeCheckingState:
         self.int_operations : tuple[str] = (">", "<", ">=", "<=", "==", "!=")
         self.float_operations : tuple[str] = ("/")
         self.iter_operations : tuple[str] = state.iter_operations
+        self.diff_types_operations : tuple[str] = state.diff_types_operations
 
     def reset(self):
         """Resets data beetween two stages of type checking"""

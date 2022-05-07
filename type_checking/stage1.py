@@ -53,12 +53,6 @@ def tc_line1(op : list[str], state):
                 elif state.vars.get(op.args[0], None) in (None, object):
                     state.vars[op.args[0]] = tc_line1(op.args[1], state)
 
-        case OpIds.input:
-            if is_func:
-                local[op.args[0]] = int
-            else:
-                state.vars[op.args[0]] = int
-
         case OpIds.convert:
             return op.args[1]
 

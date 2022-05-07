@@ -49,6 +49,9 @@ class ExecutionState:
         self.iter_operations : tuple[str] = (
             "+", "==", "!="
         ) 
+        self.diff_types_operations : tuple[str] = (
+            "==", "!="
+        )
 
         self.RESTRICTED_NAMES : tuple[str] = (
             "and", "or", "not", "var", "drop", "input", "output", "func",
@@ -83,8 +86,6 @@ def execute_line(op : Oper, state : ExecutionState, local : dict[str : object] =
     if op.id not in (OpIds.else_, OpIds.elif_) and not state.is_expr and state.opened_ifs:
         del state.opened_ifs[-1]
 
-    if op.id == OpIds.operation:
-        return execute_oper(op, state, full_vars)
 
     match op.id:
         case OpIds.variable:
@@ -100,6 +101,9 @@ def execute_line(op : Oper, state : ExecutionState, local : dict[str : object] =
                 return res
             else:
                 return ret
+
+        case OpIds.operation:
+            return execute_oper(op, state, full_vars)
 
         case OpIds.var:
             var_keyword(op, state, local if is_func else state.vars, local)
@@ -206,7 +210,7 @@ def main(test_argv : list[str] = None) -> None:
         exit(0)
 
     try:
-        code = open(argv[1], "r", encoding="utf-8").read().lower()
+        code = open(argv[1], "r", encoding="utf-8").read()
     except Exception:
         raise FileNotFoundError("File does not exist.")
 
