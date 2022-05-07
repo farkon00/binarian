@@ -3,4 +3,4 @@ var res = 1
 for i l {
     var res = (* i res)
 }
-output res res
+print res

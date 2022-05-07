@@ -1,7 +1,7 @@
 from bin_types.list import List
 from funcs.exceptions import binarian_assert
 from funcs.utils import type_to_str
-from parsing.oper import OpIds
+from parsing.oper import *
 
 def tc_line2(op : str, state):
     """Executes 2 stage of type checking for 1 keyword"""
@@ -65,7 +65,7 @@ def tc_line2(op : str, state):
                 return int
 
         case OpIds.var:
-            exp = local[op.args[0]] if is_func else state.vars[op.args[0]]
+            exp = tc_line2(Oper(OpIds.variable, state, op.args[0]), state)
             got = tc_line2(op.args[1], state)
             if exp not in (object, None) and got not in (object, None):
                 binarian_assert(not issubclass(got, exp),
@@ -87,14 +87,6 @@ def tc_line2(op : str, state):
                 
             for i in op.oper:
                 tc_line2(i, state)
-
-            try:
-                if is_func:
-                    del local[op.args[0]]
-                else:
-                    del state.vars[op.args[0]]
-            except KeyError:
-                pass
 
         case OpIds.func:
             state.opened_function = state.functions[op.args[0]]

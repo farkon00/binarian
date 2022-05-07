@@ -33,14 +33,6 @@ def for_keyword(op : Oper, state, local : dict[str : object]):
         if state.last_return != None:
             break
 
-    try:
-        if local != None:
-            del local[var_name]
-        else:
-            del state.vars[var_name]
-    except KeyError:
-        pass
-
 def while_keyword(op : Oper, state, local : dict[str : object]):
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
 

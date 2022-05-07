@@ -11,4 +11,4 @@ while (< now 4000000) {
     }
 }
 
-output sum sum
+print sum

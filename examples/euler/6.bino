@@ -7,4 +7,4 @@ while (<= i 100) {
     var i = (+ 1 i)
 }
 
-output (- (** square_of_sums 2) sum_of_squares) res
+print (- (** square_of_sums 2) sum_of_squares)

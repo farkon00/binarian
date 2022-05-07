@@ -10,4 +10,4 @@ while (< i 1000) {
     var i = (+ i 1)
 }
 
-output sum sum
+print sum

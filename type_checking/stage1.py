@@ -69,14 +69,6 @@ def tc_line1(op : list[str], state):
             for i in op.oper:
                 tc_line1(i, state)
 
-            try:
-                if is_func:
-                    del local[op.args[0]]
-                else:
-                    del state.vars[op.args[0]]
-            except KeyError:
-                pass
-
         case OpIds.func:
             func = TypeCheckedFunction(op.oper, list(zip(op.args[1:], op.types[1:])), op.types[0])
             state.functions[op.args[0]] = func

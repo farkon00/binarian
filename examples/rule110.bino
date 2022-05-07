@@ -1,23 +1,38 @@
-// This script isnt working with current version of language.
-// TODO make it work, and may be make it better than previous version.
+// Input
+var initial = [] 
+output "Input initial state"
+for i (input) {
+    if (== i "1") {
+        append initial 1
+    }
+    elif (== i "0") {
+        append initial 0
+    }
+    else {
+        output "Explain wtf are you doing, why are you trying to input "
+        output (to_str i)
+        print "?"
+    }
+} 
 
-// Input 
-var i = 0
-var initial = []
-while (< i 10) {
-    var i = (+ i 1)
-    input inp
-    append initial inp
-}
+var size = (len initial)
 
 var states = [initial]
 
+var iterations_ = (try_input_int "How many iterations you want? ")
+while (or (not (index iterations_ 0)) (< (index iterations_ 1) 1)) {
+    output "Plz input a number next time"
+    var iterations_ = (try_input_int "How many iterations you want? ")
+}
+
+var iterations = (index iterations_ 1)
+
 var last-state = initial
 var i = 0
-while (< i 9) {
+while (< i (- iterations 1)) {
     var j = 1
     var new-state = [0]
-    while (< j 9) {
+    while (< j (- size 1)) {
         var p = (index last-state (- j 1))
         var q = (index last-state j)
         var r = (index last-state (+ j 1))
@@ -32,5 +47,13 @@ while (< i 9) {
 }
 
 for i states {
-    output i state
+    for j i {
+        if j {
+            output "*"
+        }
+        else {
+            output " "
+        }
+    }
+    print ""
 }
