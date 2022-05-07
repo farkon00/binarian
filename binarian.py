@@ -105,7 +105,7 @@ def execute_line(op : Oper, state : ExecutionState, local : dict[str : object] =
             drop_keyword(op, state, local if is_func else state.vars)
 
         case OpIds.input:
-            input_keyword(op, local if is_func else state.vars, state)
+            return input_keyword(op, state)
 
         case OpIds.output:
             output_keyword(op, state, local)

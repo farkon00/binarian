@@ -1,3 +1,6 @@
+// This script isnt working with current version of language.
+// TODO make it work, and may be make it better than previous version.
+
 // Input 
 var i = 0
 var initial = []

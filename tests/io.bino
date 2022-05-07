@@ -1,5 +1,5 @@
-input inp1
-input inp2
+var inp1 = (to_int (input))
+var inp2 = (to_int (input))
 
 output inp1 inp1
 output inp2 inp2

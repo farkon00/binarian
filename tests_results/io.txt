@@ -1,5 +1,5 @@
-inp1 : inp2 : inp1 : 1
+inp1 : 1
 inp2 : 0
 or : 1
 
-Finished in 0.003989219665527344 sec
+Finished in 0.003988981246948242 sec

@@ -34,7 +34,7 @@ class TypeCheckingState:
         # None  - not typechecked(e. g. name of var)
         self.keywords : dict[str : tuple[type]] = {
             "drop" : (None,),
-            "input" : (None, None),
+            "input" : (str,),
             "output" : (None, object, None),
             "convert" : (object, object, None),
             "and_" : (int, object, object),

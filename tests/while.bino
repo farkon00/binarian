@@ -1,7 +1,7 @@
 var inp = 1
 
 while inp {
-    input inp
+    var inp = (to_int (input))
     output inp in_loop
 }
 

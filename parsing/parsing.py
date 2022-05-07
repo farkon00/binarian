@@ -100,9 +100,8 @@ def parse_line(line, state):
             return Oper(OpIds.drop, state.current_line, lexic[1])
 
         case "input":
-            binarian_assert(len(lexic) != 2, "Input must have one argument.", state)
-            binarian_assert(is_name_unavailable(lexic[1], state), "Variable name is unavailiable.", state)
-            return Oper(OpIds.input, state.current_line, lexic[1])
+            binarian_assert(len(lexic) != 1, "Input must have no argument.", state)
+            return Oper(OpIds.input, state.current_line)
 
         case "output":
             op = Oper(OpIds.output, state.current_line, get_args(lexic[1:-1], state) + [lexic[-1]])

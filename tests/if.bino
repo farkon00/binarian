@@ -1,4 +1,4 @@
-input inp
+var inp = (to_int (input))
 
 if inp {
     output (not inp) if_test1
@@ -7,7 +7,7 @@ else {
     output (and inp 1) else_test1
 }
 
-input inp
+var inp = (to_int (input))
 
 if inp {
     output (not inp) if_test2
