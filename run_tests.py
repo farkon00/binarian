@@ -8,6 +8,7 @@ tests = [
     ["io"],
     ["log_oper"],
     ["operations"],
+    ["str"],
     ["expr"],
     ["drop", ["-d"]],
     ["if"],

@@ -1,0 +1,6 @@
+123
+abc	no \n
+str-eq 1
+str-eq 0
+
+Finished in 0.0039942264556884766 sec

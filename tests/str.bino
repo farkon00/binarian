@@ -1,0 +1,9 @@
+print "123"
+
+for i "abc" {
+    output i
+}
+output (+ "\tno \\n" "\n")
+
+print (+ "str-eq " (to_str (== "and" "and")))
+print (+ "str-eq " (to_str (== "or" "and")))
