@@ -11,7 +11,7 @@
     * [Functions](#functions)
   * [Keywords](#keywords)
     * [Special keywords](#special-keywords)
-      * [set](#set)
+      * [var](#var)
       * [drop](#drop)
       * [input](#input)
       * [output](#output)
@@ -126,18 +126,18 @@ There are 6 types in binarian, one of them isnt recomended to use and was added 
 
   ## float
   Number with floating decimal point, has slower arithmetics operation then int and range of values are smaller. But you can have fractions with it. 
+  
+  ## str
+  String of characters, matched only with ". Str can contain escape characters new line, tab etc., to use them put \ before character e. g. "\\", "\n" "\"".
 
   ## list
-  List can contain any objects of any other types(except none). Look to [Lists](#lists) for more details.
+  List can contain any objects of any other types. Look to [Lists](#lists) for more details.
 
   ## function
   Type representing function usually defined by [func](#func) keyword.
 
   ## object
   Object is basically every possible value in binarian. So if type of something is object it can be anything.
-
-  ## none
-  Just not type checked type, very unrecomended to use. Was added for keywords that not return any value.
   
 # Keywords
   ## Special keywords
