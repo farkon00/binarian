@@ -1,17 +1,17 @@
 var inp = (to_int (input))
 
 if inp {
-    output (not inp) if_test1
+    print "if_test1"
 }
 else {
-    output (and inp 1) else_test1
+    print "else_test1"
 }
 
 var inp = (to_int (input))
 
 if inp {
-    output (not inp) if_test2
+    print "if_test2"
 }
 else {
-    output (and inp 1) else_test2
+    print "else_test2"
 }

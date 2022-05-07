@@ -1,5 +1,5 @@
-test : 1
+1
 
 {'test': '1'}
 
-Finished in 0.00299072265625 sec
+Finished in 0.0059833526611328125 sec

@@ -1,10 +1,10 @@
-output (xor 1 1) xor
-output (and 0 1) and
+print (xor 1 1)
+print (and 0 1)
 
 for i (zip [1 0] [1 1]) {
-    output i i
+    print i
 }
 
 if (xor 1 0) {
-    output 1 condition
+    print "condition"
 }

@@ -1,15 +1,15 @@
 func int nut : arg:int { 
-    output 1 side
+    print "side"
 
     if arg {
-        output arg if_test_func
+        print "if_test_func"
     }
     else {
-        output (not arg) else_test_func
+        print "else_test_func"
     }
 
     return (not arg)
 }
 
-output (nut 1) nut
-output (nut 0) nut
+print (nut 1)
+print (nut 0)

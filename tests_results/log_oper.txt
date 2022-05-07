@@ -1,8 +1,8 @@
-and : 0
-and : 1
-or : 0
-or : 1
-not : 0
-not : 1
+0
+1
+0
+1
+0
+1
 
-Finished in 0.00399017333984375 sec
+Finished in 0.002991914749145508 sec

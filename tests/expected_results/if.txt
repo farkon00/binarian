@@ -1,2 +1,2 @@
-else_test1 : 0
-if_test2 : 0
+else_test1
+if_test2

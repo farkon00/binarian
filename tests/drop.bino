@@ -2,4 +2,4 @@ var test = 1
 var droped = 0
 
 drop droped
-output test test
+print test

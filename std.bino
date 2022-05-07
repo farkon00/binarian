@@ -19,6 +19,10 @@ func list to_list : val {
     return (convert val list)
 }
 
+func int print : value: object {
+    output (to_str value)
+}
+
 func int ceil : val: float {
     if (== (to_int val) val) {
         return (to_int val)

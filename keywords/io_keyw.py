@@ -1,6 +1,7 @@
 from time import time
 
-from funcs.exceptions import binarian_assert, throw_exception
+from funcs.exceptions import binarian_assert
+from funcs.utils import check_args
 
 def input_keyword(op : list[str], state) -> None | str:
     input_start_time = time()
@@ -13,4 +14,6 @@ def input_keyword(op : list[str], state) -> None | str:
 def output_keyword(op : list[str], state, local : dict[str : object]):
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
 
-    print(f"{op.args[1]} : {state.GLOBAL_FUNCS['execute_line'](op.args[0], state, local)}")
+    text = check_args(op, [str], state, local)
+
+    print(text)

@@ -1,7 +1,7 @@
-xor : 0
-and : 0
-i : [1 1]
-i : [0 1]
-condition : 1
+0
+0
+[1 1]
+[0 1]
+condition
 
-Finished in 0.003991603851318359 sec
+Finished in 0.006983041763305664 sec

@@ -1,4 +1,4 @@
-else_test1 : 0
-if_test2 : 0
+else_test1
+if_test2
 
-Finished in 0.001994609832763672 sec
+Finished in 0.0059871673583984375 sec

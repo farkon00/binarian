@@ -1,4 +1,4 @@
-output (convert 123 float) float
-output (convert 123.456 float) float
-output (convert 123.456 int) int
-output (convert [0] list) list
+print (convert 123 float)
+print (convert 123.456 float)
+print (convert 123.456 int)
+print (convert [0] list)

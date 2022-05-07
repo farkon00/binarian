@@ -35,7 +35,7 @@ class TypeCheckingState:
         self.keywords : dict[str : tuple[type]] = {
             "drop" : (None,),
             "input" : (str,),
-            "output" : (None, object, None),
+            "output" : (None, str),
             "convert" : (object, object, None),
             "and_" : (int, object, object),
             "or_" : (int, object, object),

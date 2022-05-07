@@ -1,6 +1,6 @@
-output (and 1 0) and
-output (and 1 1) and
-output (or 0 0) or
-output (or 1 0) or
-output (not 1) not
-output (not 0) not
+print (and 1 0)
+print (and 1 1)
+print (or 0 0)
+print (or 1 0)
+print (not 1)
+print (not 0)

@@ -1,7 +1,7 @@
 var inp1 = (to_int (input))
 var inp2 = (to_int (input))
 
-output inp1 inp1
-output inp2 inp2
+print inp1
+print inp2
 
-output (or inp1 inp2) or
+print (or inp1 inp2)
