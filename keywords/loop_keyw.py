@@ -1,14 +1,15 @@
 from funcs.exceptions import binarian_assert
 from funcs.utils import type_to_str
 from bin_types.list import List
+from parsing.oper import Oper
 
-def break_keyword(op : list[str], state):
+def break_keyword(op : Oper, state):
     state.is_breaked = True
 
-def continue_keyword(op : list[str], state):
+def continue_keyword(op : Oper, state):
     state.is_continued = True
 
-def for_keyword(op : list[str], state, local : dict[str : object]):
+def for_keyword(op : Oper, state, local : dict[str : object]):
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
 
     var_name = op.args[0]
@@ -40,7 +41,7 @@ def for_keyword(op : list[str], state, local : dict[str : object]):
     except KeyError:
         pass
 
-def while_keyword(op : list[str], state, local : dict[str : object]):
+def while_keyword(op : Oper, state, local : dict[str : object]):
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
 
 

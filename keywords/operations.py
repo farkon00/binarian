@@ -1,8 +1,9 @@
 from bin_types.list import List
 from funcs.exceptions import binarian_assert
 from funcs.utils import check_args, type_to_str
+from parsing.oper import Oper
 
-def execute_oper(op : list[str], state, local : dict[str : object]):
+def execute_oper(op : Oper, state, local : dict[str : object]):
     operation = op.args[0]
     orig_args = op.args
     op.args = op.args[1:]

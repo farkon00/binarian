@@ -1,14 +1,15 @@
 from typing import Iterable
 from bin_types.function import Function
 from funcs.exceptions import binarian_assert
-from funcs.utils import is_name_unavailable, check_args
+from funcs.utils import check_args
+from parsing.oper import Oper
 
-def func_keyword(op : list[str], state, in_vars : dict[str : object]):
+def func_keyword(op : Oper, state, in_vars : dict[str : object]):
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
 
     in_vars[op.args[0]] = Function(op)
 
-def call_keyword(op : list[str], state, local : dict[str : object]):
+def call_keyword(op : Oper, state, local : dict[str : object]):
     func = check_args(op, [Function], state, local)
     if isinstance(func, Iterable):
         args = func[1:]
@@ -30,7 +31,7 @@ def call_keyword(op : list[str], state, local : dict[str : object]):
 
     return ret
 
-def return_keyword(op : list[str], state, is_func : bool, local : dict[str : object]):
+def return_keyword(op : Oper, state, is_func : bool, local : dict[str : object]):
     binarian_assert(not is_func, 'Keyword "return" is restricted out of functions.', state)
 
     state.last_return = check_args(op, [object], state, local)

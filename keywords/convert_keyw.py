@@ -1,8 +1,8 @@
-from funcs.exceptions import *
-from type_checking.get_type import get_type
+from funcs.exceptions import throw_exception
 from funcs.utils import type_to_str
+from parsing.oper import Oper
 
-def convert_keyword(op : list[str], state, local : dict[str : object]):
+def convert_keyword(op : Oper, state, local : dict[str : object]):
     original = state.GLOBAL_FUNCS['execute_line'](op.args[0], state, local)
     end_type = op.args[1]
     try:
