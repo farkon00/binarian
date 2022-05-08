@@ -1,0 +1,12 @@
+print (pyeval ["ret = ['a', 23, -23.45]"] [] ["ret"])
+print (pyeval ["ret = ['a', 69, listy]"] [["listy" [0 0 42]]] ["ret"])
+print (pyeval ["import math" "ret = math.pi"] [] ["ret"])
+
+print math
+print None
+print (get_attribute math "ceil")
+print (execute_method math "sqrt" [23.45])
+print (execute_function "len" ["abc"])
+print (is_instance "abc" "str")
+print (is_instance "420" "int")
+print (type_of 69)

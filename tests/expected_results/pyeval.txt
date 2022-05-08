@@ -1,0 +1,11 @@
+[["a" 23 -23.45]]
+[["a" 69 [0 0 42]]]
+[3.141592653589793]
+<module 'math' (built-in)>
+None
+<built-in function ceil>
+4.8425200051213
+3
+1
+0
+<class 'int'>
