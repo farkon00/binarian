@@ -36,6 +36,21 @@ func int has_attr : obj: object, attr: str {
     return (to_int (execute_function "hasattr" [obj attr]))
 }
 
+func object open : file: str, mode: str {
+    return (index (pyeval ["f = open(file, mode)"] [["file" file] ["mode" mode]] ["f"]) 0)
+}
+
+func str read : file : object {
+    assert (has_attr file "read") "Object cant be readed"
+    return (execute_method file "read" [])
+} 
+
+func int write : file: object, str_ : str {
+    assert (has_attr file "write") "Object cant be written to"
+    assert (is_instance str_ str) "Message to write must be a string"
+    return (execute_method file "write" [str_])
+}
+
 func int exit : code: int {
     execute_function "exit" [code]
 }
