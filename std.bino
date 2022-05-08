@@ -46,6 +46,16 @@ func object safe_get_attr : obj: object, attr: str {
     }
 }
 
+func throw_exception : message: str {
+    pyeval ["throw_exception(message, state)"] [["message" message]] []
+}
+
+func assert : condition: int, message: str {
+    if (not condition) {
+        throw_exception message
+    }
+}
+
 func int is_instance : obj: object, type: str {
     var type = (index (pyeval [(+ "ret = " type)] [] ["ret"]) 0)
     return (to_int (execute_function "isinstance" [obj type]))
@@ -124,6 +134,29 @@ func str join : list_: list, sep: str {
         }
         var result = (+ (+ result sep) (to_str i))
     } 
+
+    return result
+}
+
+func list split : str_: str, sep: str {
+    return (split_limit str_ sep -1)
+}
+
+func list split_limit : str_: str, sep: str, limit: int {
+    var result = [""]
+    var splits = 0
+    assert (is_instance str_ "str") "String to split must be a str"
+    assert (is_instance sep "str") "Sep must be a str"
+
+    for i str_ {
+        if (and (== i sep) (!= splits limit)) {
+            append result ""
+            var splits = (+ splits 1)
+        }
+        else {
+            setindex result -1 (+ (index result -1) i)
+        }
+    }
 
     return result
 }
