@@ -4,18 +4,29 @@
   * [xor](#xor)
 * [Input/Output](#inputoutput)
   * [print](#print)
-  * [try_input_int](#try_input_int)
+  * [try_input_int](#tryinputint)
 * [Math](#math)
   * [ceil](#ceil)
-  * [math_to_int](#to_int)
+  * [math_to_int](#mathtoint)
 * [Type convertions shortcuts](#type-convertions-shortcuts)
-  * [to_int](#to_int)
-  * [to_float](#to_float)
-  * [to_str](#to_str)
-  * [to_list](#to_list)
+  * [to_int](#toint)
+  * [to_float](#tofloat)
+  * [to_str](#tostr)
+  * [to_list](#tolist)
+* [Pyeval](#pyeval)
+  * [execute_method](#executemethod)
+  * [execute_function](#executefunction)
+  * [get_module](#getmodule)
+  * [get_attr](#getattr)
+  * [has_attr](#hasattr)
+  * [safe_get_attr](#safegetattr)
+  * [is_instance](#isinstance)
+  * [type_of](#typeof)
+  * [random](#random)
+  * [random_range](#randomrange)
 * [Str functions](#str-functions)
   * [join](#join)
-  * [is_numeric](#is_numeric)
+  * [is_numeric](#isnumeric)
 * [List functions](#list-function)
   * [in](#in)
   * [sum](#sum)
@@ -64,6 +75,15 @@
   Arguments :
   * val : object
 
+  ## Variables
+  math
+  ---
+  Math module from python. Check [Pyeval](#pyeval) for more details.
+
+  pi
+  ---
+  Float pi number
+
 # Type convertions shortcuts
   ## to_int
   Return type : int
@@ -96,6 +116,99 @@
 
   Arguments :
   * val : object
+
+# Pyeval
+  ## execute_method
+  Return type : object
+  
+  Executes python method with name `method` on `obj` with args(unpacks list as args). Returns return of method, if returned None, returs 0.
+
+  Arguments :
+  * obj : object
+  * method : str
+  * args : list
+
+  ## execute_function
+  Return type : object
+  
+  Executes python function with name `func_` with args(unpacks list as args). Returns return of function, if returned None, returs 0.
+
+  Arguments :
+  * func_ : str
+  * args : list
+
+  ## get_module
+  Return type : object
+  
+  Imports and returns module with name `module` 
+
+  Arguments :
+  * module : str
+
+  ## get_attr
+  Return type : object
+  
+  Returns attribute with name `attr` of object `obj`, will give python error if attribute was not found.
+
+  Arguments :
+  * obj : object
+  * attr : str
+
+  ## has_attr
+  Return type : int
+  
+  Returns 1 if `obj` has attribute with name `attr`, else returns 0.
+
+  Arguments :
+  * obj : object
+  * attr : str
+
+  ## safe_get_attr
+  Return type : object
+  
+  Returns attribute with name `attr` of object `obj`, if there is attribute with name `attr` on object `obj`, will return -1, if attribute was not found.
+
+  Arguments :
+  * obj : object
+  * attr : str
+
+  ## is_instance
+  Return type : int
+  
+  Returns 1 if `obj` is of type with name `type`(names will be processed with python). 
+
+  Arguments :
+  * obj : object
+  * type : str
+
+  ## type_of
+  Return type : object
+  
+  Returns type of obj.
+
+  Arguments :
+  * obj : object
+
+  ## random
+  Return type : float
+  
+  Returns pseudo-random float beetwen 0 and 1.
+
+  **This function shouldnt be used for cryptography**
+
+  ## random_range
+  Return type : int
+  
+  Returns pseudo-random float beetwen `min` and `max` including both ends.
+
+  Arguments :
+  * min : int
+  * max : int
+
+  ## Variables
+  None/null
+  ---
+  Function epresenting None from python. **This works really bad with return**
 
 # Str functions
   ## join

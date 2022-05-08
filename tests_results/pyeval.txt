@@ -1,7 +1,6 @@
 [["a" 23 -23.45]]
 [["a" 69 [0 0 42]]]
 [3.141592653589793]
-<module 'math' (built-in)>
 None
 <built-in function ceil>
 4.8425200051213
@@ -10,4 +9,4 @@ None
 0
 <class 'int'>
 
-Finished in 0.012963294982910156 sec
+Finished in 0.012962102890014648 sec
