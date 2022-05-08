@@ -15,6 +15,19 @@ func list to_list : val {
     return (convert val list)
 }
 
+// Pyeval
+func object execute_method : obj: object, method: str, args: list {
+    return (index (pyeval [(+ (+ "ret = obj." method)  "(*args)")] [["obj" obj] ["args" args]] ["ret"]) 0)
+}
+
+func object get_module : module: str {
+    return (index (pyeval [(+ "import " module) (+ "module = " module)] [] ["module"]) 0)
+}
+
+func object get_attribute : obj: object, attr: str {
+    return (index (pyeval [(+ "ret = obj." attr)] [["obj" obj]] ["ret"]) 0)
+}
+
 
 // IO
 func int print : value: object {
@@ -51,6 +64,9 @@ func int math_to_int : val: float {
         return (to_int val)
     }
 }
+
+var math = (get_module "math")
+var float pi = (get_attribute math "pi")
 
 
 func int xor : val1: int, val2: int {
