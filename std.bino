@@ -55,6 +55,16 @@ func object type_of : obj: object {
     return (execute_function "type" [obj])
 } 
 
+func float random {
+    var module = (get_module "random")
+    return (execute_method module "random" [])
+}
+
+func int random_range : min: int, max: int {
+    var module = (get_module "random")
+    return (execute_method module "randint" [min max])
+}
+
 var None = (index (pyeval ["ret = None"] [] ["ret"]) 0)
 var null = None
 
