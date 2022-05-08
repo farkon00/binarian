@@ -276,7 +276,13 @@ Options:
 
     -d          Debug mode, outputs variables values at the end of execution. 
 
+    -tc         Type check code before executing, will output all errors found.
+
     -no-std     Disables std library.
+
+    -cache      Caches parsed code to file. 
+
+    -load-cache Sets mode to loading cached file.
 
     -opers      Outputs file parsed to operations before execution. Will print all std operations too.
 
