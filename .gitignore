@@ -2,6 +2,9 @@
 .vscode
 foo.bino
 
+# Binarian .gitignore
+*.binc
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

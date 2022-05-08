@@ -44,16 +44,23 @@
   
   To run your code, run python file(binarian.py) or executable(binarian.exe). 
   
-  Also you can add -d flag after file name to see variable in the end of execution. Or -no-std flag to not include standart library.
-  
-  Examples :
-  ```
-  python binarian.py your_file.bino
-  python3 binarian.py your_file.bino
-  python3.10 binarian.py your_file.bino -d
-  python3 binarian.py other_file.bino -d
-  binarian.exe your_file.bino -no-std
-  ```
+  Usage: `binarian <file> [options]`
+
+    Options:
+
+      -d          Debug mode, outputs variables values at the end of execution. 
+
+      -tc         Type check code before executing, will output all errors found.
+
+      -no-std     Disables std library.
+
+      -cache      Caches parsed code to file. 
+
+      -load-cache Sets mode to loading cached file.
+
+      -opers      Outputs file parsed to operations before execution. Will print all std operations too.
+
+      --help      Show help message.
   
 # How to compile
  If you want to compile binarian intepreter yourself for tests of your modifications, updating std.bino or other reasons. Pyinstaller is recomended.
