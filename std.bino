@@ -36,6 +36,17 @@ func int has_attr : obj: object, attr: str {
     return (to_int (execute_function "hasattr" [obj attr]))
 }
 
+func int throw_exception : message: str {
+    pyeval ["throw_exception(message, state)"] [["message" message]] []
+}
+
+func int assert : condition: int, message: str {
+    if (not condition) {
+        throw_exception message
+    }
+    return 1
+}
+
 func object open : file: str, mode: str {
     return (index (pyeval ["f = open(file, mode)"] [["file" file] ["mode" mode]] ["f"]) 0)
 }
@@ -47,8 +58,13 @@ func str read : file : object {
 
 func int write : file: object, str_ : str {
     assert (has_attr file "write") "Object cant be written to"
-    assert (is_instance str_ str) "Message to write must be a string"
+    assert (is_instance str_ "str") "Message to write must be a string"
     return (execute_method file "write" [str_])
+}
+
+func int close : file: object {
+    assert (has_attr file "close") "Object cant be closed"
+    execute_method file "close" []
 }
 
 func int exit : code: int {
@@ -63,17 +79,6 @@ func object safe_get_attr : obj: object, attr: str {
     else {
         return -1
     }
-}
-
-func int throw_exception : message: str {
-    pyeval ["throw_exception(message, state)"] [["message" message]] []
-}
-
-func int assert : condition: int, message: str {
-    if (not condition) {
-        throw_exception message
-    }
-    return 1
 }
 
 func int is_instance : obj: object, type: str {
@@ -179,6 +184,23 @@ func list split_limit : str_: str, sep: str, limit: int {
     }
 
     return result
+}
+
+func str replace : str_: str, old: str, new: str {
+    assert (is_instance str_ "str") "String to replace must be a str"
+    assert (is_instance old "str") "Old must be a str"
+    assert (is_instance new "str") "New must be a str"
+    assert (<= (len old) 1) "Old must be a single character"
+
+    var res = "" 
+    for i str_ {
+        if (== i old) {
+            var res = (+ res new)
+        }
+        else {
+            var res = (+ res i)
+        }
+    }
 }
 
 func int is_numeric : string: str {

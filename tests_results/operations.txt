@@ -24,4 +24,4 @@
 0
 1
 
-Finished in 0.024934768676757812 sec
+Finished in 0.018947362899780273 sec
