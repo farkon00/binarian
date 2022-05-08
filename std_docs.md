@@ -24,6 +24,10 @@
   * [assert](#assert)
   * [is_instance](#isinstance)
   * [type_of](#typeof)
+  * [open](#open)
+  * [read](#read)
+  * [write](#write)
+  * [close](#close)
   * [random](#random)
   * [random_range](#randomrange)
   * [exit](#exit)
@@ -209,6 +213,40 @@
   Arguments :
   * obj : object
 
+  ## open
+  Return type : object
+  
+  Returns file object with name `file`.
+
+  Arguments :
+  * file : str
+  * mode : str
+  
+  ## write
+  Return type : int
+  
+  Writes to file with mode "a" or "w". Returns number of characters written.
+
+  Arguments :
+  * file : object
+  * str_ : str
+
+  ## read
+  Return type : int
+  
+  Returns all text in file with mode "r".
+
+  Arguments :
+  * file : object
+
+  ## close
+  Return type : int
+  
+  Closes file.
+
+  Arguments :
+  * file : object
+
   ## random
   Return type : float
   
@@ -247,6 +285,16 @@
   Arguments :
   * list_ : list
   * sep : str
+
+  ## replace
+  Return type : str
+  
+  Replaces all `old` characters with `new` string in string `str_` and returns it. Old mush be 0-1 characters string.
+
+  Arguments :
+  * str_ : str
+  * old : str
+  * new : str
 
   ## is_numeric
   Return type : int
