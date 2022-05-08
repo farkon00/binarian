@@ -211,11 +211,14 @@ def main(test_argv : list[str] = None) -> None:
         exit(0)
 
     try:
-        code = open(argv[1], "r", encoding="utf-8").read()
+        if "-load-cache" not in argv:
+            code = open(argv[1], "r", encoding="utf-8").read()
+        else:
+            ops = pickle.load(open(argv[1], "rb"))
     except Exception:
         raise FileNotFoundError("File does not exist.")
 
-    if "-no-std" not in argv and "-cache" not in argv:
+    if "-no-std" not in argv:
         try:
             std_path = "\\".join(__file__.split("\\")[:-1])
             std_path += "\\" if std_path else ""
@@ -232,12 +235,16 @@ def main(test_argv : list[str] = None) -> None:
     else:
         std_lib = ""
 
-    code = delete_comments(std_lib + "\n" + code)
-    state = ExecutionState(code)
+    state = ExecutionState(code if "-load-cache" not in argv else "")
     state.std_lines = std_lib.count("\n") + 1
-    ops = parse_to_ops(state)
 
-    if "-cache" in argv:
+    if "-load-cache" not in argv:
+        code = delete_comments(std_lib + "\n" + code)
+        state = ExecutionState(code if "-load-cache" not in argv else "")
+        state.std_lines = std_lib.count("\n") + 1
+        ops = parse_to_ops(state)
+
+    if "-cache" in argv and "-load-cache" not in argv:
         with open(f"{argv[1]}.binc", "wb") as f:
             pickle.dump(ops, f)
 

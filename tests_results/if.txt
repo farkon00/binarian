@@ -1,4 +1,4 @@
 else_test1
 if_test2
 
-Finished in 0.006981372833251953 sec
+Finished in 0.01595759391784668 sec
