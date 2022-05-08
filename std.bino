@@ -20,6 +20,10 @@ func object execute_method : obj: object, method: str, args: list {
     return (index (pyeval [(+ (+ "ret = obj." method)  "(*args)")] [["obj" obj] ["args" args]] ["ret"]) 0)
 }
 
+func object execute_function : func_: str, args: list {
+    return (index (pyeval [(+ (+ "ret = " func_)  "(*args)")] [["args" args]] ["ret"]) 0)
+}
+
 func object get_module : module: str {
     return (index (pyeval [(+ "import " module) (+ "module = " module)] [] ["module"]) 0)
 }
@@ -29,9 +33,30 @@ func object get_attribute : obj: object, attr: str {
 }
 
 func int has_attribute : obj: object, attr: str {
-    return (to_int (index (pyeval ["ret = hasattr(obj, attr)"] [["obj" obj] ["attr" attr]] ["ret"]) 0))
+    return (to_int (execute_function "hasattr" [obj attr]))
 }
 
+// Sorry for not having rusteval for safeness
+func object safe_get_attribute : obj: object, attr: str {
+    if (has_attribute obj attr) {
+        return (get_attribute obj attr)
+    } 
+    else {
+        return -1
+    }
+}
+
+func int is_instance : obj: object, type: str {
+    var type = (index (pyeval [(+ "ret = " type)] [] ["ret"]) 0)
+    return (to_int (execute_function "isinstance" [obj type]))
+}
+
+func object type_of : obj: object {
+    return (execute_function "type" [obj])
+} 
+
+var None = (index (pyeval ["ret = None"] [] ["ret"]) 0)
+var null = None
 
 // IO
 func int print : value: object {

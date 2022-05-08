@@ -57,7 +57,7 @@ class ExecutionState:
             "and", "or", "not", "var", "drop", "input", "output", "func",
             "return", "index", "len", "append", "zip", "for", "while", "if",
             "elif", "else", "object", "int", "float", "list", "function",
-            "none", "break", "continue",
+            "break", "continue",
             *self.operations
         )
         self.BRACKETS : tuple[str] = ("(", ")", "[", "]", "{", "}")
@@ -221,9 +221,9 @@ def main(test_argv : list[str] = None) -> None:
             std_path += "std.bino"
             
             try:
-                std_lib = open(std_path, "r").read().lower()
+                std_lib = open(std_path, "r").read()
             except FileNotFoundError:
-                std_lib = open("std.bino", "r").read().lower()
+                std_lib = open("std.bino", "r").read()
         except FileNotFoundError:
             print("\nSTD LIBRARY FILE WAS NOT FOUND!")
             print(f"Path where std library was excepted {std_path} and your current directory\n\n")
