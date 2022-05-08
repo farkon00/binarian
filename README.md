@@ -74,16 +74,7 @@
 
   Use -no-std flag in command to not include it while execution. If std.bino is not found warning will be displayed and execution will continue without including standart library.
 
-# Basic syntax
-  All syntax is based on keywords and arguments. 
-  ```
-  keyword1 arg1 arg2...
-  keyword2 arg1 arg2...
-  keyword3 arg1
-  ```
-  
-  To reference variable you must type name of it. 
-  
+# Basic syntax  
   To write comments use '//'. All symbols in line after '//' will be marked as comments.
   
   ## Expression
@@ -99,12 +90,6 @@
    input var2
    output (and var1 (not var2))
    ```
-
-  ## Lists
-  Lists in binarian can contain any object and isn't staticlly typed. Multidimensional lists are also supported.
-  To create list in binarian use square brackets : `[0 1 [1 1]]`.
-
-  Check [List keywords](#list-keywords) for all possible keywords related to lists.
    
   ## Functions
   To create function use [func](#func) keyword is global scope.
@@ -129,16 +114,16 @@
 There are 6 types in binarian, one of them isnt recomended to use and was added for techinical porpuses.
 
   ## int
-  Most common type in binarian, represents any integer from -9,223,372,036,854,775,808 to 9,223,372,036,854,775,808(64 bits limits). In binarian also takes place of boolean.
+  Most common type in binarian, represents any integer. In binarian also takes place of boolean. Examples : `0 -69 420`
 
   ## float
-  Number with floating decimal point, has slower arithmetics operation then int and range of values are smaller. But you can have fractions with it. 
+  Number with floating decimal point, has slower arithmetics operation then int. But you can have fractions with it. Examples : `420.69 -24.0000 96.0001`
   
   ## str
-  String of characters, matched only with ". Str can contain escape characters new line, tab etc., to use them put \ before character e. g. "\\", "\n" "\"".
+  String of characters, matched only with ". Str can contain escape characters new line, tab etc., to use them put \ before character e. g. "\\", "\n" "\"". Examples : `"Hellow world\n" "\tBrackets : [] {} ()"`
 
   ## list
-  List can contain any objects of any other types. Look to [Lists](#lists) for more details.
+  List can contain any objects of any other types. Look to [Lists](#lists) for more details. Examples : `[6 9 "420" [420.69]]`
 
   ## function
   Type representing function usually defined by [func](#func) keyword.
@@ -182,37 +167,27 @@ There are 6 types in binarian, one of them isnt recomended to use and was added 
   ```
   
   ### input
-  Syntax : `input var_name`
+  Syntax : `input`
   
-  This keyword uses to input data from keyboard. In console user will see `var_name : <user input here>`. Keyword assign variable with name var_name.
-  
-  You can't use this keyword in expression.
-  Variable name can\`t be same as keyword or have brackets in them. 
-  Input must be valid integer.
+  This keyword uses to input data from keyboard. Keyword returns user input as str.
   
   Example : 
   ```
-  input inp0
-  input some_name
-  or inp0 some_name
+  output (input) // echo
   ```
   
   ### output
-  Syntax : `output value user_tip`
+  Syntax : `output str`
   
-  This keyword uses to output data to user. In console user will see 'user_tip : value'.
-
-  user_tip writing without " or '.
- 
-  User tip cannot contain spaces.
+  This keyword uses to output data to user.
  
   You can't use this keyword in expression.
   
   Example : 
   ```
   var val1 = 1
-  output val1 Hi! // Hi! : 1
-  output 0 Its_zero // Its_zero : 0
+  output val1
+  output "some string"
   ```
 
   ### convert
@@ -230,6 +205,19 @@ There are 6 types in binarian, one of them isnt recomended to use and was added 
   var a = (convert inp float)  // Type cheking will automatically set type of variable to float,
                                // but wont check if type can be converted to specified type
   ```
+
+  ### pyeval
+  Syntax : `pyeval code imports exports`
+  Executes python code joins first argument with new line, imports values to code with name, returns list of variables with names from exports.
+
+  **Using this keyword isnt recomended std library may have features, that you need or at least use functions for generic features**
+
+  Example :
+  ```
+  func object get_attr : obj: object, attr: str {
+    return (index (pyeval [(+ "ret = obj." attr)] [["obj" obj]] ["ret"]) 0)
+  }
+  ``` 
 
   ## Logical operators keywords
   ### and
@@ -485,7 +473,7 @@ There are 6 types in binarian, one of them isnt recomended to use and was added 
   ### len
   Synatax : `len list`
 
-  Returns length of list.
+  Returns length of list or string.
 
   If keyword used in expression, expression will replaced by result.
 
