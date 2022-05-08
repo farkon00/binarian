@@ -6,4 +6,4 @@
 69
 condition
 
-Finished in 0.0069806575775146484 sec
+Finished in 0.017953157424926758 sec

@@ -17,6 +17,7 @@ tests = [
     ["func"],
     ["exception"],
     ["call_stack"],
+    ["pyeval"],
     ["std", "-d"],
     ["no-std", ["-no-std"]],
     ["convert"],

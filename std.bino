@@ -15,6 +15,58 @@ func list to_list : val {
     return (convert val list)
 }
 
+// Pyeval
+func object execute_method : obj: object, method: str, args: list {
+    return (index (pyeval [(+ (+ "ret = obj." method)  "(*args)")] [["obj" obj] ["args" args]] ["ret"]) 0)
+}
+
+func object execute_function : func_: str, args: list {
+    return (index (pyeval [(+ (+ "ret = " func_)  "(*args)")] [["args" args]] ["ret"]) 0)
+}
+
+func object get_module : module: str {
+    return (index (pyeval [(+ "import " module) (+ "module = " module)] [] ["module"]) 0)
+}
+
+func object get_attr : obj: object, attr: str {
+    return (index (pyeval [(+ "ret = obj." attr)] [["obj" obj]] ["ret"]) 0)
+}
+
+func int has_attr : obj: object, attr: str {
+    return (to_int (execute_function "hasattr" [obj attr]))
+}
+
+// Sorry for not having rusteval for safeness
+func object safe_get_attr : obj: object, attr: str {
+    if (has_attr obj attr) {
+        return (get_attr obj attr)
+    } 
+    else {
+        return -1
+    }
+}
+
+func int is_instance : obj: object, type: str {
+    var type = (index (pyeval [(+ "ret = " type)] [] ["ret"]) 0)
+    return (to_int (execute_function "isinstance" [obj type]))
+}
+
+func object type_of : obj: object {
+    return (execute_function "type" [obj])
+} 
+
+func float random {
+    var module = (get_module "random")
+    return (execute_method module "random" [])
+}
+
+func int random_range : min: int, max: int {
+    var module = (get_module "random")
+    return (execute_method module "randint" [min max])
+}
+
+var None = (index (pyeval ["ret = None"] [] ["ret"]) 0)
+var null = None
 
 // IO
 func int print : value: object {
@@ -51,6 +103,9 @@ func int math_to_int : val: float {
         return (to_int val)
     }
 }
+
+var math = (get_module "math")
+var float pi = (get_attr math "pi")
 
 
 func int xor : val1: int, val2: int {

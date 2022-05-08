@@ -37,7 +37,8 @@ def tc_line2(op : str, state):
                 )
 
             if issubclass(arg1, str | List) or issubclass(arg2, str | List):
-                binarian_assert(arg1 != arg2 and op.args[0] not in state.diff_types_operations, 
+                binarian_assert(arg1 != arg2 and op.args[0] not in state.diff_types_operations and\
+                    arg1 not in (object, None) and arg2 not in (object, None),
                     f"Cant perform operation with different types : {type_to_str(arg1)} and {type_to_str(arg2)}", state
                 )
                 binarian_assert(op.args[0] not in state.iter_operations, 
@@ -109,6 +110,8 @@ def tc_line2(op : str, state):
             if func not in state.functions:
                 state.warnings += 1
                 return object
+            binarian_assert(len(state.functions[func].args) != len(op.args) - 1,
+                f"{func} takes {len(state.functions[func].args)} arguments", state)
             for j, i in enumerate(state.functions[func].args):
                 exp = i[1]
                 got = tc_line2(op.args[j+1], state)
