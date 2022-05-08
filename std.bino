@@ -36,6 +36,10 @@ func int has_attr : obj: object, attr: str {
     return (to_int (execute_function "hasattr" [obj attr]))
 }
 
+func exit : code: int {
+    execute_function "exit" [code]
+}
+
 // Sorry for not having rusteval for safeness
 func object safe_get_attr : obj: object, attr: str {
     if (has_attr obj attr) {
