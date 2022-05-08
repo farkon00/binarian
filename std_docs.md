@@ -20,10 +20,13 @@
   * [get_attr](#getattr)
   * [has_attr](#hasattr)
   * [safe_get_attr](#safegetattr)
+  * [throw_exception](#throwexception)
+  * [assert](#assert)
   * [is_instance](#isinstance)
   * [type_of](#typeof)
   * [random](#random)
   * [random_range](#randomrange)
+  * [exit](#exit)
 * [Str functions](#str-functions)
   * [join](#join)
   * [is_numeric](#isnumeric)
@@ -172,6 +175,23 @@
   * obj : object
   * attr : str
 
+  ## throw_exception 
+  Return type : int
+  
+  Throws regular binarian exception with message `message`. 
+
+  Arguments :
+  * message : str
+
+  ## assert
+  Return type : int
+  
+  Throws regular binarian exception with message `message` if condition is 1. Retunrs condition.
+
+  Arguments :
+  * condition : int
+  * message : str
+
   ## is_instance
   Return type : int
   
@@ -204,6 +224,14 @@
   Arguments :
   * min : int
   * max : int
+
+  ## exit
+  Return type : int
+  
+  Exits with exit code `code`
+
+  Arguments :
+  * code : int
 
   ## Variables
   None/null

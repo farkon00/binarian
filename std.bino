@@ -36,7 +36,7 @@ func int has_attr : obj: object, attr: str {
     return (to_int (execute_function "hasattr" [obj attr]))
 }
 
-func exit : code: int {
+func int exit : code: int {
     execute_function "exit" [code]
 }
 
@@ -50,14 +50,15 @@ func object safe_get_attr : obj: object, attr: str {
     }
 }
 
-func throw_exception : message: str {
+func int throw_exception : message: str {
     pyeval ["throw_exception(message, state)"] [["message" message]] []
 }
 
-func assert : condition: int, message: str {
+func int assert : condition: int, message: str {
     if (not condition) {
         throw_exception message
     }
+    return 1
 }
 
 func int is_instance : obj: object, type: str {
