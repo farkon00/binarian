@@ -28,6 +28,10 @@ func object get_attribute : obj: object, attr: str {
     return (index (pyeval [(+ "ret = obj." attr)] [["obj" obj]] ["ret"]) 0)
 }
 
+func int has_attribute : obj: object, attr: str {
+    return (to_int (index (pyeval ["ret = hasattr(obj, attr)"] [["obj" obj] ["attr" attr]] ["ret"]) 0))
+}
+
 
 // IO
 func int print : value: object {
