@@ -27,7 +27,7 @@ def pyeval_keyword(op : Oper, state, local : dict[str : object]):
     ret = []
     for i in exports:
         binarian_assert(i not in glob, f"Variable {i} was not found", state)
-        ret.append(glob[i])
+        ret.append(glob[i] if not isinstance(glob[i], list) else List(glob[i]))
 
     if state.is_expr:
         return List(ret)
