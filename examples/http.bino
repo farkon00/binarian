@@ -1,0 +1,30 @@
+var PORT = 6969
+
+func build_server {
+    var socket = (get_module "socket")
+    var server = (execute_method socket "socket" [])
+
+    execute_method server "bind" [(index (pyeval ["ret = ('127.0.0.1'," (to_str PORT) ")"] [] ["ret"]) 0)]
+    execute_method server "listen" [10]
+    execute_method server "setsockopt" [65535 4 1]
+
+    print "Server is running"
+    return server
+}
+
+var server = (build_server)
+
+while 1 {
+    var client = (execute_method server "accept" [])
+    var conn = (index (to_list client) 0)
+
+    // conn.recv(1024).decode()
+    var data = (execute_method (execute_method conn "recv" [1024]) "decode" [])
+    print data
+
+    var resp = "HTTP/1.0\ncontent-type: text/html; charset=utf-8 200 OK\n\nHello World"
+    execute_method conn "send" [(execute_method resp "encode" [])]
+    execute_method conn "close" []
+}
+
+execute_method server "close" []
