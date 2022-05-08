@@ -199,7 +199,7 @@
   ## random_range
   Return type : int
   
-  Returns pseudo-random float beetwen `min` and `max` including both ends.
+  Returns pseudo-random float beetwen `min` and `max` including only first endpoint.
 
   Arguments :
   * min : int
