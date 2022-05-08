@@ -1,4 +1,5 @@
 import sys
+import pickle
 
 from time import time
 from types import FunctionType
@@ -210,7 +211,10 @@ def main(test_argv : list[str] = None) -> None:
         exit(0)
 
     try:
-        code = open(argv[1], "r", encoding="utf-8").read()
+        if "-load-cache" not in argv:
+            code = open(argv[1], "r", encoding="utf-8").read()
+        else:
+            ops = pickle.load(open(argv[1], "rb"))
     except Exception:
         raise FileNotFoundError("File does not exist.")
 
@@ -231,10 +235,21 @@ def main(test_argv : list[str] = None) -> None:
     else:
         std_lib = ""
 
-    code = delete_comments(std_lib + "\n" + code)
-    state = ExecutionState(code)
+    state = ExecutionState(code if "-load-cache" not in argv else "")
     state.std_lines = std_lib.count("\n") + 1
-    ops = parse_to_ops(state)
+
+    if "-load-cache" not in argv:
+        code = delete_comments(std_lib + "\n" + code)
+        state = ExecutionState(code if "-load-cache" not in argv else "")
+        state.std_lines = std_lib.count("\n") + 1
+        ops = parse_to_ops(state)
+
+    if "-cache" in argv and "-load-cache" not in argv:
+        with open(f"{argv[1]}.binc", "wb") as f:
+            pickle.dump(ops, f)
+
+        print("Seccessfully parsed and cached.")
+        exit(0)
 
     if "-opers" in argv:
         print("\n".join([str(i) for i in ops]))
