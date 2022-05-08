@@ -7,7 +7,7 @@ def execute_oper(op : Oper, state, local : dict[str : object]):
     operation = op.args[0]
     orig_args = op.args
     op.args = op.args[1:]
-    types = int | float | str | List
+    types = (int, float, str, List)
     arg1, arg2 = check_args(op, [types, types], state, local)
     op.args = orig_args
 

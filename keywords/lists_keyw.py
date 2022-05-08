@@ -4,7 +4,7 @@ from bin_types.list import List
 from parsing.oper import Oper
 
 def index_keyword(op : Oper, state, local : dict[str : object]):
-    list, index = check_args(op, [List | str, int], state, local)
+    list, index = check_args(op, [(List, str), int], state, local)
 
     binarian_assert(index >= len(list) if index > 0 else abs(index) > len(list), "Index out of range.", state)
 
@@ -21,7 +21,7 @@ def setindex_keyword(op : Oper, state, local : dict[str : object]):
     list[index] = val
 
 def len_keyword(op : Oper, state, local : dict[str : object]):
-    _list = check_args(op, [List | str], state, local)
+    _list = check_args(op, [(List, str)], state, local)
 
     if state.is_expr:
         return len(_list)
