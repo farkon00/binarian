@@ -167,7 +167,7 @@ def execute_line(op : Oper, state : ExecutionState, local : dict[str : object] =
             continue_keyword(op, state)
 
         case OpIds.func:
-            func_keyword(op, state, local if is_func else state.vars)
+            func_keyword(op, state, local if is_func else state.vars, is_func)
 
         case OpIds.return_:
             return return_keyword(op, state, is_func, local)

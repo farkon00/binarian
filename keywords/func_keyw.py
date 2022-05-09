@@ -4,8 +4,9 @@ from funcs.exceptions import binarian_assert
 from funcs.utils import check_args
 from parsing.oper import Oper
 
-def func_keyword(op : Oper, state, in_vars : dict[str : object]):
+def func_keyword(op : Oper, state, in_vars : dict[str : object], is_func : bool):
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
+    binarian_assert(is_func, "Cant define function inside other function.", state)
 
     in_vars[op.args[0]] = Function(op)
 

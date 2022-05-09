@@ -1,6 +1,6 @@
 from bin_types.list import List
 from funcs.exceptions import binarian_assert
-from funcs.utils import check_args, type_to_str
+from funcs.utils import type_to_str
 from parsing.oper import Oper
 
 def execute_oper(op : Oper, state, local : dict[str : object]):
