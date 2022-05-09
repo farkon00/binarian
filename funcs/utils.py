@@ -35,6 +35,7 @@ def check_args(op, types : list[type], state, local) -> list | object:
 
     if len(ret) > 1:
         return ret
+    binarian_assert(len(ret) < 1, "No arguments were given", state)
     return ret[0]
 
 def is_name_unavailable(name : str, state):
