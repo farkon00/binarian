@@ -1,4 +1,5 @@
 [![Test](https://github.com/farkon00/binarian/actions/workflows/main.yml/badge.svg)](https://github.com/farkon00/binarian/actions/workflows/main.yml)
+![](https://img.shields.io/github/commit-activity/m/farkon00/binarian)
 # Binarian
 # Content
   * [Global info](#global-info)
@@ -7,7 +8,6 @@
   * [Types](#types)
   * [Basic syntax](#basic-syntax)
     * [Expressions](#expression)
-    * [Lists](#lists)
     * [Functions](#functions)
   * [Keywords](#keywords)
     * [Special keywords](#special-keywords)
@@ -15,6 +15,8 @@
       * [drop](#drop)
       * [input](#input)
       * [output](#output)
+      * [convert](#convert)
+      * [pyeval](#pyeval)
     * [Logical operators keywords](#logical-operators-keywords)
       * [and](#and)
       * [or](#or)
