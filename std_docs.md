@@ -213,6 +213,15 @@
   Arguments :
   * obj : object
 
+  ## construct
+  Return type : object
+  
+  Creates object of type `type_` and returns its instance. Gives arguments args to constructor.
+
+  Arguments :
+  * type_ : object
+  * args : list
+
   ## open
   Return type : object
   

@@ -90,6 +90,10 @@ func object type_of : obj: object {
     return (execute_function "type" [obj])
 } 
 
+func object construct : type: object, args: list {
+    return (index (pyeval ["ret = type_(*args)"] [["type_" type] ["args" args]] ["ret"]) 0)
+}
+
 func float random {
     var module = (get_module "random")
     return (execute_method module "random" [])

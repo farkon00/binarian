@@ -27,4 +27,4 @@ bc
 20
 29
 
-Finished in 0.03647208213806152 sec
+Finished in 0.02493429183959961 sec

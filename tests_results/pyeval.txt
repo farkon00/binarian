@@ -9,4 +9,4 @@ None
 0
 <class 'int'>
 
-Finished in 0.02031111717224121 sec
+Finished in 0.01795220375061035 sec
