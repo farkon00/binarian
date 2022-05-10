@@ -8,6 +8,7 @@
   * [Types](#types)
   * [Basic syntax](#basic-syntax)
     * [Expressions](#expression)
+    * [Operations](#operations)
     * [Functions](#functions)
   * [Keywords](#keywords)
     * [Special keywords](#special-keywords)
@@ -17,10 +18,6 @@
       * [output](#output)
       * [convert](#convert)
       * [pyeval](#pyeval)
-    * [Logical operators keywords](#logical-operators-keywords)
-      * [and](#and)
-      * [or](#or)
-      * [not](#not)
     * [Conditional operators](#conditional-operators)
       * [if](#if)
       * [else](#else)
@@ -92,6 +89,14 @@
    input var2
    output (and var1 (not var2))
    ```
+   
+  ## Operations
+  Operations can be performed on int, float, str, list. But some types are limited. 
+  
+  List of operations :
+  * -, *, /, %, \*\*, &gt;, &lt;, &gt;=, &lt;= - can only be performed between floats and ints.
+  * \+ - can be performed on any types mentioned above, but you can only add lists to lists, strings to strings and int or float to int or float.
+  * ==, != - can be performed beetwen any two objects.
    
   ## Functions
   To create function use [func](#func) keyword is global scope.
@@ -220,52 +225,6 @@ There are 6 types in binarian, one of them isnt recomended to use and was added 
     return (index (pyeval [(+ "ret = obj." attr)] [["obj" obj]] ["ret"]) 0)
   }
   ``` 
-
-  ## Logical operators keywords
-  ### and
-  Syntax : `and val1 val2`
-  
-  Boolean logical operator and.
-
-  If keyword used in expression, expression will replaced by result.
-  
-  Example : 
-  ```
-  input i1
-  input i2
-  and i1 i2
-  var var1 = (and i1 1)
-  ```
-  
-  ### or
-  Syntax : `or val1 val2`
-  
-  Boolean logical operator or.
-
-  If keyword used in expression, expression will replaced by result.
-  
-  Example : 
-  ```
-  input i1
-  input i2
-  or i1 i2
-  var var1 = (or i1 i2)
-  ```
-  
-  ### not
-  Syntax : `not val`
-  
-  Boolean logical operator not.
-
-  If keyword used in expression, expression will replaced by result.
-  
-  Example : 
-  ```
-  input i1
-  input i2
-  not i1
-  var var1 = (not (or i1 i2))
-  ```
   
   ## Conditional operators
   ### if  
