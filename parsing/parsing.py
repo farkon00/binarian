@@ -16,8 +16,6 @@ def parse_to_ops(state):
             break
         line = state.lines[state.current_line]
 
-        binarian_assert(line.count("(") != line.count(")"), 'Expression must have start and finish matched with "(" and ")".', state)
-
         op = parse_line(line, state)
         if op:
             opers.append(op)
@@ -88,7 +86,7 @@ def parse_line(line, state):
                 type_ = None
                 name = parts[0][1].strip()
 
-            binarian_assert(is_name_unavailable(name, state), "Variable name is unavailiable.", state)
+            binarian_assert(is_name_unavailable(name, state), f"Variable name is unavailiable : {name}", state)
 
             op = Oper(OpIds.var, state.current_line, [name, *get_args(parts[1], state)], types=type_)
             binarian_assert(len(op.args) != 2, "Variable must have only one value.", state)
@@ -96,7 +94,7 @@ def parse_line(line, state):
 
         case "drop":
             binarian_assert(len(lexic) != 2, "Drop must have one argument.", state)
-            binarian_assert(is_name_unavailable(lexic[1], state), "Variable name is unavailiable.", state)
+            binarian_assert(is_name_unavailable(lexic[1], state), f"Variable name is unavailiable : {lexic[0]}", state)
             return Oper(OpIds.drop, state.current_line, lexic[1])
 
         case "input":
@@ -153,7 +151,7 @@ def parse_line(line, state):
         case "for":
             op = Oper(OpIds.for_, state.current_line, [lexic[1]] + get_args(lexic[2:], state))
             binarian_assert(len(op.args) != 2, "For must have two argument.", state)
-            binarian_assert(is_name_unavailable(op.args[0], state), "For variable name is unavailable.", state)
+            binarian_assert(is_name_unavailable(op.args[0], state), f"For variable name is unavailable : {op.args[0]}", state)
             op.oper = parse_block(state, state.current_line)
             return op
 
@@ -189,7 +187,7 @@ def parse_line(line, state):
                         args.append(i[0].strip())
                         args_types.append(object)
                     else:
-                        throw_exception("Argument must have only one or fewer : and must have a name.", state)
+                        throw_exception('Argument must have only one or fewer ":" and must have a name.', state)
                     binarian_assert(is_name_unavailable(args[-1], state), f"Argument name is unavailiable : {args[-1]}.", state)
 
             op = Oper(OpIds.func, state.current_line, [name, *args], types=[ret_type, *args_types])

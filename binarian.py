@@ -2,6 +2,7 @@ import sys
 import pickle
 
 from time import time
+from posixpath import abspath
 from types import FunctionType
 
 from parsing.parsing import *
@@ -176,7 +177,7 @@ def execute_line(op : Oper, state : ExecutionState, local : dict[str : object] =
             return call_keyword(op, state, local)
 
         case _:
-            throw_exception(f"Keyword or function wasn`t found.", state)
+            assert False, "Unreachable" 
 
 def execute_opers(opers : list[Oper], state : ExecutionState, local : dict[str : object] = None,
  main : bool = False, is_loop : bool = False) -> object:
@@ -216,7 +217,8 @@ def main(test_argv : list[str] = None) -> None:
         else:
             ops = pickle.load(open(argv[1], "rb"))
     except Exception:
-        raise FileNotFoundError("File does not exist.")
+        print(f"File not found {abspath(argv[1])}")
+        exit(1)
 
     if "-no-std" not in argv:
         try:

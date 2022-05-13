@@ -8,7 +8,8 @@ def execute_oper(op : Oper, state, local : dict[str : object]):
     types = (int, float, str, List)
     arg1 = state.GLOBAL_FUNCS["execute_line"](op.args[1], state, local)
     arg2 = state.GLOBAL_FUNCS["execute_line"](op.args[2], state, local)
-    binarian_assert(not isinstance(arg1, types) and not isinstance(arg2, types), f"Invalid types for operation {operation}", state)
+    binarian_assert(not isinstance(arg1, types) and not isinstance(arg2, types) and (operation not in state.diff_types_operations),
+        f"Invalid types for operation {operation}", state)
 
     if isinstance(arg1, str | List) or isinstance(arg2, str | List):
         binarian_assert(type(arg1) != type(arg2) and op.args[0] not in state.diff_types_operations, 

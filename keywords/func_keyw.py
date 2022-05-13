@@ -18,8 +18,10 @@ def call_keyword(op : Oper, state, local : dict[str : object]):
     else:
         args = []
 
-    binarian_assert(len(func.args) > len(args), f"You didn`t give enough arguments, {len(func.args)} was expected.", state)
-    binarian_assert(len(func.args) < len(args), f"You gave too much arguments, {len(func.args)} was expected.", state)
+    binarian_assert(len(func.args) > len(args), f"You didn`t give enough arguments,\
+{len(func.args)} was expected, {len(args)} found.", state)
+    binarian_assert(len(func.args) < len(args), f"You gave too much arguments,\
+{len(func.args)} was expected, {len(args)} found.", state)
 
     call_line = state.current_line
 
