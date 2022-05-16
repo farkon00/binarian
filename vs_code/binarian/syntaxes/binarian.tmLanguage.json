@@ -15,7 +15,7 @@
 		"keywords": {
 			"patterns": [{
 				"name": "keyword.control.binarian",
-				"match": "\\b(var|drop|output|input|convert|and|or|not|index|setindex|len|append|zip|if|else|elif|for|while|break|continue|func|return)\\b"
+				"match": "\\b(var|drop|output|input|convert|and|or|not|index|setindex|append|zip|if|else|elif|for|while|break|continue|func|return)\\b"
 			}]
 		},
 		"types": {

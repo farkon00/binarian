@@ -225,6 +225,11 @@ func int is_numeric : string: str {
 }
 
 // Lists
+func int len : iter {
+    assert (or (is_instance iter "list") (is_instance iter "str")) (+ "Cant get len of " (to_str (type_of iter)))
+    return (execute_function "len" [iter])
+}
+
 func int in : val: object, _list: list {
     for i _list {
         if (== val i) {

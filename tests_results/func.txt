@@ -5,4 +5,4 @@ side
 else_test_func
 1
 
-Finished in 0.009969472885131836 sec
+Finished in 0.02472996711730957 sec

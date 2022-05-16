@@ -43,7 +43,6 @@ class TypeCheckingState:
             "not_" : (int, object),
             "index" : (object, (List, str), int),
             "setindex" : (None, List, int, object),
-            "len" : (int, (List, str)),
             "append" : (None, List, object),
             "if_" : (None, object),
             "else_" : (None,),

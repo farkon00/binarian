@@ -57,7 +57,7 @@ class ExecutionState:
 
         self.RESTRICTED_NAMES : tuple[str] = (
             "and", "or", "not", "var", "drop", "input", "output", "func",
-            "return", "index", "len", "append", "zip", "for", "while", "if",
+            "return", "index", "append", "zip", "for", "while", "if",
             "elif", "else", "object", "int", "float", "list", "function",
             "break", "continue",
             *self.operations
@@ -139,9 +139,6 @@ def execute_line(op : Oper, state : ExecutionState, local : dict[str : object] =
 
         case OpIds.setindex:
             return setindex_keyword(op, state, local)
-
-        case OpIds.len:
-            return len_keyword(op, state, local)
 
         case OpIds.append:
             return append_keyword(op, state, local)

@@ -22,12 +22,6 @@ list has length {len(list)}, index was {index}.", state)
 
     list[index] = val
 
-def len_keyword(op : Oper, state, local : dict[str : object]):
-    _list = check_args(op, [(List, str)], state, local)
-
-    if state.is_expr:
-        return len(_list)
-
 def append_keyword(op : Oper, state, local : dict[str : object]):
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
 

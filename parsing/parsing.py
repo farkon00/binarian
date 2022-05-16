@@ -131,11 +131,6 @@ def parse_line(line, state):
             binarian_assert(len(op.args) != 3, f"{lexic[0][0].upper() + lexic[0][1:]} must have three argument.", state)
             return op
 
-        case "len":
-            op = Oper(OpIds.len, state.current_line, get_args(lexic[1:], state))
-            binarian_assert(len(op.args) != 1, "Len must have one argument.", state)
-            return op
-
         case "if" | "elif" | "while":
             op = Oper(type.__getattribute__(OpIds, lexic[0] + "_"), state.current_line, get_args(lexic[1:], state))
             binarian_assert(len(op.args) != 1, f"{lexic[0][0].upper() + lexic[0][1:]} must have one argument.", state)

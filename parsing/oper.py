@@ -17,7 +17,6 @@ class OpIds(Enum):
     not_ = auto()
     index = auto()
     setindex = auto()
-    len = auto()
     append = auto()
     if_ = auto()
     else_ = auto()
