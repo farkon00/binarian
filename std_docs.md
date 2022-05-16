@@ -50,10 +50,18 @@
   * num2 : int
 
 # Input/Output
-  ## print
-  Return type : int(always 0)
+  ## output
+  Return type : int
   
-  Writes object, converted to str, to stdout and puts \n at the end.
+  Writes str to stdout. Returns how many characters was written.
+
+  Arguments :
+  * text : str
+
+  ## print
+  Return type : int
+
+  Writes object, converted to str, to stdout and puts \n at the end. Returns how many characters was printed.
 
   Arguments :
   * value : obejct
@@ -65,6 +73,15 @@
 
   Arguments :
   * tip : str
+
+  ## Variables
+  sys
+  ---
+  Python sys library
+
+  stdout
+  ---
+  Standart output, can be changed to any writable object(mostly file), so [output](#output) will write to this stdout.
 
 # Math
   ## ceil
@@ -268,6 +285,8 @@
   Return type : int
   
   Returns pseudo-random float beetwen `min` and `max` including only first endpoint.
+
+  **This function shouldnt be used for cryptography**
 
   Arguments :
   * min : int

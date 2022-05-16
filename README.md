@@ -15,7 +15,6 @@
       * [var](#var)
       * [drop](#drop)
       * [input](#input)
-      * [output](#output)
       * [convert](#convert)
       * [pyeval](#pyeval)
     * [Conditional operators](#conditional-operators)
@@ -46,9 +45,9 @@
 
     Options:
 
-      -d          Debug mode, outputs variables values at the end of execution. 
+      -d          Debug mode, prints variables values at the end of execution. 
 
-      -tc         Type check code before executing, will output all errors found.
+      -tc         Type check code before executing, will print all errors found.
 
       -no-std     Disables std library.
 
@@ -56,7 +55,7 @@
 
       -load-cache Sets mode to loading cached file.
 
-      -opers      Outputs file parsed to operations before execution. Will print all std operations too.
+      -opers      prints file parsed to operations before execution. Will print all std operations too.
 
       --help      Show help message.
   
@@ -76,7 +75,7 @@
   To write comments use '//'. All symbols in line after '//' will be marked as comments.
   
   ## Expression
-   Expressions is lines in lines, but while execution they will be replaced with returns of keywords or functions. Also you can't use set, input and output etc. in expressions.
+   Expressions is lines in lines, but while execution they will be replaced with returns of keywords or functions. Also you can't use set, input and print etc. in expressions.
    Syntax : 
    ```
    keyword (keyword arg (keyword arg arg)) arg
@@ -86,7 +85,7 @@
    ```
    input var1
    input var2
-   output (and var1 (not var2))
+   print (and var1 (not var2))
    ```
    
   ## Operations
@@ -110,7 +109,7 @@
     not arg1
     
     input inp1
-    output (and inp1 arg1) output
+    print (and inp1 arg1)
     
     return (and arg1 arg2)
   }
@@ -187,21 +186,7 @@ There are 6 types in binarian, one of them isnt recomended to use and was added 
   
   Example : 
   ```
-  output (input) // echo
-  ```
-  
-  ### output
-  Syntax : `output str`
-  
-  This keyword uses to output data to user.
- 
-  You can't use this keyword in expression.
-  
-  Example : 
-  ```
-  var val1 = 1
-  output val1
-  output "some string"
+  print (input) // echo
   ```
 
   ### convert
@@ -247,7 +232,7 @@ There are 6 types in binarian, one of them isnt recomended to use and was added 
   ```
   input a
   if a {
-    output a _a
+    print a _a
   }
   ```
   
@@ -272,11 +257,11 @@ There are 6 types in binarian, one of them isnt recomended to use and was added 
   input a
   
   if a {
-    output a _a
+    print a _a
   }
   else {
     input b
-    output b _b
+    print b _b
   }
   ```
 
@@ -308,14 +293,14 @@ There are 6 types in binarian, one of them isnt recomended to use and was added 
   input b
   
   if a {
-    output a a
+    print a a
   }
   elif b {
-    output b b
+    print b b
   }
   else {
     input c
-    output c c
+    print c c
   }
   ```
 
@@ -335,10 +320,10 @@ There are 6 types in binarian, one of them isnt recomended to use and was added 
   var list = [[0 1] [1 0]]
 
   for i list {
-    output i pretty list
+    print i pretty list
 
     for j i {
-      output j pretty sub-list
+      print j pretty sub-list
     }
   }
   ```
@@ -354,11 +339,11 @@ There are 6 types in binarian, one of them isnt recomended to use and was added 
       
   Example :
   ```
-  // This code will just output hi there : 1
+  // This code will just print hi there : 1
   var name = 1
 
   while name {
-    output 1 hi_there
+    print 1 hi_there
     var name = 0
   }
   ```
@@ -383,7 +368,7 @@ There are 6 types in binarian, one of them isnt recomended to use and was added 
     if i {
       break
     }
-    output i i
+    print i i
   }
   ```
 
@@ -407,7 +392,7 @@ There are 6 types in binarian, one of them isnt recomended to use and was added 
     if i {
       continue
     }
-    output i cont
+    print i cont
   }
   ```
  
@@ -422,7 +407,7 @@ There are 6 types in binarian, one of them isnt recomended to use and was added 
   Example :
   ```
   var list = [0 1 0]
-  output (index list 2) 3rd // Prints 0
+  print (index list 2) 3rd // Prints 0
   ```
 
   ### setindex

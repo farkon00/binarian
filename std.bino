@@ -109,11 +109,12 @@ var null = None
 
 // IO
 func int output : text : str {
+    assert (is_instance text "str") "Text to output must be a string"
     return (write stdout text)
 } 
 
 func int print : value: object {
-    output (+ (to_str value) "\n")
+    return (output (+ (to_str value) "\n"))
 }
 
 func list try_input_int : tip: str {
@@ -128,7 +129,6 @@ func list try_input_int : tip: str {
 }
 
 var sys = (get_module "sys")
-var stdin = (get_attr sys "stdin")
 var stdout = (get_attr sys "stdout")
 
 
