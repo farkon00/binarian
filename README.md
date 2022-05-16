@@ -123,6 +123,14 @@ There are 6 types in binarian, one of them isnt recomended to use and was added 
   ## int
   Most common type in binarian, represents any integer. In binarian also takes place of boolean. Examples : `0 -69 420`
 
+  There is int litterals in other bases: octal, binary and hexadecimal. Binarian uses prefixes to recognize alternative bases.
+  Examples : 
+  ```
+  0x12  // Hexadecimal, 18
+  0b010 // Binary, 2
+  0o10  // Octal, 8
+  ```
+
   ## float
   Number with floating decimal point, has slower arithmetics operation then int. But you can have fractions with it. Examples : `420.69 -24.0000 96.0001`
   
