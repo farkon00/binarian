@@ -17,26 +17,41 @@ def get_args(lexic, state) -> Oper:
         if var[0] == "[": # list parsing
             elems = get_args(var[1:-1].split(), state)
             ret.append(Oper(OpIds.value, state.current_line, [List(elems)]))
+
         elif var[0] == '"': # string parsing
             ret.append(Oper(OpIds.value, state.current_line, [parse_string(var, state)]))
-        elif var.lower().startswith("0x") or var.lower().startswith("-0x"): # Hex numbers
+
+        elif var.lower().startswith("0x") or\
+         var.lower().startswith("-0x"): # Hex numbers
             binarian_assert(any(i not in "0123456789abcdef" for i in var[2:].lower()),
              f"Invalid hexadecimal litteral: {var}", state)
             ret.append(Oper(OpIds.value, state.current_line, [int(var, 16)]))
-        elif var.lower().startswith("0b") or var.lower().startswith("-0b"): # Binary numbers
+
+        elif var.lower().startswith("0b") or\
+         var.lower().startswith("-0b"): # Binary numbers
             binarian_assert(any(i not in "01" for i in var[2:].lower()),
              f"Invalid binary litteral: {var}", state)
             ret.append(Oper(OpIds.value, state.current_line, [int(var, 2)]))
-        elif var.lower().startswith("0o") or var.lower().startswith("-0b"): # Octal numbers
+
+        elif var.lower().startswith("0o") or\
+         var.lower().startswith("-0b"): # Octal numbers
             binarian_assert(any(i not in "01234567" for i in var[2:].lower()),
              f"Invalid octal litteral: {var}", state)
             ret.append(Oper(OpIds.value, state.current_line, [int(var, 8)]))
-        elif var.isdigit() or (var[0] == "-" and var[1:].isdigit()): # int parsing
-            ret.append(Oper(OpIds.value, state.current_line, int(var) if var[0] != "-" else -int(var[1:])))
-        elif var.replace(".", "").isdigit() or (var[0] == "-" and var[1:].replace(".", "").isdigit()): # float parsing
-            ret.append(Oper(OpIds.value, state.current_line, float(var) if var[0] != "-" else -float(var[1:])))
+
+        elif var.isdigit() or\
+         (var[0] == "-" and var[1:].isdigit()): # int parsing
+            ret.append(Oper(OpIds.value, state.current_line,
+             int(var) if var[0] != "-" else -int(var[1:])))
+
+        elif var.replace(".", "").isdigit() or (var[0] == "-" and\
+         var[1:].replace(".", "").isdigit()): # float parsing
+            ret.append(Oper(OpIds.value, state.current_line,
+             float(var) if var[0] != "-" else -float(var[1:])))
+
         elif var[0] == "(": # expression parsing
             ret.append(state.GLOBAL_FUNCS["parse_line"](var[1:-1], state))
+
         else: # variable parsing
             ret.append(Oper(OpIds.variable, state.current_line, var))
 
