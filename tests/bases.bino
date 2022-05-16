@@ -7,3 +7,8 @@ print (+ 0x1F 1)
 //Binary
 print 0b1001
 print (+ 0b101 0xA)
+
+// Octal
+print 0o7
+print 0o77
+print (+ 0o7 0b1)
