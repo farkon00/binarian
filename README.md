@@ -439,19 +439,6 @@ There are 6 types in binarian, one of them isnt recomended to use and was added 
   setindex list_ 2 1 // [0 1 1]
   ```
 
-  ### len
-  Synatax : `len list`
-
-  Returns length of list or string.
-
-  If keyword used in expression, expression will replaced by result.
-
-  Example :
-  ```
-  set list [0 1 0]
-  output (len list) len // Prints 3
-  ```
-
   ### append
   Synatax : `append list element`
 

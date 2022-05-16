@@ -314,6 +314,14 @@
   * string : str
 
 # List function
+  ## len
+  Return type : int
+  
+  Returns length of str/list.
+
+  Arguments :
+  * iter : object
+
   ## in
   Return type : int
   
