@@ -35,6 +35,7 @@
   * [join](#join)
   * [is_numeric](#isnumeric)
 * [List functions](#list-function)
+  * [len](#len)
   * [in](#in)
   * [sum](#sum)
 

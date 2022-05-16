@@ -30,7 +30,6 @@
     * [List keywords](#list-keywords)
       * [index](#index)
       * [setindex](#setindex)
-      * [len](#len)
       * [append](#append)
     * [Functions keywords](#functions-keywords)
       * [func](#func)
