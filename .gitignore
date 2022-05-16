@@ -1,6 +1,7 @@
 # My devlopment env files and files for testing
 .vscode
 foo.bino
+tests_results
 
 # Binarian .gitignore
 *.binc

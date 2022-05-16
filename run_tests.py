@@ -1,7 +1,11 @@
 import sys
-from .binarian import main
-from subprocess import run
+import os
+
 import pytest
+
+from subprocess import run
+
+from .binarian import main
 
 tests = [
     ["set_debug", ["-d"]],
@@ -39,6 +43,11 @@ for test in tests:
 
 @pytest.mark.parametrize(["name", "argv"], tests)
 def test_python(name, argv):
+    try:
+        os.mkdir("tests_results")
+    except FileExistsError:
+        pass
+
     sys.stdout = open(f"tests_results/{name}.txt", "w")
 
     try:
