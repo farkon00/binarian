@@ -2,7 +2,7 @@ from .oper import *
 
 from bin_types.list import List
 
-from funcs.exceptions import throw_exception
+from funcs.exceptions import binarian_assert, throw_exception
 from funcs.brackets_parser import parse_lexic
 
 def get_args(lexic, state) -> Oper:
@@ -20,6 +20,7 @@ def get_args(lexic, state) -> Oper:
         elif var[0] == '"': 
             ret.append(Oper(OpIds.value, state.current_line, [parse_string(var, state)]))
         elif var.lower().startswith("0x") or var.lower().startswith("-0x"):
+            binarian_assert(any(i not in "0123456789abcdef" for i in var[2:].lower()), f"Invalid hexadecimal number: {var}", state)
             ret.append(Oper(OpIds.value, state.current_line, [int(var, 16)]))
         elif var.isdigit() or (var[0] == "-" and var[1:].isdigit()): # int parsing
             ret.append(Oper(OpIds.value, state.current_line, int(var) if var[0] != "-" else -int(var[1:])))
