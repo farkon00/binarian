@@ -108,6 +108,10 @@ var None = (index (pyeval ["ret = None"] [] ["ret"]) 0)
 var null = None
 
 // IO
+func int output : text : str {
+    return (write stdout text)
+} 
+
 func int print : value: object {
     output (+ (to_str value) "\n")
 }
@@ -122,6 +126,10 @@ func list try_input_int : tip: str {
         return [0 0]
     }
 }
+
+var sys = (get_module "sys")
+var stdin = (get_attr sys "stdin")
+var stdout = (get_attr sys "stdout")
 
 
 // Math

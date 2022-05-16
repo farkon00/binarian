@@ -35,7 +35,6 @@ class TypeCheckingState:
         self.keywords : dict[str : tuple[type]] = {
             "drop" : (None,),
             "input" : (str,),
-            "output" : (None, str),
             "convert" : (object, object, None),
             "pyeval" : (List, List, List, List),
             "and_" : (int, object, object),

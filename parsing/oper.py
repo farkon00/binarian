@@ -9,7 +9,6 @@ class OpIds(Enum):
     var = auto()
     drop = auto()
     input = auto()
-    output = auto()
     convert = auto()
     pyeval = auto()
     and_ = auto()

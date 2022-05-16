@@ -56,7 +56,7 @@ class ExecutionState:
         )
 
         self.RESTRICTED_NAMES : tuple[str] = (
-            "and", "or", "not", "var", "drop", "input", "output", "func",
+            "and", "or", "not", "var", "drop", "input", "func",
             "return", "index", "append", "zip", "for", "while", "if",
             "elif", "else", "object", "int", "float", "list", "function",
             "break", "continue",
@@ -115,9 +115,6 @@ def execute_line(op : Oper, state : ExecutionState, local : dict[str : object] =
 
         case OpIds.input:
             return input_keyword(op, state)
-
-        case OpIds.output:
-            output_keyword(op, state, local)
 
         case OpIds.convert:
             return convert_keyword(op, state, local)

@@ -101,11 +101,6 @@ def parse_line(line, state):
             binarian_assert(len(lexic) != 1, "Input must have no argument.", state)
             return Oper(OpIds.input, state.current_line)
 
-        case "output":
-            op = Oper(OpIds.output, state.current_line, get_args(lexic[1:], state))
-            binarian_assert(len(op.args) != 1, "Output must have one argument.", state)
-            return op
-
         case "convert":
             op = Oper(OpIds.convert, state.current_line, get_args(lexic[1:-1], state) + [get_type(lexic[-1], state, {}, True)])
             binarian_assert(len(op.args) != 2, "Convert must have two argument.", state)
