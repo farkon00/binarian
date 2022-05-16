@@ -1,9 +1,0 @@
-0
-0
-0
-42
-23
-69
-condition
-
-Finished in 0.02088642120361328 sec

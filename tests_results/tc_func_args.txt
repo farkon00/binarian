@@ -1,8 +1,0 @@
-First stage of type checking completed successfully with 0 warnings
-
-While type checking, exception was thrown :
-
-line 5 :
-  tc 1 0
-
-Unexpected argument type for arg2, list was expected, int found

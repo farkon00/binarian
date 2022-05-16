@@ -1,8 +1,0 @@
-First stage of type checking completed successfully with 0 warnings
-
-While type checking, exception was thrown :
-
-line 5 :
-  + a 1
-
-Cant perform operation with different types : list and int

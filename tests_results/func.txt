@@ -1,8 +1,0 @@
-side
-if_test_func
-0
-side
-else_test_func
-1
-
-Finished in 0.02472996711730957 sec

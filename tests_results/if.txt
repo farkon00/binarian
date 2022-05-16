@@ -1,4 +1,0 @@
-else_test1
-if_test2
-
-Finished in 0.011967658996582031 sec
