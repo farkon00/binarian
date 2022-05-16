@@ -22,6 +22,9 @@ def get_args(lexic, state) -> Oper:
         elif var.lower().startswith("0x") or var.lower().startswith("-0x"):
             binarian_assert(any(i not in "0123456789abcdef" for i in var[2:].lower()), f"Invalid hexadecimal number: {var}", state)
             ret.append(Oper(OpIds.value, state.current_line, [int(var, 16)]))
+        elif var.lower().startswith("0b") or var.lower().startswith("-0b"):
+            binarian_assert(any(i not in "01" for i in var[2:].lower()), f"Invalid binary number: {var}", state)
+            ret.append(Oper(OpIds.value, state.current_line, [int(var, 2)]))
         elif var.isdigit() or (var[0] == "-" and var[1:].isdigit()): # int parsing
             ret.append(Oper(OpIds.value, state.current_line, int(var) if var[0] != "-" else -int(var[1:])))
         elif var.replace(".", "").isdigit() or (var[0] == "-" and var[1:].replace(".", "").isdigit()): # float parsing

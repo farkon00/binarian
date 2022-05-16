@@ -3,4 +3,4 @@ abc	no \n
 str-eq 1
 str-eq 0
 
-Finished in 0.030890941619873047 sec
+Finished in 0.008975028991699219 sec
