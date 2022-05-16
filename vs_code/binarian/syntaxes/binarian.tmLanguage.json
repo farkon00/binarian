@@ -6,6 +6,9 @@
 		{"include": "#types"},
 		{"include": "#strings"},
 		{"include": "#numbers"},
+		{"include": "#hex-numbers"},
+		{"include": "#oct-numbers"},
+		{"include": "#bin-numbers"},
 		{"include": "#comments"}
 	],
 	"repository": {
@@ -25,6 +28,24 @@
 			"patterns": [{
 				"name": "constant.numeric",
 				"match": "\\b([0-9]([.]([0-9])*)?)\\b"
+			}]
+		},
+		"hex-numbers" : {
+			"patterns": [{
+				"name": "constant.numeric",
+				"match": "\\b(0x[0-9a-fA-F]+)\\b"
+			}]
+		},
+		"oct-numbers" : {
+			"patterns": [{
+				"name": "constant.numeric",
+				"match": "\\b(0o[0-7]+)\\b"
+			}]
+		},
+		"bin-numbers" : {
+			"patterns": [{
+				"name": "constant.numeric",
+				"match": "\\b(0b[0-1]+)\\b"
 			}]
 		},
 		"strings": {
