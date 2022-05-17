@@ -6,8 +6,8 @@ tests_results
 # Binarian .gitignore
 *.binc
 # Files for -opers
-.dot
-.svg
+*.dot
+*.svg
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

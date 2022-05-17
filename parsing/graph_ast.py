@@ -26,9 +26,14 @@ def render_node(state : AstRenderingState, op : Oper) -> int:
     skip_args = 0
     match op.id:
         case OpIds.value | OpIds.variable:
-            state.out.write(
-                f"Node{my_node} [label=\"{op.values[0] if not isinstance(op.values[0], list) else 'listy'}\" shape=none];\n"
-            )
+            if isinstance(op.values[0], list):
+                state.out.write(f"Node{my_node} [label=\"List\"]\n")
+                for i in op.values[0]:
+                    state.out.write(f"Node{my_node} -> Node{render_node(state, i)}\n")
+            else:
+                state.out.write(
+                    f"Node{my_node} [label=\"{op.values[0] if not isinstance(op.values[0], list) else 'listy'}\" shape=none];\n"
+                )
 
         case OpIds.operation:
             state.out.write(
