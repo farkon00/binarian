@@ -1,6 +1,6 @@
 from funcs.exceptions import binarian_assert
 
-def type_to_str(_type : type, sep : str =" or "):
+def type_to_str(_type : type | tuple, sep : str =" or "):
     """
     Converts type or tuple of types to string
     e. g. <class 'bin_types.functions.Function'> -> function

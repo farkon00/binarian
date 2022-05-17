@@ -1,9 +1,9 @@
 from bin_types.function import Function
 from bin_types.list import List
-from parsing.oper import OpIds
+from parsing.oper import OpIds, Oper
 from .tc_types import TypeCheckedFunction
 
-def tc_line1(op : list[str], state):
+def tc_line1(op : Oper, state):
     """Executes 1 stage of type checking for 1 keyword"""
     is_func = bool(state.opened_function)
     local = state.opened_function.locals if is_func else {}

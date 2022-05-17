@@ -29,7 +29,7 @@ class OpIds(Enum):
     call = auto()
 
 class Oper:
-    def __init__(self, id: OpIds, line: int, args: list[Oper | object] = None,
+    def __init__(self, id: OpIds, line: int, args: list[Oper] | Oper = None,
      oper: list[Oper] = None, types : list[type] = None):
         if args is None:
             args = []

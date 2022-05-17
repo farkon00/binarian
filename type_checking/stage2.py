@@ -3,7 +3,7 @@ from funcs.exceptions import binarian_assert
 from funcs.utils import type_to_str
 from parsing.oper import *
 
-def tc_line2(op : str, state):
+def tc_line2(op : Oper, state):
     """Executes 2 stage of type checking for 1 keyword"""
     is_func = bool(state.opened_function)
     local = state.opened_function.locals if is_func else {}
