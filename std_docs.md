@@ -1,4 +1,4 @@
-# Standart library
+# Standard library
 # Table of contents
 * [Operators](#operators)
   * [xor](#xor)
@@ -85,7 +85,7 @@
 
   stdout
   ---
-  Standart output, can be changed to any writable object(mostly file), so [output](#output) will write to this stdout.
+  Standard output, can be changed to any writable object(mostly file), so [output](#output) will write to this stdout.
 
 # Math
   ## ceil
@@ -99,7 +99,7 @@
   ## math_to_int
   Return type : int
   
-  Regular to_int works like floor, this funtion uses standart mathematical way to round number with decimal point to integer.
+  Regular to_int works like floor, this funtion uses standard mathematical way to round number with decimal point to integer.
 
   Arguments :
   * val : object
