@@ -1,5 +1,5 @@
 # .github/workflows/app.yaml
-name: Test
+name: Test and type check
 on: push
 
 jobs:
@@ -20,7 +20,7 @@ jobs:
       - name: Install pipenv and pytest
         run: |
           python -m pip install --upgrade pipenv wheel
-          python -m pip install pytest
+          python -m pip install pytest mypy
       - id: cache-pipenv
         uses: actions/cache@v1
         with:
@@ -31,3 +31,9 @@ jobs:
         shell: bash
         run: |
           PYTHONPATH="$(pwd)" pytest run_tests.py -k test_python
+
+      - name: Run type checking(mypy)
+        shell: bash
+        run: |
+          mypy binarian.py --explicit-package-bases --namespace-packages
+
