@@ -346,6 +346,24 @@
   Arguments :
   * iter : object
 
+  ## map
+  Return type : list
+  
+  Returns new list, where all elements are return values of function `callback` with 1st argument as element of list.
+
+  Arguments :
+  * list_ : list
+  * callback : function
+
+  ## filter
+  Return type : list
+  
+  Returns new list, where all elements, will return true if you call `callback` with 1st argument as element of list. Other elements are elemenated from new list.
+
+  Arguments :
+  * list_ : list
+  * callback : function
+
   ## in
   Return type : int
   

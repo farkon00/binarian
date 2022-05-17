@@ -246,6 +246,16 @@ func list map : list_: list, callback: function {
     return res
 }
 
+func list filter : list_: list, callback: function {
+    var res = []
+    for i list_ {
+        if (callback i) {
+            append res i
+        }
+    }
+    return res
+}
+
 func int in : val: object, _list: list {
     for i _list {
         if (== val i) {
