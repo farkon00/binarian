@@ -5,6 +5,7 @@ from subprocess import run
 class AstRenderingState:
     def __init__(self, out : TextIOWrapper):
         self.last_node = 0
+        self.last_block = 0
 
         self.out = out
 
@@ -51,15 +52,22 @@ def render_node(state : AstRenderingState, op : Oper) -> int:
             label += '\\n'.join([str(i) for i in op.values])
 
             state.out.write(
-                f"Node{my_node} [label=\"{label}\"];\n"
+                f"Node{my_node} [label=\"{label}\" shape=box];\n"
             )
 
     for i in op.args[skip_args:]:
         new_node = render_node(state, i)
         state.out.write(f"Node{my_node} -> Node{new_node} [arrowhead=box];\n")
 
-    for i in op.oper:
-        new_node = render_node(state, i)
-        state.out.write(f"Node{my_node} -> Node{new_node};\n")
+    if op.oper:
+        state.last_block += 1
+        state.out.write("subgraph cluster_%i {\n" % state.last_block)
+
+        for i in op.oper:
+            new_node = render_node(state, i)
+            state.out.write(f"Node{my_node} -> Node{new_node};\n")
+
+        state.out.write("style=dotted;\n")
+        state.out.write("}\n")
         
     return my_node 
