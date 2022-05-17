@@ -82,7 +82,7 @@ def execute_line(op : Oper, state : ExecutionState, local : dict[str, object] | 
         throw_exception("Continue is restricted out of loops", state)
 
     is_func = local != None
-    full_vars = {**state.vars, **(local if is_func else {})}
+    full_vars = state.vars | (local if local else {})
     state.is_expr = is_expr 
 
     if op.id not in (OpIds.else_, OpIds.elif_) and not state.is_expr and state.opened_ifs:

@@ -112,13 +112,13 @@ def tc_line2(op : Oper, state):
                 return object
             binarian_assert(len(state.functions[func].args) != len(op.args) - 1,
                 f"{func} takes {len(state.functions[func].args)} arguments", state)
-            for j, i in enumerate(state.functions[func].args):
-                exp = i[1]
+            for j, i_ in enumerate(state.functions[func].args): # i_ for avoiding same name as other loops, so mypy will not complain
+                exp = i_[1]
                 got = tc_line2(op.args[j+1], state)
                 if exp not in (object, None) and got not in (object, None):
                     binarian_assert(
                         not issubclass(got, exp),
-                        f"Unexpected argument type for {i[0]}, {type_to_str(exp)} was expected, {type_to_str(got)} found", state
+                        f"Unexpected argument type for {i_[0]}, {type_to_str(exp)} was expected, {type_to_str(got)} found", state
                     )
             return state.functions[func].ret
 
