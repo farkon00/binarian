@@ -6,7 +6,7 @@ from parsing.oper import Oper
 
 def convert_keyword(op : Oper, state, local : dict[str, object] | None):
     original = state.GLOBAL_FUNCS['execute_line'](op.args[0], state, local)
-    end_type = op.args[1]
+    end_type = op.values[0]
     try:
         final = end_type(original)
     except Exception:

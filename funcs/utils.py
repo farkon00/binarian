@@ -25,7 +25,7 @@ def type_to_str(_type : type | tuple, sep : str =" or "):
 
     return res.lower()
 
-def check_args(op, types : list[type], state, local) -> list:
+def check_args(op, types : list[type | tuple], state, local) -> list:
     ret = []
     for i, type_ in zip(op.args, types + [object] * (len(op.args) - len(types))):
         res = state.GLOBAL_FUNCS['execute_line'](i, state, local)

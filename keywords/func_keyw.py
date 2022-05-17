@@ -4,11 +4,11 @@ from funcs.exceptions import binarian_assert
 from funcs.utils import check_args
 from parsing.oper import Oper
 
-def func_keyword(op : Oper, state, in_vars : dict[str, object] | None, is_func : bool):
+def func_keyword(op : Oper, state, in_vars : dict[str, object], is_func : bool):
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
     binarian_assert(is_func, "Cant define function inside other function.", state)
 
-    in_vars[op.args[0]] = Function(op)
+    in_vars[op.values[0]] = Function(op)
 
 def call_keyword(op : Oper, state, local : dict[str, object] | None):
     func_args : list = check_args(op, [Function], state, local)

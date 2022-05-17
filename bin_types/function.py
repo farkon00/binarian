@@ -1,13 +1,14 @@
 from funcs.brackets_parser import *
 from funcs.exceptions import *
+from parsing.oper import Oper
 
 class Function:
     """Class that represents function in binarian"""
 
-    def __init__(self, oper):
+    def __init__(self, oper : Oper):
         self.body = oper.oper
-        self.args = oper.args[1:]
-        self.name = oper.args[0]
+        self.args = oper.values[1:]
+        self.name = oper.values[0]
 
     def execute(self, args : list[str], state) -> object:
         """Executes function"""

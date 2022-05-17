@@ -91,11 +91,11 @@ def execute_line(op : Oper, state : ExecutionState, local : dict[str, object] | 
 
     match op.id:
         case OpIds.variable:
-            binarian_assert(op.args[0] not in full_vars, f"Variable {op.args[0]} is not defined", state)
-            return full_vars[op.args[0]]
+            binarian_assert(op.values[0] not in full_vars, f"Variable {op.values[0]} is not defined", state)
+            return full_vars[op.values[0]]
 
         case OpIds.value:
-            ret = op.args[0]
+            ret = op.values[0]
             if isinstance(ret, list):
                 res = List()
                 for i in ret:
@@ -108,10 +108,10 @@ def execute_line(op : Oper, state : ExecutionState, local : dict[str, object] | 
             return execute_oper(op, state, local)
 
         case OpIds.var:
-            var_keyword(op, state, local if is_func else state.vars, local)
+            var_keyword(op, state, local if local is not None else state.vars, local)
 
         case OpIds.drop:
-            drop_keyword(op, state, local if is_func else state.vars)
+            drop_keyword(op, state, local if local is not None else state.vars)
 
         case OpIds.input:
             return input_keyword(op, state)
@@ -162,7 +162,7 @@ def execute_line(op : Oper, state : ExecutionState, local : dict[str, object] | 
             continue_keyword(op, state)
 
         case OpIds.func:
-            func_keyword(op, state, local if is_func else state.vars, is_func)
+            func_keyword(op, state, local if local is not None else state.vars, is_func)
 
         case OpIds.return_:
             return return_keyword(op, state, is_func, local)

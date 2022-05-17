@@ -13,30 +13,30 @@ def tc_line1(op : Oper, state):
 
     match op.id:
         case OpIds.value:
-            return type(op.args[0])
+            return type(op.values[0])
 
         case OpIds.variable:
-            if op.args[0] not in full_vars:
+            if op.values[0] not in full_vars:
                 state.warnings += 1
                 return object
 
-            return full_vars[op.args[0]]
+            return full_vars[op.values[0]]
 
         case OpIds.operation:
-            if op.args[0] in state.int_operations:
+            if op.values[0] in state.int_operations:
                 return int
-            elif op.args[0] in state.float_operations:
+            elif op.values[0] in state.float_operations:
                 return float
-            elif issubclass(tc_line1(op.args[1], state), float) or\
-            issubclass(tc_line1(op.args[2], state), float):
+            elif issubclass(tc_line1(op.args[0], state), float) or\
+            issubclass(tc_line1(op.args[1], state), float):
                 return float
-            elif issubclass(tc_line1(op.args[1], state), str) or\
-            issubclass(tc_line1(op.args[2], state), str) and\
-            op.args[0] in state.iter_operations:
+            elif issubclass(tc_line1(op.args[0], state), str) or\
+            issubclass(tc_line1(op.args[1], state), str) and\
+            op.values[0] in state.iter_operations:
                 return str
-            elif issubclass(tc_line1(op.args[1], state), List) or\
-            issubclass(tc_line1(op.args[2], state), List) and\
-            op.args[0] in state.iter_operations:
+            elif issubclass(tc_line1(op.args[0], state), List) or\
+            issubclass(tc_line1(op.args[1], state), List) and\
+            op.values[0] in state.iter_operations:
                 return List
             else:
                 return int
@@ -44,17 +44,17 @@ def tc_line1(op : Oper, state):
         case OpIds.var:
             if is_func:
                 if op.types:
-                    local[op.args[0]] = op.types[0]
-                elif local.get(op.args[0], None) in (None, object):
-                    local[op.args[0]] = tc_line1(op.args[1], state)
+                    local[op.values[0]] = op.types[0]
+                elif local.get(op.values[0], None) in (None, object):
+                    local[op.values[0]] = tc_line1(op.args[0], state)
             else:
                 if op.types:
-                    state.vars[op.args[0]] = op.types[0]
-                elif state.vars.get(op.args[0], None) in (None, object):
-                    state.vars[op.args[0]] = tc_line1(op.args[1], state)
+                    state.vars[op.values[0]] = op.types[0]
+                elif state.vars.get(op.values[0], None) in (None, object):
+                    state.vars[op.values[0]] = tc_line1(op.args[0], state)
 
         case OpIds.convert:
-            return op.args[1]
+            return op.values[0]
 
         case OpIds.if_ | OpIds.else_ | OpIds.elif_ | OpIds.while_:
             for i in op.oper:
@@ -70,16 +70,16 @@ def tc_line1(op : Oper, state):
                 tc_line1(i, state)
 
         case OpIds.func:
-            func = TypeCheckedFunction(op.oper, list(zip(op.args[1:], op.types[1:])), op.types[0])
-            state.functions[op.args[0]] = func
-            full_vars[op.args[0]] = Function
+            func = TypeCheckedFunction(op.oper, list(zip(op.values[1:], op.types[1:])), op.types[0])
+            state.functions[op.values[0]] = func
+            full_vars[op.values[0]] = Function
             state.opened_function = func
             for i in op.oper:
                 tc_line1(i, state)
             state.opened_function = None
 
         case OpIds.call:
-            called = op.args[0].args[0]
+            called = op.args[0].values[0]
             if called not in state.functions:
                 state.warnings += 1
                 return object

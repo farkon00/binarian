@@ -13,68 +13,68 @@ def tc_line2(op : Oper, state):
 
     match op.id:
         case OpIds.value:
-            return type(op.args[0])
+            return type(op.values[0])
         
         case OpIds.variable:
-            if op.args[0] not in full_vars: 
+            if op.values[0] not in full_vars: 
                 state.warnings += 1
                 return object
 
-            return full_vars[op.args[0]]
+            return full_vars[op.values[0]]
 
         case OpIds.operation:
             exp_type = type_to_str((float, int))
-            arg1 = tc_line2(op.args[1], state)
-            arg2 = tc_line2(op.args[2], state)
+            arg1 = tc_line2(op.args[0], state)
+            arg2 = tc_line2(op.args[1], state)
 
-            if arg1 not in (object, None) and op.args[0] not in state.iter_operations:
+            if arg1 not in (object, None) and op.values[0] not in state.iter_operations:
                 binarian_assert(not issubclass(arg1, float | int),
                 f"Unexpected operation argument type, {exp_type} was expected, {type_to_str(arg1)} found.", state
                 )
-            if arg2 not in (object, None) and op.args[0] not in state.iter_operations:
+            if arg2 not in (object, None) and op.values[0] not in state.iter_operations:
                 binarian_assert(not issubclass(arg2, float | int),
                 f"Unexpected operation argument type, {exp_type} was expected, {type_to_str(arg2)} found.", state
                 )
 
             if issubclass(arg1, str | List) or issubclass(arg2, str | List):
-                binarian_assert(arg1 != arg2 and op.args[0] not in state.diff_types_operations and\
+                binarian_assert(arg1 != arg2 and op.values[0] not in state.diff_types_operations and\
                     arg1 not in (object, None) and arg2 not in (object, None),
                     f"Cant perform operation with different types : {type_to_str(arg1)} and {type_to_str(arg2)}", state
                 )
-                binarian_assert(op.args[0] not in state.iter_operations, 
-                    f"Cant perform \"{op.args[0]}\" on {type_to_str(arg1)} and {type_to_str(arg2)}", state
+                binarian_assert(op.values[0] not in state.iter_operations, 
+                    f"Cant perform \"{op.values[0]}\" on {type_to_str(arg1)} and {type_to_str(arg2)}", state
                 )
 
             # Returns type
-            if op.args[0] in state.int_operations:
+            if op.values[0] in state.int_operations:
                 return int
-            elif op.args[0] in state.float_operations:
+            elif op.values[0] in state.float_operations:
                 return float
             elif arg1 not in (object, None) and issubclass(arg1 if arg1 else object, float):
                 return float
             elif arg2 not in (object, None) and issubclass(arg2 if arg2 else object, float):
                 return float
-            elif issubclass(tc_line2(op.args[1], state), str) or\
-            issubclass(tc_line2(op.args[2], state), str) and\
-            op.args[0] in state.iter_operations:
+            elif issubclass(tc_line2(op.args[0], state), str) or\
+            issubclass(tc_line2(op.args[1], state), str) and\
+            op.values[0] in state.iter_operations:
                 return str
-            elif issubclass(tc_line2(op.args[1], state), List) or\
-            issubclass(tc_line2(op.args[2], state), List) and\
-            op.args[0] in state.iter_operations:
+            elif issubclass(tc_line2(op.args[0], state), List) or\
+            issubclass(tc_line2(op.args[1], state), List) and\
+            op.values[0] in state.iter_operations:
                 return List
             else:
                 return int
 
         case OpIds.var:
-            exp = tc_line2(Oper(OpIds.variable, state, op.args[0]), state)
-            got = tc_line2(op.args[1], state)
+            exp = tc_line2(Oper(OpIds.variable, state, values=[op.values[0]]), state)
+            got = tc_line2(op.args[0], state)
             if exp not in (object, None) and got not in (object, None):
                 binarian_assert(not issubclass(got, exp),
                  f"Unmatching types, {type_to_str(exp)} was expected, {type_to_str(got)} found.", state
                 )
 
         case OpIds.convert:
-            return op.args[1]
+            return op.values[0]
 
         case OpIds.if_ | OpIds.else_ | OpIds.elif_ | OpIds.while_:
             for i in op.oper:
@@ -90,7 +90,7 @@ def tc_line2(op : Oper, state):
                 tc_line2(i, state)
 
         case OpIds.func:
-            state.opened_function = state.functions[op.args[0]]
+            state.opened_function = state.functions[op.values[0]]
             for i in state.opened_function.oper:
                 tc_line2(i, state)
             state.opened_function = None
@@ -106,7 +106,7 @@ def tc_line2(op : Oper, state):
                 )
 
         case OpIds.call:
-            func = op.args[0].args[0]
+            func = op.args[0].values[0]
             if func not in state.functions:
                 state.warnings += 1
                 return object

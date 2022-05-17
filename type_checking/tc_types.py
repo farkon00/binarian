@@ -6,9 +6,9 @@ class TypeCheckedFunction:
     Contains types for all arguments, local variables and return type
     """
     def __init__(self, oper, args, ret=object):
-        self.args : list[tuple[str:type]] = args
+        self.args : list[tuple[str, type]] = args
         self.ret : type = ret
-        self.oper = oper
+        self.oper : list = oper
 
         self.locals : dict[str : type] = {i : j for i, j in args}
 

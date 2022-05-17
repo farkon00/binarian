@@ -12,8 +12,8 @@ def continue_keyword(op : Oper, state):
 def for_keyword(op : Oper, state, local : dict[str, object] | None):
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
 
-    var_name = op.args[0]
-    list_ = state.GLOBAL_FUNCS["execute_line"](op.args[1], state, local)
+    var_name = op.values[0]
+    list_ = state.GLOBAL_FUNCS["execute_line"](op.args[0], state, local)
     binarian_assert(not isinstance(list_, List | str), f"Cant iterate throw {type_to_str(type(list_))}.", state)
     for loop_iter in list_:
         if local is not None:

@@ -4,15 +4,15 @@ from funcs.utils import type_to_str
 from parsing.oper import Oper
 
 def execute_oper(op : Oper, state, local : dict[str, object] | None):
-    operation = op.args[0]
+    operation = op.values[0]
     types = (int, float, str, List)
-    arg1 = state.GLOBAL_FUNCS["execute_line"](op.args[1], state, local)
-    arg2 = state.GLOBAL_FUNCS["execute_line"](op.args[2], state, local)
+    arg1 = state.GLOBAL_FUNCS["execute_line"](op.args[0], state, local)
+    arg2 = state.GLOBAL_FUNCS["execute_line"](op.args[1], state, local)
     binarian_assert(not isinstance(arg1, types) and not isinstance(arg2, types) and (operation not in state.diff_types_operations),
         f"Invalid types for operation {operation}", state)
 
     if isinstance(arg1, str | List) or isinstance(arg2, str | List):
-        binarian_assert(type(arg1) != type(arg2) and op.args[0] not in state.diff_types_operations, 
+        binarian_assert(type(arg1) != type(arg2) and op.values[0] not in state.diff_types_operations, 
             f"Cant perform operation with different types : {type_to_str(type(arg1))} and {type_to_str(type(arg2))}", state
         )
         binarian_assert(operation not in state.iter_operations, 
