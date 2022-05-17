@@ -29,7 +29,7 @@ def render_node(state : AstRenderingState, op : Oper) -> int:
             if isinstance(op.values[0], list):
                 state.out.write(f"Node{my_node} [label=\"List\"]\n")
                 for i in op.values[0]:
-                    state.out.write(f"Node{my_node} -> Node{render_node(state, i)}\n")
+                    state.out.write(f"Node{my_node} -> Node{render_node(state, i)} [arrowhead=dot];\n")
             else:
                 state.out.write(
                     f"Node{my_node} [label=\"{op.values[0] if not isinstance(op.values[0], list) else 'listy'}\" shape=none];\n"
