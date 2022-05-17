@@ -238,6 +238,14 @@ func int len : iter {
     return (execute_function "len" [iter])
 }
 
+func list map : list_: list, callback: function {
+    var res = []
+    for i list_ {
+        append res (callback i)
+    }
+    return res
+}
+
 func int in : val: object, _list: list {
     for i _list {
         if (== val i) {
