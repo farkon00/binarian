@@ -1,7 +1,7 @@
 from bin_types.list import List
 from funcs.exceptions import binarian_assert
 
-def get_type(var : str, state, full_vars : dict[str : object], only_name : bool = False):
+def get_type(var : str, state, full_vars : dict[str, object], only_name : bool = False):
     """Returns type of variable or type of literal e. g. int, float, list etc."""
     if var[0] == "[" and not only_name:
         return List

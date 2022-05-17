@@ -9,6 +9,6 @@ def var_keyword(op : Oper, state, in_vars : dict[str, object] | None, local : di
 
 def drop_keyword(op : Oper, state, in_vars : dict[str, object] | None):
     binarian_assert(state.is_expr, "This operation is unavailable in expressions.", state)
+    binarian_assert(op.args[0] not in in_vars, f"Variable to drop was not found : {op.args[0]}", state)
 
-    if op.args[0] in in_vars:
-        del in_vars[op.args[0]]
+    del in_vars[op.args[0]]

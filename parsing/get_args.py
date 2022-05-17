@@ -5,7 +5,7 @@ from bin_types.list import List
 from funcs.exceptions import binarian_assert, throw_exception
 from funcs.brackets_parser import parse_lexic
 
-def get_args(lexic, state) -> Oper:
+def get_args(lexic, state) -> list[Oper]:
     """
     Parses literal, variable or expression and returns list of Oper object 
     """

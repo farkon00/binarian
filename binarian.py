@@ -3,7 +3,7 @@ import pickle
 
 from time import time
 from posixpath import abspath
-from types import FunctionType
+from typing import Callable
 
 from parsing.parsing import *
 
@@ -32,11 +32,11 @@ class ExecutionState:
         self.code : str = code
         self.lines : list[str] = code.split("\n")
         self.std_lines : int = 0 # Shold be setted to right value in main 
-        self.std_lib_vars : dict[str : object] = {} 
+        self.std_lib_vars : dict[str, object] = {} 
 
         self.input_time : int = 0
 
-        self.types : dict[str : type] = {
+        self.types : dict[str, type] = {
             "object" : object,
             "int" : int,
             "float" : float,
@@ -45,25 +45,25 @@ class ExecutionState:
             "list" : List,
         }
 
-        self.operations : tuple[str] = (
+        self.operations : list[str] = [
             "+", "-", "*", "/", "**", "%", ">", "<", ">=", "<=", "==", "!="
-        )
-        self.iter_operations : tuple[str] = (
+        ]
+        self.iter_operations : tuple[str, str, str] = (
             "+", "==", "!="
         ) 
-        self.diff_types_operations : tuple[str] = (
+        self.diff_types_operations : tuple[str, str] = (
             "==", "!="
         )
 
-        self.RESTRICTED_NAMES : tuple[str] = (
+        self.RESTRICTED_NAMES : list[str] = [
             "and", "or", "not", "var", "drop", "input", "func",
             "return", "index", "append", "zip", "for", "while", "if",
             "elif", "else", "object", "int", "float", "list", "function",
             "break", "continue",
             *self.operations
-        )
-        self.BRACKETS : tuple[str] = ("(", ")", "[", "]", "{", "}")
-        self.GLOBAL_FUNCS : dict[str, FunctionType] = {
+        ]
+        self.BRACKETS : list[str] = ["(", ")", "[", "]", "{", "}"]
+        self.GLOBAL_FUNCS : dict[str, Callable] = {
             "execute_line" : execute_line,
             "execute_opers" : execute_opers,
             "parse_line" : parse_line
@@ -105,7 +105,7 @@ def execute_line(op : Oper, state : ExecutionState, local : dict[str, object] | 
                 return ret
 
         case OpIds.operation:
-            return execute_oper(op, state, full_vars)
+            return execute_oper(op, state, local)
 
         case OpIds.var:
             var_keyword(op, state, local if is_func else state.vars, local)
@@ -172,6 +172,8 @@ def execute_line(op : Oper, state : ExecutionState, local : dict[str, object] | 
 
         case _:
             assert False, "Unreachable" 
+    
+    return None
 
 def execute_opers(opers : list[Oper], state : ExecutionState, local : dict[str, object] | None,
  main : bool = False, is_loop : bool = False) -> None:

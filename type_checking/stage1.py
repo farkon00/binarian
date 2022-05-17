@@ -79,11 +79,11 @@ def tc_line1(op : Oper, state):
             state.opened_function = None
 
         case OpIds.call:
-            func = op.args[0].args[0]
-            if func not in state.functions:
+            called = op.args[0].args[0]
+            if called not in state.functions:
                 state.warnings += 1
                 return object
-            return state.functions[func].ret
+            return state.functions[called].ret
 
         case _:
             if op.id.name in state.keywords:
