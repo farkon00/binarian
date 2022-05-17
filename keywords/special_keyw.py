@@ -4,7 +4,7 @@ from funcs.utils import check_args, type_to_str
 from bin_types.list import List
 from parsing.oper import Oper
 
-def convert_keyword(op : Oper, state, local : dict[str : object]):
+def convert_keyword(op : Oper, state, local : dict[str, object] | None):
     original = state.GLOBAL_FUNCS['execute_line'](op.args[0], state, local)
     end_type = op.args[1]
     try:
@@ -15,7 +15,7 @@ def convert_keyword(op : Oper, state, local : dict[str : object]):
     if state.is_expr:
         return final
 
-def pyeval_keyword(op : Oper, state, local : dict[str : object]):
+def pyeval_keyword(op : Oper, state, local : dict[str, object] | None):
     code, imports, exports = check_args(op, [List, List, List], state, local)
 
     glob = {i : (list(j) if isinstance(j, List) else j) for i, j in imports}
