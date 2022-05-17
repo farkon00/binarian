@@ -4,7 +4,7 @@
 # Content
   * [Global info](#global-info)
   * [How to compile](#how-to-compile)
-  * [Standart library](#standart-library)
+  * [Standard library](#standard-library)
   * [Types](#types)
   * [Basic syntax](#basic-syntax)
     * [Expressions](#expression)
@@ -64,12 +64,12 @@
 
  Command for creating executable in current version is `pyinstaller binarian.py --paths "<path to source code directory>" --onefile --add-data "std.bino;."`
 
-# Standart library
-  Latest version of standart library is stored in github repo in std.bino file, if you want new features from standart library and stay with old version, use old source code of intepreter and new std.bino in directory with source code. New versions of standart library can work incorrectly on older versions. Look to [How to compile](#how-to-compile) for more information about creating executable.  
+# Standard library
+  Latest version of standard library is stored in github repo in std.bino file, if you want new features from standard library and stay with old version, use old source code of intepreter and new std.bino in directory with source code. New versions of standard library can work incorrectly on older versions. Look to [How to compile](#how-to-compile) for more information about creating executable.  
 
-  Standart library includes useful functions like sum, list-eq, xor. Documentation for standart library is available in github repo in std_docs.md file.
+  Standard library includes useful functions like sum, list-eq, xor. Documentation for standard library is available in github repo in std_docs.md file.
 
-  Use -no-std flag in command to not include it while execution. If std.bino is not found warning will be displayed and execution will continue without including standart library.
+  Use -no-std flag in command to not include it while execution. If std.bino is not found warning will be displayed and execution will continue without including standard library.
 
 # Basic syntax  
   To write comments use '//'. All symbols in line after '//' will be marked as comments.
