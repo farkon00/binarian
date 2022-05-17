@@ -29,8 +29,8 @@ class OpIds(Enum):
     call = auto()
 
 class Oper:
-    def __init__(self, id: OpIds, line: int, args: list[Oper | object] = None,
-     oper: list[Oper] = None, types : list[type] = None):
+    def __init__(self, id: OpIds, line: int, args: list[Oper] | Oper | None = None,
+     values : list = None, oper: list[Oper] = None, types : list[type] = None):
         if args is None:
             args = []
         elif not isinstance(args, list | tuple):
@@ -39,11 +39,14 @@ class Oper:
             oper = []
         if types is None:
             types = []
+        if values is None:
+            values = []
         elif not isinstance(types, list | tuple):
             types = [types]
 
         self.id = id
         self.args = args
+        self.values = values
         self.oper = oper
         self.types = types
         self.line = line

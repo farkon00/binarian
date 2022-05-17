@@ -61,8 +61,8 @@ def parse_line(line, state):
         return
 
     if lexic[0] in state.operations:
-        op = Oper(OpIds.operation, state.current_line, lexic[0:1] + get_args(lexic[1:], state)) 
-        binarian_assert(len(op.args) != 3, "Operation must have two argument.", state)
+        op = Oper(OpIds.operation, state.current_line, get_args(lexic[1:], state), values=[lexic[0]]) 
+        binarian_assert(len(op.args) != 2, "Operation must have two argument.", state)
         return op
 
     match lexic[0]:
@@ -77,7 +77,7 @@ def parse_line(line, state):
 
             if not parts[0][-1]: parts[0] = parts[0][:-1]
             if not parts[1][0]: parts[1] = parts[1][1:]
-            binarian_assert(len(parts[0]) < 2 and parts[1], "Variable must have name and value.", state)
+            binarian_assert(len(parts[0]) < 2, "Variable must have name and value.", state)
             
             if len(parts[0]) == 3:
                 type_ = get_type(parts[0][1], state, {}, True)
@@ -88,22 +88,23 @@ def parse_line(line, state):
 
             binarian_assert(is_name_unavailable(name, state), f"Variable name is unavailiable : {name}", state)
 
-            op = Oper(OpIds.var, state.current_line, [name, *get_args(parts[1], state)], types=type_)
-            binarian_assert(len(op.args) != 2, "Variable must have only one value.", state)
+            op = Oper(OpIds.var, state.current_line, get_args(parts[1], state), values=[name], types=type_)
+            binarian_assert(len(op.args) != 1, "Variable must have only one value.", state)
             return op
 
         case "drop":
             binarian_assert(len(lexic) != 2, "Drop must have one argument.", state)
             binarian_assert(is_name_unavailable(lexic[1], state), f"Variable name is unavailiable : {lexic[0]}", state)
-            return Oper(OpIds.drop, state.current_line, lexic[1])
+            return Oper(OpIds.drop, state.current_line, values=[lexic[1]])
 
         case "input":
             binarian_assert(len(lexic) != 1, "Input must have no argument.", state)
             return Oper(OpIds.input, state.current_line)
 
         case "convert":
-            op = Oper(OpIds.convert, state.current_line, get_args(lexic[1:-1], state) + [get_type(lexic[-1], state, {}, True)])
-            binarian_assert(len(op.args) != 2, "Convert must have two argument.", state)
+            binarian_assert(lexic[-1] not in state.types, f"Type was not found : {lexic[-1]}", state)
+            op = Oper(OpIds.convert, state.current_line, get_args(lexic[1:-1], state), values=[get_type(lexic[-1], state, {}, True)])
+            binarian_assert(len(op.args) != 1, "Convert must have two argument.", state)
             return op
 
         case "and" | "or":
@@ -139,9 +140,9 @@ def parse_line(line, state):
             return op
 
         case "for":
-            op = Oper(OpIds.for_, state.current_line, [lexic[1]] + get_args(lexic[2:], state))
-            binarian_assert(len(op.args) != 2, "For must have two argument.", state)
-            binarian_assert(is_name_unavailable(op.args[0], state), f"For variable name is unavailable : {op.args[0]}", state)
+            op = Oper(OpIds.for_, state.current_line, get_args(lexic[2:], state), values=[lexic[1]])
+            binarian_assert(len(op.args) != 1, "For must have two argument.", state)
+            binarian_assert(is_name_unavailable(op.values[0], state), f"For variable name is unavailable : {op.args[0]}", state)
             op.oper = parse_block(state, state.current_line)
             return op
 
@@ -180,7 +181,7 @@ def parse_line(line, state):
                         throw_exception('Argument must have only one or fewer ":" and must have a name.', state)
                     binarian_assert(is_name_unavailable(args[-1], state), f"Argument name is unavailiable : {args[-1]}.", state)
 
-            op = Oper(OpIds.func, state.current_line, [name, *args], types=[ret_type, *args_types])
+            op = Oper(OpIds.func, state.current_line, values=[name, *args], types=[ret_type, *args_types])
             op.oper = parse_block(state, state.current_line)
             return op
 
@@ -190,4 +191,4 @@ def parse_line(line, state):
             return op
 
         case _:
-            return Oper(OpIds.call, state.current_line, [Oper(OpIds.variable, state.current_line, lexic[0])] + get_args(lexic[1:], state))
+            return Oper(OpIds.call, state.current_line, [Oper(OpIds.variable, state.current_line, values=[lexic[0]])] + get_args(lexic[1:], state))

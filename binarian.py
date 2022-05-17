@@ -3,7 +3,7 @@ import pickle
 
 from time import time
 from posixpath import abspath
-from types import FunctionType
+from typing import Callable
 
 from parsing.parsing import *
 
@@ -17,7 +17,7 @@ from keywords import *
 class ExecutionState:
     """Class that contains all data about execution state and constants for execution"""
     def __init__(self, code : str) -> None:
-        self.vars : dict[str : object] = {}
+        self.vars : dict[str, object] = {}
         self.is_expr : bool = False
 
         self.current_line : int = -1
@@ -32,11 +32,11 @@ class ExecutionState:
         self.code : str = code
         self.lines : list[str] = code.split("\n")
         self.std_lines : int = 0 # Shold be setted to right value in main 
-        self.std_lib_vars : dict[str : object] = {} 
+        self.std_lib_vars : dict[str, object] = {} 
 
         self.input_time : int = 0
 
-        self.types : dict[str : type] = {
+        self.types : dict[str, type] = {
             "object" : object,
             "int" : int,
             "float" : float,
@@ -45,31 +45,31 @@ class ExecutionState:
             "list" : List,
         }
 
-        self.operations : tuple[str] = (
+        self.operations : list[str] = [
             "+", "-", "*", "/", "**", "%", ">", "<", ">=", "<=", "==", "!="
-        )
-        self.iter_operations : tuple[str] = (
+        ]
+        self.iter_operations : tuple[str, str, str] = (
             "+", "==", "!="
         ) 
-        self.diff_types_operations : tuple[str] = (
+        self.diff_types_operations : tuple[str, str] = (
             "==", "!="
         )
 
-        self.RESTRICTED_NAMES : tuple[str] = (
+        self.RESTRICTED_NAMES : list[str] = [
             "and", "or", "not", "var", "drop", "input", "func",
             "return", "index", "append", "zip", "for", "while", "if",
             "elif", "else", "object", "int", "float", "list", "function",
             "break", "continue",
             *self.operations
-        )
-        self.BRACKETS : tuple[str] = ("(", ")", "[", "]", "{", "}")
-        self.GLOBAL_FUNCS : dict[str : FunctionType] = {
+        ]
+        self.BRACKETS : list[str] = ["(", ")", "[", "]", "{", "}"]
+        self.GLOBAL_FUNCS : dict[str, Callable] = {
             "execute_line" : execute_line,
             "execute_opers" : execute_opers,
             "parse_line" : parse_line
         }
 
-def execute_line(op : Oper, state : ExecutionState, local : dict[str : object] = None, is_expr : bool = True) -> object:
+def execute_line(op : Oper, state : ExecutionState, local : dict[str, object] | None, is_expr : bool = True) -> object:
     """Executes one operation"""
     state.current_line = op.line
 
@@ -82,7 +82,7 @@ def execute_line(op : Oper, state : ExecutionState, local : dict[str : object] =
         throw_exception("Continue is restricted out of loops", state)
 
     is_func = local != None
-    full_vars = {**state.vars, **(local if is_func else {})}
+    full_vars = state.vars | (local if local else {})
     state.is_expr = is_expr 
 
     if op.id not in (OpIds.else_, OpIds.elif_) and not state.is_expr and state.opened_ifs:
@@ -91,11 +91,11 @@ def execute_line(op : Oper, state : ExecutionState, local : dict[str : object] =
 
     match op.id:
         case OpIds.variable:
-            binarian_assert(op.args[0] not in full_vars, f"Variable {op.args[0]} is not defined", state)
-            return full_vars[op.args[0]]
+            binarian_assert(op.values[0] not in full_vars, f"Variable {op.values[0]} is not defined", state)
+            return full_vars[op.values[0]]
 
         case OpIds.value:
-            ret = op.args[0]
+            ret = op.values[0]
             if isinstance(ret, list):
                 res = List()
                 for i in ret:
@@ -105,13 +105,13 @@ def execute_line(op : Oper, state : ExecutionState, local : dict[str : object] =
                 return ret
 
         case OpIds.operation:
-            return execute_oper(op, state, full_vars)
+            return execute_oper(op, state, local)
 
         case OpIds.var:
-            var_keyword(op, state, local if is_func else state.vars, local)
+            var_keyword(op, state, local if local is not None else state.vars, local)
 
         case OpIds.drop:
-            drop_keyword(op, state, local if is_func else state.vars)
+            drop_keyword(op, state, local if local is not None else state.vars)
 
         case OpIds.input:
             return input_keyword(op, state)
@@ -162,7 +162,7 @@ def execute_line(op : Oper, state : ExecutionState, local : dict[str : object] =
             continue_keyword(op, state)
 
         case OpIds.func:
-            func_keyword(op, state, local if is_func else state.vars, is_func)
+            func_keyword(op, state, local if local is not None else state.vars, is_func)
 
         case OpIds.return_:
             return return_keyword(op, state, is_func, local)
@@ -172,9 +172,11 @@ def execute_line(op : Oper, state : ExecutionState, local : dict[str : object] =
 
         case _:
             assert False, "Unreachable" 
+    
+    return None
 
-def execute_opers(opers : list[Oper], state : ExecutionState, local : dict[str : object] = None,
- main : bool = False, is_loop : bool = False) -> object:
+def execute_opers(opers : list[Oper], state : ExecutionState, local : dict[str, object] | None,
+ main : bool = False, is_loop : bool = False) -> None:
     """Executes list of operations"""
     for i in opers:
         if state.current_line < state.std_lines and main:
@@ -253,7 +255,7 @@ def main(test_argv : list[str] = None) -> None:
     if "-tc" in argv:
         type_check(ops, state)
 
-    execute_opers(ops, state, main=True)
+    execute_opers(ops, state, None, main=True)
 
     if "-d" in argv:
         debug_vars = list(state.vars.items())
