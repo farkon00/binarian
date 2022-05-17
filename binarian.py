@@ -6,6 +6,7 @@ from posixpath import abspath
 from typing import Callable
 
 from parsing.parsing import *
+from parsing.graph_ast import *
 
 from type_checking import *
 
@@ -250,7 +251,7 @@ def main(test_argv : list[str] = None) -> None:
         exit(0)
 
     if "-opers" in argv:
-        print("\n".join([str(i) for i in ops]))
+        render_ast(ops, argv[1])
 
     if "-tc" in argv:
         type_check(ops, state)
