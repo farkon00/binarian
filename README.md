@@ -55,7 +55,7 @@
 
       -load-cache Sets mode to loading cached file.
 
-      -opers      prints file parsed to operations before execution. Will print all std operations too.
+      -opers      Creates .dot and .svg file with graphviz representing ast and all operations parsed
 
       --help      Show help message.
   
