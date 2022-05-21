@@ -46,14 +46,16 @@ while (< i (- iterations 1)) {
     var i = (+ i 1)
 }
 
+var buffer = "" 
 for i states {
     for j i {
         if j {
-            output "*"
+            var buffer = (+ buffer "*")
         }
         else {
-            output " "
+            var buffer = (+ buffer " ")
         }
     }
-    print ""
+    var buffer = (+ buffer "\n")
 }
+print buffer
