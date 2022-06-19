@@ -16,6 +16,7 @@
   * [to_float](#tofloat)
   * [to_str](#tostr)
   * [to_list](#tolist)
+  * [to_tuple](#totuple)
 * [Pyeval](#pyeval)
   * [execute_method](#executemethod)
   * [execute_function](#executefunction)
@@ -145,6 +146,14 @@
 
   Arguments :
   * val : object
+
+  ## to_tuple
+  Return type : object
+  
+  Converts list top python tuple.
+
+  Arguments :
+  * val : list
 
 # Pyeval
   ## execute_method

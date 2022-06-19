@@ -15,6 +15,10 @@ func list to_list : val {
     return (convert val list)
 }
 
+func object to_tuple : val: list {
+    return (index (pyeval ["res = tuple(inp)"] [["inp" val]] ["res"]) 0)
+}
+
 // Pyeval
 func object execute_method : obj: object, method: str, args: list {
     return (index (pyeval [(+ (+ "ret = obj." method)  "(*args)")] [["obj" obj] ["args" args]] ["ret"]) 0)
