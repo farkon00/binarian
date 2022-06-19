@@ -7,6 +7,10 @@ from parsing.oper import Oper
 def convert_keyword(op : Oper, state, local : dict[str, object] | None):
     original = state.GLOBAL_FUNCS['execute_line'](op.args[0], state, local)
     end_type = op.values[0]
+
+    if isinstance(original, type) and issubclass(end_type, str):
+        return type_to_str(original)
+
     try:
         final = end_type(original)
     except Exception:
