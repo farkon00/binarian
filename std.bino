@@ -56,7 +56,7 @@ func object open : file: str, mode: str {
 }
 
 func str read : file : object {
-    assert (has_attr file "read") "Object cant be readed"
+    assert (has_attr file "read") "Object cant be read"
     return (execute_method file "read" [])
 } 
 
@@ -238,7 +238,7 @@ func int is_numeric : string: str {
 
 // Lists
 func int len : iter {
-    assert (or (is_instance iter "list") (is_instance iter "str")) (+ "Cant get len of " (to_str (type_of iter)))
+    assert (is_instance iter "(list, str)") (+ "Cant get len of " (to_str (type_of iter)))
     return (execute_function "len" [iter])
 }
 
