@@ -35,9 +35,9 @@
       * [return](#return)
 
 # Global info
-  Original interpreters are written in CPython 3.10.
+  Original interpreter was written in CPython 3.10.
   
-  All files with binarian source code have extension .bino.
+  All files with binarian source code have extension `.bino`.
   
   To run your code, run python file(binarian.py) or executable(binarian.exe). 
   
@@ -65,9 +65,9 @@
  Command for creating executable in current version is `pyinstaller binarian.py --paths "<path to source code directory>" --onefile --add-data "std.bino;."`
 
 # Standard library
-  Latest version of standard library is stored in github repo in std.bino file, if you want new features from standard library and stay with old version, use old source code of intepreter and new std.bino in directory with source code. New versions of standard library can work incorrectly on older versions. Look to [How to compile](#how-to-compile) for more information about creating executable.  
+  Latest version of standard library is stored in github repo in std.bino file, if you want new features from standard library and stay on old version of interpreter, use old source code of intepreter and new std.bino in directory with source code. New versions of standard library can work incorrectly on older versions. Look to [How to compile](#how-to-compile) for more information about creating executable.  
 
-  Standard library includes useful functions like sum, list-eq, xor. Documentation for standard library is available in github repo in std_docs.md file.
+  Standard library includes useful functions like sum, list-eq, xor. Documentation for standard library is available in github repo in (std_docs.md)[https://github.com/farkon00/binarian/blob/main/std_docs.md] file.
 
   Use -no-std flag in command to not include it while execution. If std.bino is not found warning will be displayed and execution will continue without including standard library.
 
