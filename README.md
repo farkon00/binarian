@@ -72,7 +72,11 @@
   Use -no-std flag in command to not include it while execution. If std.bino is not found warning will be displayed and execution will continue without including standard library.
 
 # Basic syntax  
+  ## Comments
   To write comments use '//'. All symbols in line after '//' will be marked as comments.
+  ```
+  var variable = 69 // This is comment
+  ```
   
   ## Expression
    Expressions is lines in lines, but while execution they will be replaced with returns of keywords or functions. Also you can't use set, input and print etc. in expressions.
@@ -83,8 +87,8 @@
    
    Example :
    ```
-   input var1
-   input var2
+   var var1 = (input)
+   var var2 = (input)
    print (and var1 (not var2))
    ```
    
