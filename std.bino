@@ -36,6 +36,10 @@ func object get_attr : obj: object, attr: str {
     return (index (pyeval [(+ "ret = obj." attr)] [["obj" obj]] ["ret"]) 0)
 }
 
+func set_attr : obj: object, attr: str, value: object {
+    pyeval [(+ (+ "obj." attr) " = value")] [["obj" obj] ["value" value]] []
+}
+
 func int has_attr : obj: object, attr: str {
     return (to_int (execute_function "hasattr" [obj attr]))
 }

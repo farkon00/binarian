@@ -22,6 +22,7 @@
   * [execute_function](#executefunction)
   * [get_module](#getmodule)
   * [get_attr](#getattr)
+  * [set_attr](#setattr)
   * [has_attr](#hasattr)
   * [safe_get_attr](#safegetattr)
   * [throw_exception](#throwexception)
@@ -191,6 +192,16 @@
   Arguments :
   * obj : object
   * attr : str
+
+  ## set_attr
+  Return type : None
+  
+  Sets attribute with name `attr` of object `obj` to `value`.
+
+  Arguments :
+  * obj : object
+  * attr : str
+  * value : object
 
   ## has_attr
   Return type : int
