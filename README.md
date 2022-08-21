@@ -1,6 +1,8 @@
 [![Test](https://github.com/farkon00/binarian/actions/workflows/main.yml/badge.svg)](https://github.com/farkon00/binarian/actions/workflows/main.yml)
 ![](https://img.shields.io/github/commit-activity/m/farkon00/binarian)
 # Binarian
+# Try it out online!
+Try the language online [here](farkon00.pythonanywhere.com)
 # Content
   * [Global info](#global-info)
   * [How to compile](#how-to-compile)
