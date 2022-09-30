@@ -2,7 +2,7 @@
 ![](https://img.shields.io/github/commit-activity/m/farkon00/binarian)
 # Binarian
 # Try it out online!
-Try the language online [here](farkon00.pythonanywhere.com)
+Try the language online [here](https://farkon00.pythonanywhere.com)
 # Content
   * [Global info](#global-info)
   * [How to compile](#how-to-compile)
