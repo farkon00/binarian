@@ -26,7 +26,7 @@ def render_node(state : AstRenderingState, op : Oper) -> int:
     my_node = state.last_node
     skip_args = 0
     match op.id:
-        case OpIds.value | OpIds.variable:
+        case OpIds.value_ | OpIds.variable:
             if isinstance(op.values[0], list):
                 state.out.write(f"Node{my_node} [label=\"List\"]\n")
                 for i in op.values[0]:

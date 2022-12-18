@@ -95,7 +95,7 @@ def execute_line(op : Oper, state : ExecutionState, local : dict[str, object] | 
             binarian_assert(op.values[0] not in full_vars, f"Variable {op.values[0]} is not defined", state)
             return full_vars[op.values[0]]
 
-        case OpIds.value:
+        case OpIds.value_:
             ret = op.values[0]
             if isinstance(ret, list):
                 res = List()
@@ -196,7 +196,7 @@ def execute_opers(opers : list[Oper], state : ExecutionState, local : dict[str, 
                 state.is_continued = False
                 break
 
-def main(test_argv : list[str] = None) -> None:
+def main(test_argv : Optional[list[str]] = None) -> None:
     start_time = time()
 
     if test_argv:

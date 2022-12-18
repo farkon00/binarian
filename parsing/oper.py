@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 from enum import Enum, auto
+from typing import Optional
 
 class OpIds(Enum):
     operation = auto()
-    value = auto()
+    value_ = auto()
     variable = auto()
     var = auto()
     drop = auto()
@@ -29,8 +30,8 @@ class OpIds(Enum):
     call = auto()
 
 class Oper:
-    def __init__(self, id: OpIds, line: int, args: list[Oper] | Oper | None = None,
-     values : list = None, oper: list[Oper] = None, types : list[type] = None):
+    def __init__(self, id: OpIds, line: int, args: Optional[list[Oper] | Oper] = None,
+     values : Optional[list] = None, oper: Optional[list[Oper]] = None, types : Optional[list[type]] = None):
         if args is None:
             args = []
         elif not isinstance(args, list | tuple):

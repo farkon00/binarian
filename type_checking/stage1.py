@@ -12,7 +12,7 @@ def tc_line1(op : Oper, state):
     state.current_line = op.line
 
     match op.id:
-        case OpIds.value:
+        case OpIds.value_:
             return type(op.values[0])
 
         case OpIds.variable:
