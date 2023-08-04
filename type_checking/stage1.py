@@ -62,9 +62,9 @@ def tc_line1(op : Oper, state):
 
         case OpIds.for_:
             if is_func:
-                local[op.args[0]] = object
+                local[op.values[0]] = object
             else:
-                state.vars[op.args[0]] = object
+                state.vars[op.values[0]] = object
 
             for i in op.oper:
                 tc_line1(i, state)
