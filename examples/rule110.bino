@@ -19,10 +19,10 @@ var size = (len initial)
 
 var states = [initial]
 
-var iterations_ = (try_input_int "How many iterations you want? ")
+var iterations_ = (try_input_int "How many iterations do you want? ")
 while (or (not (index iterations_ 0)) (< (index iterations_ 1) 1)) {
     output "Plz input a number next time"
-    var iterations_ = (try_input_int "How many iterations you want? ")
+    var iterations_ = (try_input_int "How many iterations do you want? ")
 }
 
 var iterations = (index iterations_ 1)
@@ -30,16 +30,15 @@ var iterations = (index iterations_ 1)
 var last-state = initial
 var i = 0
 while (< i (- iterations 1)) {
-    var j = 1
-    var new-state = [0]
-    while (< j (- size 1)) {
+    var j = 0
+    var new-state = []
+    while (< j size) {
         var p = (index last-state (- j 1))
         var q = (index last-state j)
-        var r = (index last-state (+ j 1))
+        var r = (index last-state (% (+ j 1) size))
         append new-state (or (and q (not p)) (xor q r))
         var j = (+ j 1)
     }
-    append new-state 0
     var last-state = new-state
     append states last-state
 
